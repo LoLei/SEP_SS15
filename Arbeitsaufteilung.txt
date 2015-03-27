@@ -1,0 +1,10 @@
+Von Website:
+
+benötigte Klassen, Write Befehl -
+Write ist mit Binärdatei (Wie Bitmap in ESP)
+
+AddTile und ergänzen von eindeutig bestimmten Tiles -
+Beinhaltet Logik von Ergänzungen
+
+Sieg, Quit und Unentschieden -
+Beinhaltet Logik von Sieg
