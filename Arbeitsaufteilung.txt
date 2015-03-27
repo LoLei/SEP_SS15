@@ -1,10 +1,10 @@
 Von Website:
 
-benötigte Klassen, Write Befehl -
+benötigte Klassen, Write Befehl - Lorenz
 Write ist mit Binärdatei (Wie Bitmap in ESP)
 
-AddTile und ergänzen von eindeutig bestimmten Tiles -
+AddTile und ergänzen von eindeutig bestimmten Tiles - Markus
 Beinhaltet Logik von Ergänzungen
 
-Sieg, Quit und Unentschieden -
+Sieg, Quit und Unentschieden - Verena
 Beinhaltet Logik von Sieg
