@@ -20,5 +20,7 @@ int main()
     file << "Test 2" << std::endl;
   }
 
+  file.close();
+
   return 0;
 }
