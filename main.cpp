@@ -11,6 +11,7 @@
 //
 
 #include <iostream>
+#include <string>
 #include "Game.h"
 #include "Position.h"
 #include "Color.h"
