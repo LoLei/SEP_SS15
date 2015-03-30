@@ -19,6 +19,7 @@ int getUserChoice()
   return -1;
 }
 
+// Function ti display the desired items
 void displayItem(int x)
 {
   std::ifstream object_file("objects.bin", std::ios::in | std::ios::binary);
