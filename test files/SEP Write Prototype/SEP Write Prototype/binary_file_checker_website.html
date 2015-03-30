@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Trax</title>
+    <style type="text/css">
+body {
+  color: #222;
+  font: 16px Helvetica, Arial, sans-serif;
+  line-height: 1.625;
+  margin: 1em;
+  background: #ECEFF1;
+}
+h1 {
+  font-size: 2em;
+  margin: .4em 0;
+  background: #263238;
+  color: #ECEFF1;
+  padding: 0 .2em;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.label {
+  font-weight: bold;
+}
+ul.errors {
+  list-style-type: none;
+  padding: 0;
+}
+ul.errors li {
+  display: block;
+  border-left: 4px solid #ce4844;
+  margin: .5em 0;
+  padding-left: .5em;
+}
+ul.errors li strong {
+  color: #ce4844;
+}
+div.controls {
+  margin-bottom: .5em;
+}
+svg {
+  margin: 2em 0;
+}
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1 id="title">Trax</h1>
+      <ul id="errors" class="errors"></ul>
+      <div class="controls">
+        <label for="fileinput" class="label">File:</label>
+        <input type="file" id="fileinput" />
+        <input type="checkbox" id="autorefresh" valuẹ="true" checked="checked" />
+        <label for="autorefresh">refresh automatically</label>
+      </div>
+    </div>
+    <div><span class="label">Active Player:</span> <span id="activeplayer">N/A</span></div>
+    <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      width="170" height="170" id="svg">
+      <defs>
+        <pattern id="grid" x="35" y="35" width="200" height="200" patternUnits="userSpaceOnUse">
+          <rect fill="black" x="0" y="0" width="100" height="100" opacity="0.1" />
+          <rect fill="white" x="100" y="0" width="100" height="100" />
+          <rect fill="black" x="100" y="100" width="100" height="100" opacity="0.1" />
+          <rect fill="white" x="0" y="100" width="100" height="100" />
+        </pattern>
+        <g id="crossed_tile">
+          <rect x="0" y="0" rx="15" ry="15" width="100" height="100" style="fill:black;" />
+          <line x1="0" y1="50" x2="100" y2="50" style="stroke:red;stroke-width:15" />
+          <line x1="50" y1="0" x2="50" y2="39" style="stroke:white;stroke-width:15" />
+          <line x1="50" y1="61" x2="50" y2="100" style="stroke:white;stroke-width:15" />
+        </g>
+        <g id="courved_tile">
+          <rect x="0" y="0" rx="15" ry="15" width="100" height="100" style="fill:black;" />
+          <path d="M 50 100 A 50 50 0 0 1 100 50" fill="none" stroke="red" stroke-width="15" />
+          <path d="M 0 50 A 50 50 0 0 0 50 0" fill="none" stroke="white" stroke-width="15" />
+        </g>
+        <g id="crossed_tile_0">
+          <use transform="rotate(0, 50, 50)" xlink:href="#crossed_tile" />
+        </g>
+        <g id="crossed_tile_1">
+          <use transform="rotate(90, 50, 50)" xlink:href="#crossed_tile" />
+        </g>
+        <g id="courved_tile_0">
+          <use transform="rotate(0, 50, 50)" xlink:href="#courved_tile" />
+        </g>
+        <g id="courved_tile_2">
+          <use transform="rotate(90, 50, 50)" xlink:href="#courved_tile" />
+        </g>
+        <g id="courved_tile_1">
+          <use transform="rotate(180, 50, 50)" xlink:href="#courved_tile" />
+        </g>
+        <g id="courved_tile_3">
+          <use transform="rotate(270, 50, 50)" xlink:href="#courved_tile" />
+        </g>
+      </defs>
+      <rect fill="url(#grid)" x="0" y="0" width="100%" height="100%"/>
+    </svg>
+
+    <script type="text/javascript">
+(function() {
+  "use strict";
+
+  var elemTitle = null;
+  var elemFile = null;
+  var elemRefresh = null;
+  var elemActive = null;
+  var elemErrors = null;
+  var elemSVG = null;
+
+  var timer = null;
+  var content = null;
+
+  function addEvent(evnt, elem, fn) {
+    if (elem.addEventListener) { // W3C DOM
+      elem.addEventListener(evnt, fn, false);
+    } else if (elem.attachEvent) { // IE DOM
+      elem.attachEvent("on"+evnt, fn);
+    }
+  }
+
+  addEvent("load", window, function() {
+    elemTitle = document.getElementById("title");
+    elemFile = document.getElementById("fileinput");
+    elemRefresh = document.getElementById("autorefresh");
+    elemActive = document.getElementById("activeplayer");
+    elemErrors = document.getElementById("errors");
+    elemSVG = document.getElementById("svg");
+
+    addEvent("change", elemRefresh, changeRefresh);
+    addEvent("change", elemFile, refresh);
+    addEvent("click", elemTitle, refresh);
+    changeRefresh();
+    clearError();
+
+    addLabels(elemSVG, 1, -1, 1, -1);
+  });
+
+  function changeRefresh() {
+    if (timer) {
+      window.clearInterval(timer);
+      timer = null;
+    }
+    if (elemRefresh.checked) {
+      timer = window.setInterval(refresh, 1000);
+    }
+  }
+
+  function clearError() {
+    while (elemErrors.firstChild) {
+      elemErrors.removeChild(elemErrors.firstChild);
+    }
+    elemErrors.style.display = "none";
+  }
+
+  function reportError(msg) {
+    var li = document.createElement("li");
+    var label = document.createElement("strong");
+    label.appendChild(document.createTextNode("Error:"))
+    li.appendChild(label);
+    li.appendChild(document.createTextNode(" "));
+    li.appendChild(document.createTextNode(msg));
+    elemErrors.appendChild(li);
+    elemErrors.style.display = "block";
+  }
+
+  function refresh() {
+    if (!elemFile.files.length) {
+      return;
+    }
+    var file = elemFile.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function(e) {
+      if (content === reader.result) {
+        return;
+      }
+      content = reader.result;
+      clearError();
+      createSVG(content);
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  function createSVG(data) {
+    if (!data)
+      return;
+
+    if (data.byteLength < 9) {
+      reportError("InputFile not long enough!");
+      return;
+    }
+    var svg = elemSVG;
+    var buffer = new Int8Array(data);
+
+    if (buffer[0] !== 84 || buffer[1] !== 82 || buffer[2] !== 65 || buffer[3] !== 88) {
+      reportError("Missing \"TRAX\" at beginning of file");
+      return;
+    }
+    if (buffer[4] < 1 || buffer[4] > 2) {
+      reportError("Active Player is invalid!");
+      return;
+    }
+    var active_player_str = ((buffer[4] === 1) ? "White" : "Red");
+    elemActive.innerText = active_player_str;
+    var minX = buffer[5];
+    var minY = buffer[6];
+    var maxX = buffer[7];
+    var maxY = buffer[8];
+
+    var width = maxX - minX + 1;
+    var height = maxY - minY + 1;
+
+    if (data.byteLength < 9 + width*height) {
+      reportError("InputFile not long enough!")
+    }
+    svg.setAttribute("width", width*100 + 270);
+    svg.setAttribute("height", height*100 + 270);
+
+    addLabels(svg, minX, maxX, minY, maxY);
+    addTiles(svg, width, height, buffer);
+  }
+
+  function addTiles(svg, width, height, buffer) {
+    var oldTiles = svg.getElementsByClassName("tile");
+
+    while (oldTiles.length > 0) {
+      svg.removeChild(oldTiles[0]);
+    }
+    var buffer_index = 9;
+    for (var y = 1; y <= height; y++) {
+      for (var x = 1; x <= width; x++) {
+        addOneTile(svg, x, y, buffer[buffer_index], buffer[buffer_index + 1]);
+        buffer_index = buffer_index + 2;
+      }
+    }
+  }
+
+  function addOneTile(svg, x, y, side, orientation) {
+    if(side === 0 && orientation === 0) {
+      return;
+    }
+    if(side < 1 || side > 3) {
+      reportError("Invalid side for coordinates (" + x + "," + y + ")");
+      return;
+    }
+    if(orientation < 1 || orientation > 2)
+    {
+      reportError("Invalid orientation for coordinates (" + x + "," + y + ")");
+      return;
+    }
+
+    var tile = "";
+    if (side === 1 && orientation === 1) {
+      tile = "#crossed_tile_0";
+    } else if (side === 1 && orientation === 2) {
+      tile = "#crossed_tile_1";
+    } else if (side === 2 && orientation === 1) {
+      tile = "#courved_tile_0";
+    } else if (side === 2 && orientation === 2) {
+      tile = "#courved_tile_1";
+    } else if (side === 3 && orientation === 1) {
+      tile = "#courved_tile_2";
+    } else if (side === 3 && orientation === 2) {
+      tile = "#courved_tile_3";
+    }
+
+    var elem = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    elem.setAttribute("class", "tile");
+    elem.setAttribute("x", x * 100 + 35);
+    elem.setAttribute("y", y * 100 + 35);
+    elem.setAttributeNS("http://www.w3.org/1999/xlink", "href", tile);
+    svg.appendChild(elem);
+  }
+
+  function addLabels(svg, minX, maxX, minY, maxY) {
+    var oldLabels = svg.getElementsByClassName("label");
+    while (oldLabels.length > 0) {
+      svg.removeChild(oldLabels[0]);
+    }
+
+    var i = minX - 1;
+    var j = 0;
+    for(; i <= maxX + 1; i++, j++) {
+      addOneLabel(svg, j * 100 + 35 + 50, 20, i);
+    }
+    i = minY - 1;
+    j = 0;
+    for(; i <= maxY + 1; i++, j++) {
+      addOneLabel(svg, 20, j * 100 + 35 + 50, i);
+    }
+  }
+
+  function addOneLabel(svg, x, y, label) {
+    var elem = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    elem.setAttribute("alignment-baseline", "middle");
+    elem.setAttribute("text-anchor", "middle");
+    elem.setAttribute("x", x);
+    elem.setAttribute("y", y);
+    elem.setAttribute("font-size", "20");
+    elem.setAttribute("font-family", "monospace");
+    elem.setAttribute("class", "label");
+    elem.appendChild(document.createTextNode(label));
+    svg.appendChild(elem);
+  }
+})();
+    </script>
+  </body>
+</html>
