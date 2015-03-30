@@ -66,7 +66,7 @@ void displayItem(int x)
       std::cout << "----------------------------------------" << std::endl;
       std::cout << "You need to enter 1, 2, 3 or 4!" << std::endl;
       break;
-  }   
+  }
   object_file.close();
 }
 
