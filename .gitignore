@@ -34,6 +34,7 @@
 *.suo
 *.vcxproj
 *.filters
+*.TMP
 
 # Debug files
 *.log
