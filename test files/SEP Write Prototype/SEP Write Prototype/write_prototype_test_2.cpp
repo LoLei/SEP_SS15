@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstdint>
 #include <fstream>
 
 #define TYPE 1480675924 // TRAX in dec from hex in little endian
