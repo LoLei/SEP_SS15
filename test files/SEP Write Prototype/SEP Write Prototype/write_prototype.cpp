@@ -1,4 +1,4 @@
-// Version 2.1
+// Version 2.1.1
 // TODO Swapping active player only happens when next player makes a turn
 // not when a forced tile is placed
 
@@ -9,6 +9,12 @@
 #define AP_OFFSET 4
 #define AP_WHITE 1
 #define AP_RED 2
+#define NO_FIGURE 0
+#define CROSS 1
+#define CURVE_1 2
+#define CURVE_2 3
+#define TOP_WHITE 1
+#define TOP_RED 2
 
 int main()
 {
@@ -72,8 +78,8 @@ int main()
   // Sets position to where it left off
   file.seekp(pos);
 
-  board_tiles.side = 1;
-  board_tiles.top_color = 2;
+  board_tiles.side = CROSS;
+  board_tiles.top_color = TOP_RED;
   
   file << board_tiles.side;
   file << board_tiles.top_color;
@@ -88,8 +94,8 @@ int main()
   // Sets position to where it left off
   file.seekp(pos);
 
-  board_tiles.side = 1;
-  board_tiles.top_color = 2;
+  board_tiles.side = CROSS;
+  board_tiles.top_color = TOP_RED;
   
   file << board_tiles.side;
   file << board_tiles.top_color;
@@ -104,8 +110,8 @@ int main()
   // Sets position to where it left off
   file.seekp(pos);
 
-  board_tiles.side = 1;
-  board_tiles.top_color = 2;
+  board_tiles.side = CURVE_2;
+  board_tiles.top_color = TOP_RED;
 
   file << board_tiles.side;
   file << board_tiles.top_color;
