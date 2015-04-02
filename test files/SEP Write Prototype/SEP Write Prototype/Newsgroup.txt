@@ -1,0 +1,18 @@
+On 04/02/2015 10:11 AM, Florian Kaum wrote:
+> Hallo,
+>
+> wir haben folgende Fragen zum Write-Befehl:
+> 1.Soll der Jede Runde aufgerufen werden oder nur wenn der Benutzer
+> diesen Befehl eingibt?
+
+Kommt darauf an. Wenn das Programm mit dem optionalen Parameter "-g foo.bin" aufgerufen wird, wird nach jeder Änderung (d.h. nach jedem addtile) automatisch "write foo.bin" aufgerufen. Wenn das Programm ohne dem Parameter "-g" gestartet wurde nicht.
+
+Diese Option erleichtert euch (mit Hilfe des Trax-Viewers) das Spiel einfacher zu testen.
+
+
+> 2.Wozu ist der Paramter Filename beim Write-Befehl? den Filename
+> bekommen wir doch beim Programmstart schon als Parameter übergeben.
+
+Unabhängig vom Parameter "-g" beim Programmstart kann der Benutzer jeder Zeit selber "write myfile.bin" eingeben. Dann wird die entsprechende Datei mit dem aktuellen Spielstand erstellt.
+
+-christoph 
