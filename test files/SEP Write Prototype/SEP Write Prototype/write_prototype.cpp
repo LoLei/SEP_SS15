@@ -1,4 +1,6 @@
 // Version 2.1
+// TODO Swapping active player only happens when next player makes a turn
+// not when a forced tile is placed
 
 #include <iostream>
 #include <fstream>
