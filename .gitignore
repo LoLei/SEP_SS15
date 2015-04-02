@@ -42,3 +42,7 @@
 *.idb
 *.pdb
 *.ilk
+
+# Binary files
+*.png
+*.bmp
