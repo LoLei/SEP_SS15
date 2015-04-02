@@ -1,12 +1,17 @@
-// Version 2
+// Version 2.1
 
 #include <iostream>
 #include <fstream>
 
 #define TYPE 1480675924 // TRAX in dec from hex in little endian
+#define AP_OFFSET 4
+#define AP_WHITE 1
+#define AP_RED 2
 
 int main()
 {
+  long pos;
+
   typedef struct
   {
     char *signature; // char[4] // TRAX // hex: 54 52 41 58 // little endian: 58 41 52 54 // Offset 0
@@ -27,14 +32,14 @@ int main()
   FileHeader file_header;
   //file_header.signature = { 'T', 'R', 'A', 'X', '\0' };
   file_header.signature = "TRAX";
-  file_header.active_player = 1;
+  file_header.active_player = AP_WHITE;
   file_header.minX = 0;
   file_header.minY = 0;
   file_header.maxX = 1;
   file_header.maxY = 1;
 
   // Write header into file
-  std::ofstream file("trax", std::ios::out | std::ios::trunc | std::ios::binary);
+  std::ofstream file("trax2", std::ios::out | std::ios::trunc | std::ios::binary);
   
   file << file_header.signature;
   file << file_header.active_player;
@@ -47,40 +52,63 @@ int main()
   // Write tiles into file
   // TODO Change active_player each turn
   BoardTiles board_tiles;
-  
+  //--------------------------------------------------------------------------//
   // Active player = White, set already
   board_tiles.side = 1;
   board_tiles.top_color = 2;
 
   file << board_tiles.side;
   file << board_tiles.top_color;
-
+  // Save position
+  pos = file.tellp();
+  //--------------------------------------------------------------------------//
   // Active player = Red
-  file_header.active_player = 2;
+  file_header.active_player = AP_RED;
   // Sets position to offset 4 for active player in binary file
-  file.seekp(4);
+  file.seekp(AP_OFFSET);
   file << file_header.active_player;
   // Sets position to where it left off
-  file.seekp(11);
+  file.seekp(pos);
 
   board_tiles.side = 1;
   board_tiles.top_color = 2;
   
   file << board_tiles.side;
   file << board_tiles.top_color;
+  // Save position
+  pos = file.tellp();
+  //--------------------------------------------------------------------------//
+  // Active player = White
+  file_header.active_player = AP_WHITE;
+  // Sets position to offset 4 for active player in binary file
+  file.seekp(AP_OFFSET);
+  file << file_header.active_player;
+  // Sets position to where it left off
+  file.seekp(pos);
+
+  board_tiles.side = 1;
+  board_tiles.top_color = 2;
+  
+  file << board_tiles.side;
+  file << board_tiles.top_color;
+  // Save position
+  pos = file.tellp();
+  //--------------------------------------------------------------------------//
+  // Active player = Red
+  file_header.active_player = AP_RED;
+  // Sets position to offset 4 for active player in binary file
+  file.seekp(AP_OFFSET);
+  file << file_header.active_player;
+  // Sets position to where it left off
+  file.seekp(pos);
 
   board_tiles.side = 1;
   board_tiles.top_color = 2;
 
   file << board_tiles.side;
   file << board_tiles.top_color;
-
-  board_tiles.side = 1;
-  board_tiles.top_color = 2;
-
-  file << board_tiles.side;
-  file << board_tiles.top_color;
-
+  // Save position
+  pos = file.tellp();
 
   return 0;
 }
