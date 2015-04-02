@@ -24,8 +24,8 @@ class Addtile:public Command
 {
   public:
 
-    Addtile() : Command("Addtile"){};
-    virtual ~Addtile();
+    Addtile();
+    //~Addtile();
 
     int execute(Game& board, std::vector<std::string>& params);
 

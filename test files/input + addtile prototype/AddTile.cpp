@@ -10,10 +10,12 @@
 
 #include "AddTile.h"
 
-//Addtile::Addtile()
-//{
+
+Addtile::Addtile() : Command("Addtile")
+{
   //
-//}
+}
+
 int Addtile::execute(Game& board, std::vector<std::string>& params)
 {
   return 0;

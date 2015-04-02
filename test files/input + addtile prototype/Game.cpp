@@ -61,7 +61,7 @@ void Game::run()
 {
   setRunning(true);
   string user_input;
-  Addtile addtile("Add a tile");
+  Addtile addtile;
   Tile current_tile;
   Position current_position(0,0);
   
