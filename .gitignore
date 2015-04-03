@@ -61,3 +61,5 @@
 *.modelproj
 *.classdiagram
 *.layout
+*.psess
+*.vsp
