@@ -1,6 +1,8 @@
 // Version 2.2
 // TODO Swapping active player only happens when next player makes a turn
 // not when a forced tile is placed
+// TODO Proper try except
+// TODO Error when board is empty
 
 #include <iostream>
 #include <fstream>
@@ -36,7 +38,7 @@ int main(int argc, char *argv[])
   if (argc == 3)
   {
     file_name = argv[2];
-    std::cout << file_name << std::endl;
+    //std::cout << file_name << std::endl;
   }
   writeFile(file_name);
   return 0;
@@ -80,6 +82,10 @@ void writeFile(std::string file_name)
   // Open file for writing
   std::ofstream file(file_name,
     std::ios::out | std::ios::trunc | std::ios::binary);
+  if (!file.is_open())
+  {
+    std::cout << "Cannot write file " << file_name << std::endl;
+  }
 
   // Write header into file
   file << file_header.signature;
@@ -150,4 +156,7 @@ void writeFile(std::string file_name)
   file << board_tiles.top_color;
   // Save position
   pos = file.tellp();
+  //--------------------------------------------------------------------------//
+  // Close file
+  file.close();
 }

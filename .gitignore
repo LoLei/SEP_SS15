@@ -52,3 +52,12 @@
 *.bmp
 *.BAK
 *.user
+
+# Other Visual Studio files
+*.cd
+*.sbr
+*.bsc
+*.uml
+*.modelproj
+*.classdiagram
+*.layout
