@@ -11,6 +11,7 @@ Repository for SEP SS15 Basisbeispiel
 # TODO
 * Rename exception files
 * Fix return type in exception files
+* Add exception file for write
 * Implement try and catch in regular files using exception files
 * Implement board through AddTile
 * Combine write function with AddTile function
