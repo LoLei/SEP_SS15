@@ -78,86 +78,92 @@ void writeFile(std::string file_name)
   file_header.maxX = 1;
   file_header.maxY = 1;
 
+  try
+  {
+    // Open file for writing
+    std::ofstream file(file_name,
+      std::ios::out | std::ios::trunc | std::ios::binary);
+    // Check if file is open, prints error if not, stops writing
+    if (!file.is_open())
+    {
+      throw - 1;
+    }
 
-  // Open file for writing
-  std::ofstream file(file_name,
-    std::ios::out | std::ios::trunc | std::ios::binary);
-  // Check if file is open, prints error if not, but still continues program
-  if (!file.is_open())
+    // Write header into file
+    file << file_header.signature;
+    file << file_header.active_player;
+    file << file_header.minX;
+    file << file_header.minY;
+    file << file_header.maxX;
+    file << file_header.maxY;
+
+    // Write each line of the board from (minX,minY) to (maxX,maxY)
+    // from left to right
+    // Write tiles into file
+    BoardTiles board_tiles;
+    //--------------------------------------------------------------------------//
+    // Active player = White, set already
+    board_tiles.side = SIDE_CROSS;
+    board_tiles.top_color = TOP_RED;
+
+    file << board_tiles.side;
+    file << board_tiles.top_color;
+    // Save position
+    pos = file.tellp();
+    //--------------------------------------------------------------------------//
+    // Active player = Red
+    file_header.active_player = AP_RED;
+    // Sets position to offset 4 for active player in binary file
+    file.seekp(AP_OFFSET);
+    file << file_header.active_player;
+    // Sets position to where it left off
+    file.seekp(pos);
+
+    board_tiles.side = SIDE_CROSS;
+    board_tiles.top_color = TOP_RED;
+
+    file << board_tiles.side;
+    file << board_tiles.top_color;
+    // Save position
+    pos = file.tellp();
+    //--------------------------------------------------------------------------//
+    // Active player = White
+    file_header.active_player = AP_WHITE;
+    // Sets position to offset 4 for active player in binary file
+    file.seekp(AP_OFFSET);
+    file << file_header.active_player;
+    // Sets position to where it left off
+    file.seekp(pos);
+
+    board_tiles.side = SIDE_CROSS;
+    board_tiles.top_color = TOP_RED;
+
+    file << board_tiles.side;
+    file << board_tiles.top_color;
+    // Save position
+    pos = file.tellp();
+    //--------------------------------------------------------------------------//
+    // Active player = Red
+    file_header.active_player = AP_RED;
+    // Sets position to offset 4 for active player in binary file
+    file.seekp(AP_OFFSET);
+    file << file_header.active_player;
+    // Sets position to where it left off
+    file.seekp(pos);
+
+    board_tiles.side = SIDE_CURVE_2;
+    board_tiles.top_color = TOP_RED;
+
+    file << board_tiles.side;
+    file << board_tiles.top_color;
+    // Save position
+    pos = file.tellp();
+    //--------------------------------------------------------------------------//
+    // Close file
+    file.close();
+  }
+  catch (int x)
   {
     std::cout << "Cannot write file " << file_name << std::endl;
   }
-
-  // Write header into file
-  file << file_header.signature;
-  file << file_header.active_player;
-  file << file_header.minX;
-  file << file_header.minY;
-  file << file_header.maxX;
-  file << file_header.maxY;
-
-  // Write each line of the board from (minX,minY) to (maxX,maxY)
-  // from left to right
-  // Write tiles into file
-  BoardTiles board_tiles;
-  //--------------------------------------------------------------------------//
-  // Active player = White, set already
-  board_tiles.side = SIDE_CROSS;
-  board_tiles.top_color = TOP_RED;
-
-  file << board_tiles.side;
-  file << board_tiles.top_color;
-  // Save position
-  pos = file.tellp();
-  //--------------------------------------------------------------------------//
-  // Active player = Red
-  file_header.active_player = AP_RED;
-  // Sets position to offset 4 for active player in binary file
-  file.seekp(AP_OFFSET);
-  file << file_header.active_player;
-  // Sets position to where it left off
-  file.seekp(pos);
-
-  board_tiles.side = SIDE_CROSS;
-  board_tiles.top_color = TOP_RED;
-
-  file << board_tiles.side;
-  file << board_tiles.top_color;
-  // Save position
-  pos = file.tellp();
-  //--------------------------------------------------------------------------//
-  // Active player = White
-  file_header.active_player = AP_WHITE;
-  // Sets position to offset 4 for active player in binary file
-  file.seekp(AP_OFFSET);
-  file << file_header.active_player;
-  // Sets position to where it left off
-  file.seekp(pos);
-
-  board_tiles.side = SIDE_CROSS;
-  board_tiles.top_color = TOP_RED;
-
-  file << board_tiles.side;
-  file << board_tiles.top_color;
-  // Save position
-  pos = file.tellp();
-  //--------------------------------------------------------------------------//
-  // Active player = Red
-  file_header.active_player = AP_RED;
-  // Sets position to offset 4 for active player in binary file
-  file.seekp(AP_OFFSET);
-  file << file_header.active_player;
-  // Sets position to where it left off
-  file.seekp(pos);
-
-  board_tiles.side = SIDE_CURVE_2;
-  board_tiles.top_color = TOP_RED;
-
-  file << board_tiles.side;
-  file << board_tiles.top_color;
-  // Save position
-  pos = file.tellp();
-  //--------------------------------------------------------------------------//
-  // Close file
-  file.close();
 }
