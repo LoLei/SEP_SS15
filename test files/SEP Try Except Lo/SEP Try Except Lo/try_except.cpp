@@ -1,11 +1,23 @@
 #include <iostream>
+#include <exception>
 
 int main()
 {
+  class MyException : public std::exception
+  {
+    virtual const char* what() const throw()
+    {
+      return "My exception happened";
+    }
+  };
+
+  MyException myex;
+
   try
   {
     float age_mom;
     float age_kid;
+    int test = 1;
 
     std::cout << "We're going to divide your mom's age by your age" << std::endl;
     std::cout << "Enter your mom's age and your age" << std::endl << std::endl;
@@ -20,6 +32,10 @@ int main()
     if (age_kid == 0)
     {
       throw 2;
+    }
+    if (test == 1)
+    {
+      throw myex;
     }
 
     // No exception caught
@@ -36,6 +52,9 @@ int main()
     {
       std::cout << "Can't divide by 0. Error Code: " << x << std::endl;
     }
-    
+  }
+  catch (std::exception& e)
+  {
+    std::cout << e.what() << '\n';
   }
 }
