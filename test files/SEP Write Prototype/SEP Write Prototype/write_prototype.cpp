@@ -55,7 +55,7 @@ void writeFile(std::string file_name)
 
   typedef struct
   {
-    char *signature; // char[4] // TRAX 
+    char *signature; // char[4] // TRAX
     char active_player; // char // white (1) or red (2)
     signed char minX; // signed char
     signed char minY; // signed char
@@ -78,10 +78,11 @@ void writeFile(std::string file_name)
   file_header.maxX = 1;
   file_header.maxY = 1;
 
-  
+
   // Open file for writing
   std::ofstream file(file_name,
     std::ios::out | std::ios::trunc | std::ios::binary);
+  // Check if file is open, prints error if not, but still continues program
   if (!file.is_open())
   {
     std::cout << "Cannot write file " << file_name << std::endl;
