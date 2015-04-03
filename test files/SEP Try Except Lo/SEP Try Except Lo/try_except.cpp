@@ -1,23 +1,13 @@
 #include <iostream>
-#include <exception>
+#include "Customexceptions.h"
 
 int main()
 {
-  class MyException : public std::exception
-  {
-    virtual const char* what() const throw()
-    {
-      return "My exception happened";
-    }
-  };
-
-  MyException myex;
-
   try
   {
     float age_mom;
     float age_kid;
-    int test = 1;
+    int test = 2;
 
     std::cout << "We're going to divide your mom's age by your age" << std::endl;
     std::cout << "Enter your mom's age and your age" << std::endl << std::endl;
@@ -26,35 +16,32 @@ int main()
     // Kid older than mom
     if (age_kid > age_mom)
     {
-      throw 1;
+      throw LogicalIntegrity();
     }
     // Kid's age is 0, can't divide by 0
     if (age_kid == 0)
     {
-      throw 2;
+      throw NullDivision();
     }
     if (test == 1)
     {
-      throw myex;
+      throw BrickException();
+    }
+    if (test == 2)
+    {
+      throw WriteException();
     }
 
     // No exception caught
     std::cout << "The result is: " << age_mom / age_kid << std::endl;
 
   }
-  catch (int x)
+  catch (WriteException& e1)
   {
-    if (x == 1)
-    {
-      std::cout << "You cannot be older than your mom. Error code: " << x << std::endl;
-    }
-    if (x == 2)
-    {
-      std::cout << "Can't divide by 0. Error Code: " << x << std::endl;
-    }
+    std::cout << e1.what() << ' ' << "<file_name>" << std::endl;
   }
   catch (std::exception& e)
   {
-    std::cout << e.what() << '\n';
+    std::cout << e.what() << std::endl;
   }
 }
