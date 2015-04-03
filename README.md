@@ -3,10 +3,10 @@ Softwareentwicklung Praktikum
 
 Repository for SEP SS15 Basisbeispiel
 
-Authorized:
-Lorenz Leitner
-Verena Niederwanger
-Markus Pichler
+**Authorized:**
+* Lorenz Leitner
+* Verena Niederwanger
+* Markus Pichler
 
 # TODO
 * Rename exception files
