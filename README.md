@@ -9,8 +9,8 @@ Repository for SEP SS15 Basisbeispiel
 * Markus Pichler
 
 # TODO
-* Rename exception files
-* Fix return type in exception files
+* ~~Rename exception files~~
+* ~~Fix return type in exception files~~
 * Add exception class for write
 * Add exception class for other exceptions too
 * Implement try and catch in regular files using exception files
