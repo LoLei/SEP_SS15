@@ -2,15 +2,14 @@
 #define WRITEEXCEPTION_H
 
 #include <exception>
+#include <string>
 
-class Writeexception : public std::exception
+class WriteException : public std::exception
 {
 public:
-  Writeexception();
-private:
-  Writeexception(Writeexception const &src);
-public:
-  virtual ~Writeexception() throw();
+  WriteException();
+  WriteException(WriteException const &src);
+  virtual ~WriteException() throw();
   virtual const char *what() const throw();
 };
 

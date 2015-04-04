@@ -1,22 +1,21 @@
-#include "writeexception.h"
+#include "WriteException.h"
 #include <iostream>
 
 
-Writeexception::Writeexception() : exception()
+WriteException::WriteException() : exception()
 {
 }
 
-Writeexception::Writeexception(Writeexception const &src)
+WriteException::WriteException(WriteException const &src)
 : exception(src)
 {
 }
 
-Writeexception::~Writeexception() throw()
+WriteException::~WriteException() throw()
 {
 }
 
-const char *Writeexception::what() const throw()
+const char *WriteException::what() const throw()
 {
-  return "Cannot write file <filename>";
-  //<filename> durch Parameter Filename ersetzen
+  return "Cannot write file ";
 }
