@@ -7,7 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Customexceptions.h"
+#include "writeexception.h"
 
 #define TYPE 1480675924 // TRAX in dec from hex in little endian
 #define AP_OFFSET     4
@@ -87,7 +87,7 @@ void writeFile(std::string file_name)
     // Check if file is open, prints error if not, stops writing
     if (!file.is_open())
     {
-      throw WriteException();
+      throw Writeexception();
     }
 
     // Write header into file
@@ -163,7 +163,7 @@ void writeFile(std::string file_name)
     // Close file
     file.close();
   }
-  catch (WriteException& e1)
+  catch (Writeexception& e1)
   {
     std::cout << e1.what() << ' ' << file_name << std::endl;
   }
