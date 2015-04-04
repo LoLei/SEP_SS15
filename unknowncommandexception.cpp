@@ -1,20 +1,20 @@
-#include "UnknownCommand.h"
+#include "UnknownCommandException.h"
 #include <iostream>
 
-UnknownCommand::UnknownCommand() : exception()
+UnknownCommandException::UnknownCommandException() : exception()
 {
 }
 
-UnknownCommand::UnknownCommand(UnknownCommand const &src)
+UnknownCommandException::UnknownCommandException(UnknownCommandException const &src)
 : exception(src)
 {
 }
 
-UnknownCommand::~UnknownCommand() throw()
+UnknownCommandException::~UnknownCommandException() throw()
 {
 }
 
-const char *UnknownCommand::what() const throw()
+const char *UnknownCommandException::what() const throw()
 {
   return "Error: Unknown command!";
   //std::cout << "Error: Unknown command!" << std::endl;

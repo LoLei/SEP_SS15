@@ -3,11 +3,11 @@
 
 #include <exception>
 
-class WrongParameter : public std::exception
+class WrongParameterException : public std::exception
 {
-  WrongParameter();
-  WrongParameter(WrongParameter const &src);
-  virtual ~WrongParameter() throw();
+  WrongParameterException();
+  WrongParameterException(WrongParameterException const &src);
+  virtual ~WrongParameterException() throw();
   virtual const char *what() const throw();
 };
 

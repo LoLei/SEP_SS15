@@ -1,20 +1,20 @@
-#include "OutOfMemory.h"
+#include "OutOfMemoryException.h"
 #include <iostream>
 
-OutOfMemory::OutOfMemory() : exception()
+OutOfMemoryException::OutOfMemoryException() : exception()
 {
 }
 
-OutOfMemory::OutOfMemory(OutOfMemory const &src)
+OutOfMemoryException::OutOfMemoryException(OutOfMemoryException const &src)
 : exception(src)
 {
 }
 
-OutOfMemory::~OutOfMemory() throw()
+OutOfMemoryException::~OutOfMemoryException() throw()
 {
 }
 
-const char *OutOfMemory::what() const throw()
+const char *OutOfMemoryException::what() const throw()
 {
   return "Error: Out of Memory!";
   //std::cout << "Error: Out of Memory!" << std::endl;

@@ -1,20 +1,20 @@
-#include "Usage.h"
+#include "UsageException.h"
 #include <iostream>
 
-Usage::Usage() : exception()
+UsageException::UsageException() : exception()
 {
 }
 
-Usage::Usage(Usage const &src)
+UsageException::UsageException(UsageException const &src)
 : exception(src)
 {
 }
 
-Usage::~Usage() throw()
+UsageException::~UsageException() throw()
 {
 }
 
-const char *Usage::what() const throw()
+const char *UsageException::what() const throw()
 {
   return "Usage: <program>";
   //std::cout << "Usage: " << "<program>" << std::endl;

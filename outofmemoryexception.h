@@ -3,11 +3,11 @@
 
 #include <exception>
 
-class OutOfMemory : public std::exception
+class OutOfMemoryException : public std::exception
 {
-  OutOfMemory();
-  OutOfMemory(OutOfMemory const &src);
-  virtual ~OutOfMemory() throw();
+  OutOfMemoryException();
+  OutOfMemoryException(OutOfMemoryException const &src);
+  virtual ~OutOfMemoryException() throw();
   virtual const char *what() const throw();
 };
 

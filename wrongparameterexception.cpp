@@ -1,20 +1,20 @@
-#include "WrongParameter.h"
+#include "WrongParameterException.h"
 #include <iostream>
 
-WrongParameter::WrongParameter() : exception()
+WrongParameterException::WrongParameterException() : exception()
 {
 }
 
-WrongParameter::WrongParameter(WrongParameter const &src)
+WrongParameterException::WrongParameterException(WrongParameterException const &src)
 : exception(src)
 {
 }
 
-WrongParameter::~WrongParameter() throw()
+WrongParameterException::~WrongParameterException() throw()
 {
 }
 
-const char *WrongParameter::what() const throw()
+const char *WrongParameterException::what() const throw()
 {
   return "Error: Wrong parameter count!";
   //std::cout << "Error: Wrong parameter count!" << std::endl;

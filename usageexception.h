@@ -3,11 +3,11 @@
 
 #include <exception>
 
-class Usage : public std::exception
+class UsageException : public std::exception
 {
-  Usage();
-  Usage(Usage const &src);
-  virtual ~Usage() throw();
+  UsageException();
+  UsageException(UsageException const &src);
+  virtual ~UsageException() throw();
   virtual const char *what() const throw();
 };
 
