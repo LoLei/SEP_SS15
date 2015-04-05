@@ -41,8 +41,9 @@ bool Addtile::valuecommand(std::string user_input, Tile &tile,
       return false;
     }
   }
-  catch(std::exception& e)
+  catch(...)
   {
-  return false;
+    std::cout << "Invalid parameters" << std::endl;
+    return false;
   }
 }
