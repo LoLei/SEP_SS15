@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 #include "AddTile.h"
+#include "WrongParameterException.h"
 
 
 Addtile::Addtile() : Command("Addtile")
@@ -41,9 +42,14 @@ bool Addtile::valuecommand(std::string user_input, Tile &tile,
       return false;
     }
   }
+  /*catch (WrongParameterException& e1)
+  {
+    std::cout << e1.what() << std::endl;
+    return false;
+  }*/
   catch(...)
   {
-    std::cout << "Invalid parameters" << std::endl;
+    std::cout << "Error: Wrong parameter count!" << std::endl;
     return false;
   }
 }
