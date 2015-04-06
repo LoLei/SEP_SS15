@@ -5,6 +5,7 @@
 
 class OutOfMemoryException : public std::exception
 {
+public:
   OutOfMemoryException();
   OutOfMemoryException(OutOfMemoryException const &src);
   virtual ~OutOfMemoryException() throw();

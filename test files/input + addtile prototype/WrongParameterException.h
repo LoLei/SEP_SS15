@@ -5,6 +5,7 @@
 
 class WrongParameterException : public std::exception
 {
+public:
   WrongParameterException();
   WrongParameterException(WrongParameterException const &src);
   virtual ~WrongParameterException() throw();

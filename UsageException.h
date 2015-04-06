@@ -5,6 +5,7 @@
 
 class UsageException : public std::exception
 {
+public:
   UsageException();
   UsageException(UsageException const &src);
   virtual ~UsageException() throw();

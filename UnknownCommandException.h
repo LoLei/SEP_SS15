@@ -5,6 +5,7 @@
 
 class UnknownCommandException : public std::exception
 {
+public:
   UnknownCommandException();
   UnknownCommandException(UnknownCommandException const &src);
   virtual ~UnknownCommandException() throw();
