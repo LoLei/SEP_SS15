@@ -1,0 +1,8 @@
+Soll die Fehlermeldung "Invalid parameters\n" auch kommen, wenn der
+User nur "AddTile" und dann nichts eingibt?
+Beispiel [0]
+
+[0] https://i.imgur.com/q1jMbSL.png
+
+
+Nein, dieser Fall ist mit "Error: Wrong parameter count!\n" abgedeckt. 
