@@ -27,7 +27,14 @@ int main()
     std::cout << "sep> ";
     std::getline(std::cin, user_input);
     // get first word in line -> command
-    string str1 = user_input.substr(user_input.find_first_not_of(" "), user_input.size());
+    string str1;
+    str1 = user_input;
+    // If user enters bank line, prompt again
+    if (str1 == "")
+    {
+      continue;
+    }
+    str1 = user_input.substr(user_input.find_first_not_of(" "), user_input.size());
     string str2 = str1.substr(0,str1.find_first_of(" "));
     // make lower case
     for(std::size_t it = 0; it != str2.size(); it++)
