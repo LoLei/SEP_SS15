@@ -12,7 +12,7 @@ Repository for SEP SS15 Basisbeispiel
 * ~~Rename exception files~~
 * ~~Fix return type in exception files~~
 * ~~Add exception class for write~~
-* * ~~Implement board through AddTile (std::array)~~
+* ~~Implement board through AddTile (std::array)~~
 * Make structs into classes
 * Fix invalid parameters and wrong parameter count error messages
 * Add exception class for other exceptions too (must be public)
