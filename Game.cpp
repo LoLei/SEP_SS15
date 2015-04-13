@@ -76,13 +76,13 @@ void Game::run()
     // get first word in line -> command
     string str1;
 
-    /*
+
     // If user enters blank line, prompt again
     if (str1 == "")
     {
     continue;
     }
-    */
+
 
     str1 = user_input.substr(user_input.find_first_not_of(" "),
                              user_input.size());
