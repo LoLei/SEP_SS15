@@ -4,11 +4,10 @@
 // Group: Group 9, study assistant Philip Loibl
 //
 // Authors: Markus Pichler 1331070
-// 
+//
 //------------------------------------------------------------------------------
 //
 
-#include <iostream>
 #include "Tile.h"
 
 //------------------------------------------------------------------------------
@@ -28,6 +27,10 @@ Tile::Tile(const Tile & src)
 {
   side_ = src.side_;
   topcolor_ = src.topcolor_;
+}
+
+Tile::~Tile() throw()
+{
 }
 
 void Tile::setColor(Color topcolor)
@@ -60,7 +63,7 @@ void Tile::setType(char c)
       break;
   }
 }
-
+//---------------------for Test cases-----------------------------------------
 std::string Tile::getColorOut()
 {
   switch (topcolor_)
@@ -91,10 +94,90 @@ std::string Tile::getTypeOut()
   }
     return "fail";
 }
-/*
-std::ostream &operator<<(std::ostream &out, const Tile &tile)
+//----------------------------------------------------------------------------
+
+bool Tile::operator==(const Tile &src) const
 {
-  tile.toStream(out);
-  return out;
+  return (side_ == src.side_ && topcolor_ == src.topcolor_);
 }
-*/
+
+bool Tile::operator!=(const Tile &src) const
+{
+  return !(*this == src);
+}
+
+
+Color Tile::notTopColor()
+{
+  if(topcolor_ == COLOR_RED)
+  {
+    return COLOR_WHITE;
+  }
+  if(topcolor_ == COLOR_WHITE)
+  {
+    return COLOR_RED;
+  }
+  else
+  {
+    return COLOR_WHITE; // wrong?
+  }
+}
+
+Color Tile::getColorLeft()
+{
+  switch (side_)
+  {
+    case TYPE_CROSS:
+      return notTopColor();
+      break;
+    case TYPE_CURVE_1:
+      return topcolor_;
+      break;
+    case TYPE_CURVE_2:
+      return notTopColor();
+      break;
+    default:
+      return COLOR_WHITE; // wrong?
+  }
+}
+
+Color Tile::getColorRight()
+{
+  switch (side_)
+  {
+    case TYPE_CROSS:
+      return notTopColor();
+      break;
+    case TYPE_CURVE_1:
+      return notTopColor();
+      break;
+    case TYPE_CURVE_2:
+      return topcolor_;
+      break;
+    default:
+      return COLOR_WHITE; // wrong?
+  }
+}
+
+Color Tile::getColorTop()
+{
+  return getColor();
+}
+
+Color Tile::getColorButtom()
+{
+  switch (side_)
+  {
+    case TYPE_CROSS:  // +
+      return topcolor_;
+      break;
+    case TYPE_CURVE_1:  // "/"
+      return notTopColor();
+      break;
+    case TYPE_CURVE_2:  // "\"
+      return notTopColor();
+      break;
+    default:
+      return COLOR_WHITE; // wrong?
+  }
+}

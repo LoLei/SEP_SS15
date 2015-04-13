@@ -4,17 +4,17 @@
 // Group: Group 9, study assistant Philip Loibl
 //
 // Authors: Markus Pichler 1331070
-// 
+//
 //------------------------------------------------------------------------------
 //
 
 #ifndef POSITION_H
 #define POSITION_H
 
-#include <stdexcept>
 #include <iostream>
-
-enum INDEX { x=0, y=1 ,X=0, Y=1 };
+#include <string>
+#include <exception>
+#include <stdexcept>
 
 //------------------------------------------------------------------------------
 // Position Class
@@ -41,6 +41,10 @@ class Position
     Position();
     Position(signed int x, signed int y);
     Position(const Position &src) : x_(src.x_), y_(src.y_) {}
+
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
     virtual ~Position() throw();
 
     //--------------------------------------------------------------------------
@@ -49,6 +53,10 @@ class Position
     signed int getX();
     signed int getY();
 
+
+    //--------------------------------------------------------------------------
+    // Setter Methods
+    //
     void setX(const signed int x);
     void setY(const signed int y);
 
@@ -63,25 +71,13 @@ class Position
     std::string toString();
 
     //--------------------------------------------------------------------------
-    // von Vector2D mathoden
-    //
+    // operator Methods
+    // von Vector2D
     virtual Position &operator=(const Position&);
-    virtual signed int &operator[](const INDEX) throw(std::range_error);
-
-    virtual Position &operator+=(const Position&);
-    virtual Position &operator-=(const Position&);
-    virtual Position &operator*=(signed int);
-
-    virtual Position operator+(const Position&) const;
-    virtual Position operator-(const Position&) const;
-    virtual Position operator-() const;
-    virtual signed int operator*(const Position&) const; // scalar product
-    virtual Position operator*(signed int) const;
-    friend  Position operator*(signed int, const Position&);
 
     virtual bool operator==(const Position&) const;
     virtual bool operator!=(const Position&) const;
-    
+
     virtual operator bool() const;    // true if non-zero
 
     friend std::istream& operator>>(std::istream&, Position&);

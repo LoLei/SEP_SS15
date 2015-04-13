@@ -4,7 +4,7 @@
 // Group: Group 9, study assistant Philip Loibl
 //
 // Authors: Markus Pichler 1331070
-// 
+//
 //------------------------------------------------------------------------------
 //
 
@@ -13,6 +13,7 @@
 
 #include "Color.h"
 #include <string>
+#include <iostream>
 
 //------------------------------------------------------------------------------
 // Tile Class
@@ -49,19 +50,45 @@ class Tile
     // Constructor
     //
     Tile(Type side, Color topcolor);
+    Tile();
+    Tile(const Tile &);
 
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
+    virtual ~Tile() throw();
+
+    //--------------------------------------------------------------------------
+    // Setter Methods
+    //
     void setColor(Color topcolor);
     void setType(char c);
 
+    //--------------------------------------------------------------------------
+    // Getter Methods
+    //
     Color getColor();
     Type getType();
+    Color getColorLeft();
+    Color getColorRight();
+    Color getColorTop();
+    Color getColorButtom();
 
+    //--------------------------------------------------------------------------
+    // Get Output Methods
+    //
     std::string getColorOut();
     std::string getTypeOut();
 
-    Tile();
-    Tile(const Tile &);
-//    ~Tile();
-    //std::ostream &operator<<(std::ostream&, const Tile&);
+    //--------------------------------------------------------------------------
+    // Operator Methods
+    //
+    virtual bool operator==(const Tile&) const;
+    virtual bool operator!=(const Tile&) const;
+
+    //--------------------------------------------------------------------------
+    // return the color who isnt the topcolor
+    //
+    Color notTopColor();
 };
 #endif // TILE_H
