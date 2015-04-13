@@ -4,7 +4,7 @@
 // Group: Group 9, study assistant Philip Loibl
 //
 // Authors: Markus Pichler 1331070
-// 
+//
 //------------------------------------------------------------------------------
 //
 
@@ -12,6 +12,13 @@
 #define GAME_H
 
 #include "Tile.h"
+//#include "AddTile.h"
+#include <iostream>
+#include <string>
+#include <cctype>
+#include <map>
+#include "Position.h"
+#include <iomanip>
 
 //------------------------------------------------------------------------------
 // Game Class
@@ -54,14 +61,14 @@ class Game
     //--------------------------------------------------------------------------
     // Run Methode
     // ...
-    // @param 
+    // @param
     //
     void run();
 
     //--------------------------------------------------------------------------
     // toggle Player Methode
     // ...
-    // @param 
+    // @param
     //
     void togglePlayer();
 
