@@ -28,7 +28,7 @@ public:
   //~Write();
 
   void createNewFile(std::string user_input, std::map<Position*, Tile*> &karte,
-    int tile_counter);
+    int &tile_counter);
 };
 
 #endif //WRITE_H_INCLUDED

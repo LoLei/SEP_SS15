@@ -26,7 +26,7 @@ Write::Write() : Command("Write")
 
 //------------------------------------------------------------------------------
 void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &karte,
-  int tile_counter)
+  int &tile_counter)
 {
   std::string file_name = user_input.substr(6);
   long pos;
