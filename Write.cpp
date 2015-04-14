@@ -1,6 +1,8 @@
 //------------------------------------------------------------------------------
 // Filename: Write.cpp
 // Description: Used for writing binary file
+//              First only as write command
+//              Later as automatic write if -g flag is set
 // Authors: Lorenz Leitner
 // Tutor: Philipp Loibl
 // Group: 11574
@@ -28,6 +30,7 @@ Write::Write() : Command("Write")
 void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &karte,
   int &tile_counter)
 {
+  // Takes parameter after write as file_name
   std::string file_name = user_input.substr(6);
   long pos;
 
@@ -60,7 +63,7 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
   {
     // Open file for writing
     // file_name is either argv[2] or command after write, i.e. user_input
-    std::ofstream file("file_name",
+    std::ofstream file(file_name,
       std::ios::out | std::ios::trunc | std::ios::binary);
     // Check if file is open, prints error if not, stops writing
     if (!file.is_open())
@@ -143,7 +146,7 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
   }
   catch (WriteException& e1)
   {
-    std::cout << e1.what() << "file_name" << std::endl;
+    std::cout << e1.what() << file_name << std::endl;
   }
   catch (std::exception& e)
   {
