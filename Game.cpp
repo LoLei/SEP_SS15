@@ -73,18 +73,15 @@ void Game::run()
   {
     std::cout << "sep> ";
     std::getline(std::cin, user_input);
-    // get first word in line -> command
-    string str1;
-
 
     // If user enters blank line, prompt again
-    if (str1 == "")
+    if (user_input == "")
     {
-    continue;
+      continue;
     }
 
-
-    str1 = user_input.substr(user_input.find_first_not_of(" "),
+    // get first word in line -> command
+    string str1 = user_input.substr(user_input.find_first_not_of(" "),
                              user_input.size());
     string str2 = str1.substr(0,str1.find_first_of(" "));
     // make lower case
@@ -92,17 +89,18 @@ void Game::run()
     {
       str2[it] = tolower(str2[it]);
     }
+
     // choose case of command
     if(str2 == "quit")
     {
       setRunning(false);
     }
-    if(str2 == "write")
+    else if(str2 == "write")
     {
       //TODO
       std::cout << "write" << std::endl;
     }
-    if(str2 == "addtile")
+    else if(str2 == "addtile")
     {
       try
       {
