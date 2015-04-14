@@ -56,6 +56,7 @@ bool Addtile::valuecommand(string user_input, Tile &tile,
 void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
                          int &tile_counter)
 {
+  cout << tile_counter << endl;
   Position p1;
   Position center(0,0);
   Tile starttile(Tile::TYPE_CROSS, COLOR_WHITE);
