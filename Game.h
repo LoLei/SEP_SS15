@@ -12,12 +12,12 @@
 #define GAME_H
 
 #include "Tile.h"
-//#include "AddTile.h"
+#include "AddTile.h"
+#include "Position.h"
 #include <iostream>
 #include <string>
 #include <cctype>
 #include <map>
-#include "Position.h"
 #include <iomanip>
 
 //------------------------------------------------------------------------------
@@ -41,6 +41,8 @@ class Game
     // Bool is the game is running
     //
     bool running_;
+
+    std::string userInputToCommand(std::string);
 
   public:
 

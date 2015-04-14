@@ -53,6 +53,28 @@ Color Game::getActivePlayer()
   return activeplayer_;
 }
 
+string Game::userInputToCommand(string user_input)
+{
+  try
+  {
+    // get first word in line -> command
+    string first_word = user_input.substr(user_input.find_first_not_of(" "),
+                             user_input.size());
+    string command = first_word.substr(0,first_word.find_first_of(" "));
+    // make lower case
+    for(std::size_t it = 0; it != command.size(); it++)
+    {
+      command[it] = tolower(command[it]);
+    }
+      return command;
+  }
+  catch(...)
+  {
+    cout << "Invalid parameters(command)" << endl;
+    return "";
+  }
+}
+
 //------------------------------------------------------------------------------
 void Game::run()
 {
@@ -60,145 +82,37 @@ void Game::run()
 
   std::map<Position*, Tile*> karte;
 
-  Position p1;
-
-  int count = 1;
-
-  Tile starttile(Tile::TYPE_CROSS, COLOR_WHITE);
-  Position center(0,0);
-
-  string user_input;
+  int tile_counter = 0;
 
   do
   {
     std::cout << "sep> ";
+    string user_input;
     std::getline(std::cin, user_input);
 
-    // If user enters blank line, prompt again
-    if (user_input == "")
-    {
-      continue;
-    }
-
-    // get first word in line -> command
-    string str1 = user_input.substr(user_input.find_first_not_of(" "),
-                             user_input.size());
-    string str2 = str1.substr(0,str1.find_first_of(" "));
-    // make lower case
-    for(std::size_t it = 0; it != str2.size(); it++)
-    {
-      str2[it] = tolower(str2[it]);
-    }
-
+    string command = userInputToCommand(user_input);
     // choose case of command
-    if(str2 == "quit")
+    if(command == "quit")
     {
       setRunning(false);
     }
-    else if(str2 == "write")
+    else if(command == "write")
     {
       //TODO
       std::cout << "write" << std::endl;
     }
-    else if(str2 == "addtile")
+    else if(command == "addtile")
     {
-      try
-      {
-        string str3 = user_input.substr(user_input.find_first_of("("),
-                                        user_input.find_last_of(")") -
-                                        user_input.find_first_of("(") + 1);
-        bool one_type = (user_input.find_last_of("+\\/") ==
-                  user_input.find_first_of("+\\/"));
-        if(p1.parse(str3) && one_type)
-        {
-          char tile_type = user_input.at(user_input.find_last_of("+\\/"));
-          Tile t1(t1.charToType(tile_type),COLOR_WHITE);
-
-          bool ok = true;
-          bool twist = false;
-          bool found_tile = true;
-
-          if(count == 1 && (t1 != starttile || p1 != center))
-          {
-            ok = false;
-            cout << "not w+ or not (0,0)" << endl;
-          }
-          if(count != 1)
-          {
-            found_tile = false;
-            Position *left = new Position(p1.getX() - 1,p1.getY());
-            Position *right = new Position(p1.getX()+1,p1.getY());
-            Position *top = new Position(p1.getX(),p1.getY()-1);
-            Position *buttom = new Position(p1.getX(),p1.getY()+1);
-            for (auto& x: karte)
-            {
-              if(*(x.first) == *left)
-              {
-                found_tile = true;
-                if(x.second->getColorRight() != t1.getColorLeft() && ok)
-                {
-                  if(twist)
-                    ok = false;
-                  t1.setColor(t1.notTopColor());
-                  twist = true;
-                }
-              }
-              if(*(x.first) == *right)
-              {
-                found_tile = true;
-                if(x.second->getColorLeft() != t1.getColorRight() && ok)
-                {
-                  if(twist)
-                    ok = false;
-                  t1.setColor(t1.notTopColor());
-                  twist = true;
-                }
-              }
-              if(*(x.first) == *top)
-              {
-                found_tile = true;
-                if(x.second->getColorButtom() != t1.getColorTop() && ok)
-                {
-                  if(twist)
-                    ok = false;
-                  t1.setColor(t1.notTopColor());
-                  twist = true;
-                }
-              }
-              if(*(x.first) == *buttom)
-              {
-                found_tile = true;
-                if(x.second->getColorTop() != t1.getColorButtom() && ok)
-                {
-                  if(twist)
-                    ok = false;
-                  t1.setColor(t1.notTopColor());
-                  twist = true;
-                }
-              }
-            }
-            delete left;
-            delete right;
-            delete top;
-            delete buttom;
-          }
-          if(ok && found_tile)
-          {
-            karte.emplace(new Position(p1.getX(),p1.getY()),new Tile(t1));
-            count++;
-          }
-        }
-        else
-        {
-          cout << "Invalid parameters" << endl;
-        }
-      }
-      catch(...)
-      {
-        cout << "Error: Wrong parameter count!" << endl;
-      }
+      Addtile newTile;
+      newTile.addNewTile(user_input,karte,tile_counter);
+    }
+    else
+    {
+      continue;
     }
   } while( running_ );
+
+
   //----------------------------------------------------------
   // alle einträge ausgeben
   for (auto& x: karte)
