@@ -90,6 +90,12 @@ void Game::run()
     string user_input;
     std::getline(std::cin, user_input);
 
+    // If user enters blank line, prompt again
+    if (user_input == "")
+    {
+      continue;
+    }
+
     string command = userInputToCommand(user_input);
     // choose case of command
     if(command == "quit")
@@ -99,7 +105,9 @@ void Game::run()
     else if(command == "write")
     {
       //TODO
-      std::cout << "write" << std::endl;
+      /*Write newFile;
+      newFile.createNewFile(karte);
+      std::cout << "write" << std::endl;*/
     }
     else if(command == "addtile")
     {
