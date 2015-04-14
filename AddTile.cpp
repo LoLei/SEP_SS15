@@ -71,8 +71,9 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
     {
       char tile_type = user_input.at(user_input.find_last_of("+\\/"));
 
-      Tile t1(Tile::TYPE_CROSS, COLOR_WHITE);
-      t1.charToType(tile_type),COLOR_WHITE;
+      // Won't compile otherwise
+      Tile t(Tile::TYPE_CROSS, COLOR_WHITE);
+      Tile t1(t.charToType(tile_type), COLOR_WHITE);
 
       bool ok = true;
       bool twist = false;
