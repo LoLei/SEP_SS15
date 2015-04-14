@@ -106,8 +106,8 @@ void Game::run()
     {
       //TODO
       /*Write newFile;
-      newFile.createNewFile(karte);
-      std::cout << "write" << std::endl;*/
+      newFile.createNewFile(user_input,karte,tile_counter);*/
+      std::cout << "write" << std::endl;
     }
     else if(command == "addtile")
     {
