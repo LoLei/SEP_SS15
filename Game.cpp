@@ -125,9 +125,9 @@ void Game::run()
     else if(command == "addtile")
     {
       Addtile newTile;
-      Position last_pos;
+      //Position last_pos;
       newTile.addNewTile(user_input,karte,tile_counter);
-      while(newTile.completeMap(karte,tile_counter)) {}
+      //while(newTile.completeMap(karte,tile_counter)) {}
     }
     else
     {
