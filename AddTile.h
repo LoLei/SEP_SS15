@@ -33,6 +33,8 @@ class Addtile:public Command
 
     void addNewTile(std::string user_input, std::map<Position*, Tile*> &karte,
                          int &tile_counter);
+
+    bool completeMap(std::map<Position*, Tile*> &karte, int &tile_counter);
 };
 
 #endif //ADDTILE_H_INCLUDED
