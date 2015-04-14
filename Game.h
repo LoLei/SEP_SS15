@@ -14,6 +14,7 @@
 #include "Tile.h"
 #include "AddTile.h"
 #include "Position.h"
+#include "Write.h"
 #include <iostream>
 #include <string>
 #include <cctype>

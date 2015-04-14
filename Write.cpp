@@ -26,41 +26,79 @@ Write::Write() : Command("Write")
 {
 }
 
+
+int Write::execute(Game& board, std::vector<std::string>& params)
+{
+  return 0;
+}
+
+
 //------------------------------------------------------------------------------
 void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &karte,
   int &tile_counter)
 {
-  // Takes parameter after write as file_name
-  std::string file_name = user_input.substr(6);
-  long pos;
-
-  typedef struct
-  {
-    char *signature;    // char[4] // TRAX
-    char active_player; // char // white (1) or red (2)
-    signed char minX;   // s8
-    signed char minY;   // s8
-    signed char maxX;   // s8
-    signed char maxY;   // s8
-  } FileHeader;         
-
-  typedef struct
-  {
-    char side;      // no figure (0), cross (1), Kurve1 "/" (2), Kurve2 "\" (3)
-    char top_color; // no figure (0), white end (1), red end (2) // offset 1
-  } BoardTiles;
-
-  // Write values into header
-  FileHeader file_header;
-  file_header.signature = "TRAX";
-  file_header.active_player = AP_WHITE;
-  file_header.minX = 0;
-  file_header.minY = 0;
-  file_header.maxX = 1;
-  file_header.maxY = 1;
-
+  std::string file_name;
   try
   {
+    // Takes parameter after write as file_name
+    file_name = user_input.substr(6);
+    long pos;
+
+    typedef struct
+    {
+      char *signature;    // char[4] // TRAX
+      char active_player; // char // white (1) or red (2)
+      signed char minX;   // s8
+      signed char minY;   // s8
+      signed char maxX;   // s8
+      signed char maxY;   // s8
+    } FileHeader;         
+
+    typedef struct
+    {
+      char side;      // no figure (0), cross (1), Kurve1 "/" (2), Kurve2 "\" (3)
+      char top_color; // no figure (0), white end (1), red end (2) // offset 1
+    } BoardTiles;
+
+    FileHeader file_header;
+    // Find max and min coordinates
+    for (auto& x : karte)
+    {
+      file_header.minX = x.first->getX();
+      file_header.minY = x.first->getY();
+      break;
+    }
+    std::map<Position*, Tile*>::reverse_iterator rit;
+    for (rit = karte.rbegin(); rit != karte.rend(); ++rit)
+    {
+      file_header.maxX = rit->first->getX();
+      file_header.maxY = rit->first->getY();
+      break;
+    }
+    // Other way
+    /*file_header.minX = karte.begin()->first->getX();
+    file_header.minY = karte.begin()->first->getY();
+    
+    file_header.maxX = karte.end()->first->getX();
+    file_header.maxY = karte.end()->first->getY();*/
+
+
+    /*if (karte.at(1) > karte.at(2)
+    {
+      maxX = karte.at(1);
+      maxY = karte.at(1);
+    }*/
+
+    // Write values into header
+    //FileHeader file_header;
+    file_header.signature = "TRAX";
+    file_header.active_player = AP_WHITE;
+    /*file_header.minX = 0;
+    file_header.minY = 0;
+    file_header.maxX = 1;
+    file_header.maxY = 1;*/
+
+  
     // Open file for writing
     // file_name is either argv[2] or command after write, i.e. user_input
     std::ofstream file(file_name,
@@ -83,6 +121,9 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
     // from left to right
     // Write tiles into file
     BoardTiles board_tiles;
+
+    // TODO Write
+
     //--------------------------------------------------------------------------//
     // Active player = White, set already
     board_tiles.side = SIDE_CROSS;
@@ -148,8 +189,8 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
   {
     std::cout << e1.what() << file_name << std::endl;
   }
-  catch (std::exception& e)
+  catch (...)
   {
-    std::cout << e.what() << std::endl;
+    std::cout << "Error: Wrong parameter count!" << std::endl;
   }
 }
