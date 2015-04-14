@@ -53,6 +53,7 @@ Color Game::getActivePlayer()
   return activeplayer_;
 }
 
+//------------------------------------------------------------------------------
 string Game::userInputToCommand(string user_input)
 {
   try
@@ -72,6 +73,26 @@ string Game::userInputToCommand(string user_input)
   {
     cout << "Invalid parameters(command)" << endl;
     return "";
+  }
+}
+
+//------------------------------------------------------------------------------
+void Game::printTiles(std::map<Position*, Tile*> karte)
+{
+  for (auto& x: karte)
+  {
+    cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
+         << x.second->getTypeOut() << endl;
+  }
+}
+
+//------------------------------------------------------------------------------
+void Game::freeTiles(std::map<Position*, Tile*> karte)
+{
+  for (auto& x: karte)
+  {
+    delete x.first;
+    delete x.second;
   }
 }
 
@@ -112,14 +133,6 @@ void Game::run()
     }
   } while( running_ );
 
-
-  //----------------------------------------------------------
-  // alle einträge ausgeben
-  for (auto& x: karte)
-  {
-    cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
-         << x.second->getTypeOut() << endl;
-    delete x.first;
-    delete x.second;
-  }
+  printTiles(karte);
+  freeTiles(karte);
 }

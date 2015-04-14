@@ -56,10 +56,8 @@ bool Addtile::valuecommand(string user_input, Tile &tile,
 void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
                          int &tile_counter)
 {
-  cout << tile_counter << endl;
   Position p1;
   Position center(0,0);
-  Tile starttile(Tile::TYPE_CROSS, COLOR_WHITE);
   try
   {
     string str3 = user_input.substr(user_input.find_first_of("("),
@@ -70,13 +68,13 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
     if(p1.parse(str3) && one_type)
     {
       char tile_type = user_input.at(user_input.find_last_of("+\\/"));
-      Tile t1(t1.charToType(tile_type),COLOR_WHITE);
+      Tile t1(t1.charToType(tile_type),COLOR_RED);
 
       bool ok = true;
       bool twist = false;
       bool found_tile = true;
 
-      if((tile_counter == 0) && (t1 != starttile || p1 != center))
+      if((tile_counter == 0) && (t1.getColor() != COLOR_RED || p1 != center))
       {
         ok = false;
         cout << "Invalid coordinates - first tile must be set on (0,0)";
@@ -141,15 +139,27 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
         delete top;
         delete buttom;
       }
+      for (auto& x: karte)
+      {
+        if(*x.first == p1)
+        {
+          ok = false;
+          cout << "Invalid coordinates - field not empty" << endl;
+        }
+      }
+      if(ok &&(found_tile == false))
+      {
+        cout << "Invalid coordinates - field not connected to tile" << endl;
+      }
       if(ok && found_tile)
       {
-        karte.emplace(new Position(p1.getX(),p1.getY()),new Tile(t1));
+        karte.emplace(new Position(p1),new Tile(t1));
         tile_counter++;
       }
     }
     else
     {
-      cout << "Invalid parameters(addtile)" << endl;
+      cout << "Invalid parameters" << endl;
     }
   }
   catch(...)

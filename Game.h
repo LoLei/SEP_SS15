@@ -90,5 +90,8 @@ class Game
     // Destructor
     //
     //~Game();
+
+    void printTiles(std::map<Position*, Tile*> karte);
+    void freeTiles(std::map<Position*, Tile*> karte);
 };
 #endif // GAME_H
