@@ -138,6 +138,7 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
   }
 }
 
+//------------------------------------------------------------------------------
 bool Addtile::abfrage(bool abfrage1, bool &twisted, bool &lonely_tile, Tile &t1)
   {
     lonely_tile = false;
