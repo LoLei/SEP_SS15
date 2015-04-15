@@ -13,13 +13,13 @@ Repository for SEP SS15 Basisbeispiel
 * ~~Fix return type in exception files~~
 * ~~Add exception class for write~~
 * ~~Implement board through AddTile (std::array)~~
-* Make structs into classes
+* ~~Make structs into classes~~
+* * ~~Make write command~~ (Provided map is sorted and with empty tiles)
 * Fix invalid parameters and wrong parameter count error messages
 * Add exception class for other exceptions too (must be public)
 * Figure out best way how to include exception classes in other files
 * Implement try and catch in regular files using exception files
 * Make AddTile check if valid move
-* Make write command
 * Combine write function with AddTile function for -g flag
 * Forced tiles
 * Win conditions
