@@ -31,6 +31,8 @@ public:
 
   void createNewFile(std::string user_input, std::map<Position*, Tile*> &karte,
     int &tile_counter);
+
+  /*void togglePlayerWrite(FileHeader file_header);*/
 };
 
 #endif //WRITE_H_INCLUDED

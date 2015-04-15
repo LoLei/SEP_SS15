@@ -26,12 +26,10 @@ Write::Write() : Command("Write")
 {
 }
 
-
 int Write::execute(Game& board, std::vector<std::string>& params)
 {
   return 0;
 }
-
 
 //------------------------------------------------------------------------------
 void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &karte,
@@ -44,21 +42,23 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
     file_name = user_input.substr(6);
     long pos;
 
-    typedef struct
+    class FileHeader
     {
+    public:
       char *signature;    // char[4] // TRAX
       char active_player; // char // white (1) or red (2)
       signed char minX;   // s8
       signed char minY;   // s8
       signed char maxX;   // s8
       signed char maxY;   // s8
-    } FileHeader;         
+    };
 
-    typedef struct
+    class BoardTiles
     {
+    public:
       char side;      // no figure (0), cross (1), Kurve1 "/" (2), Kurve2 "\" (3)
       char top_color; // no figure (0), white end (1), red end (2) // offset 1
-    } BoardTiles;
+    };
 
     FileHeader file_header;
     // Find max and min coordinates
@@ -82,22 +82,9 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
     file_header.maxX = karte.end()->first->getX();
     file_header.maxY = karte.end()->first->getY();*/
 
-
-    /*if (karte.at(1) > karte.at(2)
-    {
-      maxX = karte.at(1);
-      maxY = karte.at(1);
-    }*/
-
     // Write values into header
-    //FileHeader file_header;
     file_header.signature = "TRAX";
-    file_header.active_player = AP_WHITE;
-    /*file_header.minX = 0;
-    file_header.minY = 0;
-    file_header.maxX = 1;
-    file_header.maxY = 1;*/
-
+    file_header.active_player = AP_RED;
   
     // Open file for writing
     // file_name is either argv[2] or command after write, i.e. user_input
@@ -117,6 +104,7 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
     file << file_header.maxX;
     file << file_header.maxY;
 
+    //--------------------------------------------------------------------------//
     // Write each line of the board from (minX,minY) to (maxX,maxY)
     // from left to right
     // Write tiles into file
@@ -124,65 +112,34 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
 
     // TODO Write
 
-    //--------------------------------------------------------------------------//
-    // Active player = White, set already
-    board_tiles.side = SIDE_CROSS;
-    board_tiles.top_color = TOP_RED;
+    for (auto& x : karte)
+    {
+      // Write type and color
+      // Ideally 0 for both if position has no tile
+      board_tiles.side = x.second->getType();
+      board_tiles.top_color = x.second->getColor();
 
-    file << board_tiles.side;
-    file << board_tiles.top_color;
-    // Save position
-    pos = file.tellp();
-    //--------------------------------------------------------------------------//
-    // Active player = Red
-    file_header.active_player = AP_RED;
-    // Sets position to offset 4 for active player in binary file
-    file.seekp(AP_OFFSET);
-    file << file_header.active_player;
-    // Sets position to where it left off
-    file.seekp(pos);
+      file << board_tiles.side;
+      file << board_tiles.top_color;
 
-    board_tiles.side = SIDE_CROSS;
-    board_tiles.top_color = TOP_RED;
-
-    file << board_tiles.side;
-    file << board_tiles.top_color;
-    // Save position
-    pos = file.tellp();
-    //--------------------------------------------------------------------------//
-    // Active player = White
-    file_header.active_player = AP_WHITE;
-    // Sets position to offset 4 for active player in binary file
-    file.seekp(AP_OFFSET);
-    file << file_header.active_player;
-    // Sets position to where it left off
-    file.seekp(pos);
-
-    board_tiles.side = SIDE_CROSS;
-    board_tiles.top_color = TOP_RED;
-
-    file << board_tiles.side;
-    file << board_tiles.top_color;
-    // Save position
-    pos = file.tellp();
-    //--------------------------------------------------------------------------//
-    // Active player = Red
-    file_header.active_player = AP_RED;
-    // Sets position to offset 4 for active player in binary file
-    file.seekp(AP_OFFSET);
-    file << file_header.active_player;
-    // Sets position to where it left off
-    file.seekp(pos);
-
-    board_tiles.side = SIDE_CURVE_2;
-    board_tiles.top_color = TOP_RED;
-
-    file << board_tiles.side;
-    file << board_tiles.top_color;
-    // Save position
-    pos = file.tellp();
-    //--------------------------------------------------------------------------//
-    // Close file
+      // Save position
+      pos = file.tellp();
+      // Toggle active player
+      switch (file_header.active_player)
+      {
+      case AP_WHITE:
+        file_header.active_player = AP_RED;
+        break;
+      case AP_RED:
+        file_header.active_player = AP_WHITE;
+        break;
+      }
+      // Go to active player offset and write
+      file.seekp(AP_OFFSET);
+      file << file_header.active_player;
+      // Go back to where we left off
+      file.seekp(pos);
+    }
     file.close();
   }
   catch (WriteException& e1)
@@ -194,3 +151,9 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
     std::cout << "Error: Wrong parameter count!" << std::endl;
   }
 }
+
+//------------------------------------------------------------------------------
+//void Write::togglePlayerWrite(FileHeader file_header)
+//{
+//  switch (file_header.active_player)
+//}
