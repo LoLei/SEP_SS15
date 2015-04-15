@@ -115,7 +115,7 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
   cout << "    |";
   while(spalten1--)
   {
-    cout << std::setfill ('_') << std::setw (7) << "||";
+    cout << std::setfill ('=') << std::setw (7) << "||";
   }
   cout << endl;
   for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
@@ -139,7 +139,7 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
     cout << "    |";
     while(spalten--)
     {
-      cout << std::setfill ('_') << std::setw (7) << "||";
+      cout << std::setfill ('=') << std::setw (7) << "||";
     }
     cout << endl;
   }
