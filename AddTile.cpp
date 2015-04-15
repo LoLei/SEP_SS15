@@ -77,9 +77,8 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
     {
       char tile_type = user_input.at(user_input.find_last_of("+\\/"));
       // Won't compile otherwise
-      Tile t(Tile::TYPE_CROSS, COLOR_WHITE);
-      Tile t1(t.charToType(tile_type), COLOR_WHITE);
-
+      Tile t1(Tile::EMPTY_T, COLOR_RED);
+      t1.setType(tile_type);
       bool ok = true;
       bool twisted = false;
       int found_tile = 1;
@@ -101,11 +100,6 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
         min_y_ = p1.getY();
       }
 
-      cout << "X max: " << max_x_ << " Y max: " << max_y_ << endl;
-
-      cout << "X min: " << min_x_ << " Y min: " << min_y_ << endl;
-
-
       if((tile_counter == 0) && (t1.getColor() != COLOR_RED || p1 != center))
       {
         ok = false;
@@ -121,93 +115,96 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
         Position *buttom = new Position(p1.getX(),p1.getY()+1);
         for (auto& x: karte)
         {
-          if(*(x.first) == *left)
+          if(*x.second != empty_tile)
           {
-            found_tile++;
-            if(x.second->getColorRight() != t1.getColorLeft())
+            if(*(x.first) == *left)
             {
-              if(ok)
+              found_tile++;
+              if(x.second->getColorRight() != t1.getColorLeft())
               {
-                if(twisted)
+                if(ok)
                 {
-                  ok = false;
-                  break;
+                  if(twisted)
+                  {
+                    ok = false;
+                    break;
+                  }
+                  t1.setColor(t1.notTopColor());
+                  twisted = true;
                 }
-                t1.setColor(t1.notTopColor());
+              }
+              else
+              {
+                twisted = true;
+              }
+            }
+            else if(*(x.first) == *right)
+            {
+              found_tile++;
+              if(x.second->getColorLeft() != t1.getColorRight())
+              {
+                if(ok)
+                {
+                  if(twisted)
+                  {
+                    ok = false;
+                    break;
+                  }
+                  t1.setColor(t1.notTopColor());
+                  twisted = true;
+                }
+              }
+              else
+              {
+                twisted = true;
+              }
+            }
+            else if(*(x.first) == *top)
+            {
+              found_tile++;
+              if(x.second->getColorButtom() != t1.getColorTop())
+              {
+                if(ok)
+                {
+                  if(twisted)
+                  {
+                    ok = false;
+                    break;
+                  }
+                  t1.setColor(t1.notTopColor());
+                  twisted = true;
+                }
+              }
+              else
+              {
+                twisted = true;
+              }
+            }
+            else if(*(x.first) == *buttom)
+            {
+              found_tile++;
+              if(x.second->getColorTop() != t1.getColorButtom())
+              {
+                if(ok)
+                {
+                  if(twisted)
+                  {
+                    ok = false;
+                    break;
+                  }
+                  t1.setColor(t1.notTopColor());
+                  twisted = true;
+                }
+              }
+              else
+              {
                 twisted = true;
               }
             }
             else
             {
-              twisted = true;
+              continue;
             }
-          }
-          else if(*(x.first) == *right)
-          {
-            found_tile++;
-            if(x.second->getColorLeft() != t1.getColorRight())
-            {
-              if(ok)
-              {
-                if(twisted)
-                {
-                  ok = false;
-                  break;
-                }
-                t1.setColor(t1.notTopColor());
-                twisted = true;
-              }
-            }
-            else
-            {
-              twisted = true;
-            }
-          }
-          else if(*(x.first) == *top)
-          {
-            found_tile++;
-            if(x.second->getColorButtom() != t1.getColorTop())
-            {
-              if(ok)
-              {
-                if(twisted)
-                {
-                  ok = false;
-                  break;
-                }
-                t1.setColor(t1.notTopColor());
-                twisted = true;
-              }
-            }
-            else
-            {
-              twisted = true;
-            }
-          }
-          else if(*(x.first) == *buttom)
-          {
-            found_tile++;
-            if(x.second->getColorTop() != t1.getColorButtom())
-            {
-              if(ok)
-              {
-                if(twisted)
-                {
-                  ok = false;
-                  break;
-                }
-                t1.setColor(t1.notTopColor());
-                twisted = true;
-              }
-            }
-            else
-            {
-              twisted = true;
-            }
-          }
-          else
-          {
-            continue;
           }
         }
         delete left;
@@ -239,6 +236,11 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
         karte.emplace(new Position(p1),new Tile(t1));
         tile_counter++;
       }
+
+      if(tile_counter > 2)
+      {
+        fillEmptyTiles(karte);
+      }
     }
     else
     {
@@ -252,53 +254,98 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::completeMap(std::map<Position*, Tile*> &karte, int &tile_counter)
+bool Addtile::completeMap(std::map<Position*, Tile*> &karte, int &tile_counter string &forAddtile)
 {
   std::map<Position*, int> grenzTiles;
+  Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   for (auto& y: karte)
   {
-    int found_tile = 0;
-    Position p1 = *(y.first);
-    Position *left = new Position(p1.getX() - 1,p1.getY());
-    Position *right = new Position(p1.getX()+1,p1.getY());
-    Position *top = new Position(p1.getX(),p1.getY()-1);
-    Position *buttom = new Position(p1.getX(),p1.getY()+1);
-    for (auto& x: karte)
+    if(*y.second == empty_tile)
     {
-      if(*(x.first) == *left)
+      int found_tile = 0;
+      Position p1 = *(y.first);
+      Position *left = new Position(p1.getX() - 1,p1.getY());
+      Position *right = new Position(p1.getX()+1,p1.getY());
+      Position *top = new Position(p1.getX(),p1.getY()-1);
+      Position *buttom = new Position(p1.getX(),p1.getY()+1);
+      for (auto& x: karte)
       {
-        found_tile++;
+        if(*(x.first) == *left)
+        {
+          found_tile++;
+        }
+        else if(*(x.first) == *right)
+        {
+          found_tile++;
+        }
+        else if(*(x.first) == *top)
+        {
+          found_tile++;
+        }
+        else if(*(x.first) == *buttom)
+        {
+          found_tile++;
+        }
+        else
+        {
+          continue;
+        }
       }
-      else if(*(x.first) == *right)
-      {
-        found_tile++;
-      }
-      else if(*(x.first) == *top)
-      {
-        found_tile++;
-      }
-      else if(*(x.first) == *buttom)
-      {
-        found_tile++;
-      }
-      else
-      {
-        continue;
-      }
+      delete left;
+      delete right;
+      delete top;
+      delete buttom;
+      grenzTiles.emplace(new Position(p1),found_tile);
     }
-    delete left;
-    delete right;
-    delete top;
-    delete buttom;
-    grenzTiles.emplace(new Position(p1),found_tile);
   }
+  // für testzwecke
+
+  /*for (auto& x: grenzTiles)
+  {
+    //cout 
+    cout << karte.find(x.first)->second->getColorOut() <<" "
+         << karte.find(x.first)->second->getTypeOut() << endl;
+  }*/
 
   for (auto& x: grenzTiles)
   {
-    cout << x.first->toString() << ": " << x.second << endl;
+    if(x.second > 2 && (*karte.find(x.first)->second != empty_tile))
+    {
+      cout << endl << "___ für testzwecke ___" << endl;
+      cout << x.first->toString() << ": " << x.second << endl;
+      cout << "ergänze tile in Position " << x.first->toString() << endl;
+      cout << "___" << endl << endl;
+      forAddtile = "addtile " + x.first->toString() + " " + karte.find(x.first)->second->getTypeOut();
+      return true;
+    }
   }
 
-
-
   return false;
+}
+
+//------------------------------------------------------------------------------
+void Addtile::fillEmptyTiles(std::map<Position*, Tile*> &karte)
+{
+  Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
+  bool wenn;
+  for(signed int x = min_x_; x < max_x_; x++)
+  {
+    for(signed int y = min_y_; y <= max_y_; y++)
+    {
+      wenn = true;
+      Position pos1(x,y);
+      for (auto& x: karte)
+      {
+        if(*x.first == pos1)
+        {
+          wenn = false;
+          break;
+        }
+      }
+      if(wenn)
+      {
+        karte.emplace(new Position(pos1),new Tile(empty_tile));
+      }
+    }
+  }
 }

@@ -44,6 +44,8 @@ void Game::togglePlayer()
     case COLOR_RED:
       activeplayer_ = COLOR_WHITE;
       break;
+    default:
+      break;
   }
 }
 
@@ -79,11 +81,13 @@ string Game::userInputToCommand(string user_input)
 //------------------------------------------------------------------------------
 void Game::printTiles(std::map<Position*, Tile*> karte)
 {
+  cout << endl << "___ für testzwecke ___" << endl;
   for (auto& x: karte)
   {
     cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
          << x.second->getTypeOut() << endl;
   }
+  cout << "___" << endl;
 }
 
 //------------------------------------------------------------------------------
@@ -133,9 +137,12 @@ void Game::run()
     else if(command == "addtile")
     {
       Addtile newTile;
-      //Position last_pos;
       newTile.addNewTile(user_input,karte,tile_counter);
-      //while(newTile.completeMap(karte,tile_counter)) {}
+      string forAddtile;
+      while(newTile.completeMap(karte, tile_counter, forAddtile)) 
+      {
+        //newTile.addNewTile(forAddtile,karte,tile_counter);
+      }
     }
     else
     {
