@@ -141,7 +141,7 @@ void Game::run()
       string forAddtile;
       while(newTile.completeMap(karte, tile_counter, forAddtile)) 
       {
-        //newTile.addNewTile(forAddtile,karte,tile_counter);
+        newTile.addNewTile(forAddtile,karte,tile_counter);
       }
     }
     else

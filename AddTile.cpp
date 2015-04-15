@@ -65,7 +65,7 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
 
   Position p1;
   Position center(0,0);
-  Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
+  Tile *empty_tile = new Tile(Tile::EMPTY_T,EMPTY_C);
   try
   {
     string str3 = user_input.substr(user_input.find_first_of("("),
@@ -115,7 +115,7 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
         Position *buttom = new Position(p1.getX(),p1.getY()+1);
         for (auto& x: karte)
         {
-          if(*x.second != empty_tile)
+          if(*x.second != *empty_tile)
           {
             if(*(x.first) == *left)
             {
@@ -216,7 +216,7 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
       {
         for (auto& x: karte)
         {
-          if(*x.first == p1 && *x.second != empty_tile)
+          if(*x.first == p1 && *x.second != *empty_tile)
           {
             ok = false;
             cout << "Invalid coordinates - field not empty" << endl;
@@ -233,7 +233,19 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
       }
       if(ok && found_tile)
       {
-        karte.emplace(new Position(p1),new Tile(t1));
+        bool ersetzen = true;
+        for(auto& y: karte)
+        {
+          if(*y.first == p1 && *y.second == *empty_tile)
+          {
+            karte[y.first] = new Tile(t1);
+            ersetzen = false;
+          }
+        }
+        if(ersetzen)
+        {
+          karte.emplace(new Position(p1),new Tile(t1));
+        }
         tile_counter++;
       }
 
@@ -254,13 +266,12 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::completeMap(std::map<Position*, Tile*> &karte, int &tile_counter string &forAddtile)
+bool Addtile::completeMap(std::map<Position*, Tile*> &karte, int &tile_counter, string &forAddtile)
 {
-  std::map<Position*, int> grenzTiles;
-  Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
+  Tile *empty_tile = new Tile(Tile::EMPTY_T,EMPTY_C);
   for (auto& y: karte)
   {
-    if(*y.second == empty_tile)
+    if(*y.second == *empty_tile)
     {
       int found_tile = 0;
       Position p1 = *(y.first);
@@ -270,56 +281,44 @@ bool Addtile::completeMap(std::map<Position*, Tile*> &karte, int &tile_counter s
       Position *buttom = new Position(p1.getX(),p1.getY()+1);
       for (auto& x: karte)
       {
-        if(*(x.first) == *left)
+        if(*x.second != *empty_tile)
         {
-          found_tile++;
-        }
-        else if(*(x.first) == *right)
-        {
-          found_tile++;
-        }
-        else if(*(x.first) == *top)
-        {
-          found_tile++;
-        }
-        else if(*(x.first) == *buttom)
-        {
-          found_tile++;
-        }
-        else
-        {
-          continue;
+          if(*(x.first) == *left)
+          {
+            found_tile++;
+          }
+          else if(*(x.first) == *right)
+          {
+            found_tile++;
+          }
+          else if(*(x.first) == *top)
+          {
+            found_tile++;
+          }
+          else if(*(x.first) == *buttom)
+          {
+            found_tile++;
+          }
+          else
+          {
+            continue;
+          }
         }
       }
       delete left;
       delete right;
       delete top;
       delete buttom;
-      grenzTiles.emplace(new Position(p1),found_tile);
+      if(found_tile > 2)
+      {
+        cout << endl << "___ für testzwecke ___" << endl;
+        cout << "ergänze tile in Position " << y.first->toString() << endl;
+        cout << "___" << endl << endl;
+        forAddtile = "addtile " + y.first->toString() + " " + "+";
+        return true;
+      }
     }
   }
-  // für testzwecke
-
-  /*for (auto& x: grenzTiles)
-  {
-    //cout 
-    cout << karte.find(x.first)->second->getColorOut() <<" "
-         << karte.find(x.first)->second->getTypeOut() << endl;
-  }*/
-
-  for (auto& x: grenzTiles)
-  {
-    if(x.second > 2 && (*karte.find(x.first)->second != empty_tile))
-    {
-      cout << endl << "___ für testzwecke ___" << endl;
-      cout << x.first->toString() << ": " << x.second << endl;
-      cout << "ergänze tile in Position " << x.first->toString() << endl;
-      cout << "___" << endl << endl;
-      forAddtile = "addtile " + x.first->toString() + " " + karte.find(x.first)->second->getTypeOut();
-      return true;
-    }
-  }
-
   return false;
 }
 
@@ -328,7 +327,7 @@ void Addtile::fillEmptyTiles(std::map<Position*, Tile*> &karte)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   bool wenn;
-  for(signed int x = min_x_; x < max_x_; x++)
+  for(signed int x = min_x_; x <= max_x_; x++)
   {
     for(signed int y = min_y_; y <= max_y_; y++)
     {
