@@ -88,7 +88,7 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
          << x.second->getTypeOut() << endl;
   }
   cout << "___" << endl;*/
-
+/*
   for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
   {
     for(signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
@@ -105,6 +105,46 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
       }
     }
   }
+  */
+  // ----
+  cout << "    |";
+  for (signed int i = Addtile::min_x_; i <= Addtile::max_x_; i++)
+    cout << std::setfill (' ') << std::setw (3) << i << std::setw (4) << "||";
+  cout << endl;
+  int spalten1 = Addtile::max_x_ - Addtile::min_x_ + 1;
+  cout << "    |";
+  while(spalten1--)
+  {
+    cout << std::setfill ('_') << std::setw (7) << "||";
+  }
+  cout << endl;
+  for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
+  {
+    cout << std::setfill (' ') << std::setw (2) << y << ": |";
+    int spalten = Addtile::max_x_ - Addtile::min_x_ + 1;
+    for(signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
+    {
+      Position pos1(x,y);
+      for (auto& x: karte)
+      {
+        if(*x.first == pos1)
+        {
+          //cout << " " << x.first->toString();
+          cout << " " << x.second->getColorOut() << " " << x.second->getTypeOut() << " ||";
+          break;
+        }
+      }
+    }
+    cout << endl;
+    cout << "    |";
+    while(spalten--)
+    {
+      cout << std::setfill ('_') << std::setw (7) << "||";
+    }
+    cout << endl;
+  }
+  //---
+
 }
 
 //------------------------------------------------------------------------------

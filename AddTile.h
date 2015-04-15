@@ -33,8 +33,7 @@ class Addtile:public Command
 
     int execute(Game& board, std::vector<std::string>& params);
 
-//    bool valuecommand(std::string input, Tile &tile, Position &position, const Color color);
-
+    void setMaximas(Position reference);
     void addNewTile(std::string user_input, std::map<Position*, Tile*> &karte,
                          int &tile_counter);
 

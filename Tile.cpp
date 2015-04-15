@@ -137,13 +137,13 @@ std::string Tile::getColorOut()
   switch (topcolor_)
   {
     case COLOR_WHITE:
-      return "White";
+      return "W";
       break;
     case COLOR_RED:
-      return "red";
+      return "R";
       break;
     case EMPTY_C:
-      return "empty";
+      return "0";
       break;
   }
   return "fail";
@@ -163,7 +163,7 @@ std::string Tile::getTypeOut()
       return "\\";
       break;
     case EMPTY_T:
-      return "empty";
+      return "0";
       break;
   }
     return "fail";
