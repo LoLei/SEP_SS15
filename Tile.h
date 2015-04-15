@@ -52,6 +52,7 @@ class Tile
     //
     Tile(Type side, Color orientation);
     Tile(const Tile &);
+    Tile(Color Li, Color Re, Color Ob, Color Un);
 
     //--------------------------------------------------------------------------
     // Destructor

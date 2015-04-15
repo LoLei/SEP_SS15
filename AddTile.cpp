@@ -274,6 +274,11 @@ bool Addtile::completeMap(std::map<Position*, Tile*> &karte, int &tile_counter, 
     if(*y.second == *empty_tile)
     {
       int found_tile = 0;
+      Color Li = EMPTY_C;
+      Color Re = EMPTY_C;
+      Color Ob = EMPTY_C;
+      Color Un = EMPTY_C;
+      
       Position p1 = *(y.first);
       Position *left = new Position(p1.getX() - 1,p1.getY());
       Position *right = new Position(p1.getX()+1,p1.getY());
@@ -286,18 +291,22 @@ bool Addtile::completeMap(std::map<Position*, Tile*> &karte, int &tile_counter, 
           if(*(x.first) == *left)
           {
             found_tile++;
+            Li = x.second->getColorRight();
           }
           else if(*(x.first) == *right)
           {
             found_tile++;
+            Re = x.second->getColorLeft();
           }
           else if(*(x.first) == *top)
           {
             found_tile++;
+            Ob = x.second->getColorButtom();
           }
           else if(*(x.first) == *buttom)
           {
             found_tile++;
+            Un = x.second->getColorTop();
           }
           else
           {
@@ -314,7 +323,8 @@ bool Addtile::completeMap(std::map<Position*, Tile*> &karte, int &tile_counter, 
         cout << endl << "___ für testzwecke ___" << endl;
         cout << "ergänze tile in Position " << y.first->toString() << endl;
         cout << "___" << endl << endl;
-        forAddtile = "addtile " + y.first->toString() + " " + "+";
+        Tile neu(Li, Re, Ob, Un);
+        forAddtile = "addtile " + y.first->toString() + " " + neu.getTypeOut();
         return true;
       }
     }
