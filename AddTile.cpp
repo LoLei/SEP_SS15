@@ -320,9 +320,10 @@ bool Addtile::completeMap(std::map<Position*, Tile*> &karte, int &tile_counter, 
       delete buttom;
       if(found_tile > 2)
       {
-        cout << endl << "___ für testzwecke ___" << endl;
-        cout << "ergänze tile in Position " << y.first->toString() << endl;
-        cout << "___" << endl << endl;
+        // für tests
+        //cout << endl << "___ für testzwecke ___" << endl;
+        //cout << "ergänze tile in Position " << y.first->toString() << endl;
+        //cout << "___" << endl << endl;
         Tile neu(Li, Re, Ob, Un);
         forAddtile = "addtile " + y.first->toString() + " " + neu.getTypeOut();
         return true;
