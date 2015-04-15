@@ -20,7 +20,7 @@ Repository for SEP SS15 Basisbeispiel
 * Figure out best way how to include exception classes in other files
 * Implement try and catch in regular files using exception files
 * Make AddTile check if valid move
-* Combine write function with AddTile function for -g flag
+* Make -g flag working (Automatic write command call?)
 * Forced tiles
 * Win conditions
 * Draw/Tie
