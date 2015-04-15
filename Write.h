@@ -18,7 +18,9 @@
 #include "Position.h"
 #include "Tile.h"
 #include "Command.h"
+#include "Game.h"
 #include "WriteException.h"
+#include "Karte.h"
 
 class Write :public Command
 {

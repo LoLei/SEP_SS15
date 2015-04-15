@@ -76,7 +76,7 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
       bool twisted = false;
       int found_tile = 1;
 
-      if((tile_counter == 0) && (t1.getColor() != COLOR_RED || p1 != center))
+      if((tile_counter == 0) && (t1.getColor() != COLOR_RED && p1 != center))
       {
         ok = false;
         cout << "Invalid coordinates - first tile must be set on (0,0)";
@@ -271,4 +271,10 @@ bool Addtile::completeMap(std::map<Position*, Tile*> &karte, int &tile_counter)
 
 
   return false;
+}
+
+//------------------------------------------------------------------------------
+bool Addtile::sortMap(std::map<Position*, Tile*> &karte, int &tile_counter)
+{
+  return true;
 }

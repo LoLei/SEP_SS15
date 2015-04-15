@@ -100,7 +100,6 @@ void Game::freeTiles(std::map<Position*, Tile*> karte)
 void Game::run()
 {
   setRunning(true);
-
   std::map<Position*, Tile*> karte;
 
   int tile_counter = 0;

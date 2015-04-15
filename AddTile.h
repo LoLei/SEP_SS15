@@ -17,6 +17,7 @@
 #include "Position.h"
 #include "Tile.h"
 #include "Command.h"
+#include "Karte.h"
 
 
 
@@ -35,6 +36,8 @@ class Addtile:public Command
                          int &tile_counter);
 
     bool completeMap(std::map<Position*, Tile*> &karte, int &tile_counter);
+
+    bool sortMap(std::map<Position*, Tile*> &karte, int &tile_counter);
 };
 
 #endif //ADDTILE_H_INCLUDED
