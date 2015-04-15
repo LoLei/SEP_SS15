@@ -14,6 +14,11 @@ using std::cout;
 using std::endl;
 using std::string;
 
+  signed int Addtile::max_x_ = 0;
+  signed int Addtile::max_y_ = 0;
+  signed int Addtile::min_x_ = 0;
+  signed int Addtile::min_y_ = 0;
+
 Addtile::Addtile() : Command("Addtile")
 {
 }
@@ -52,12 +57,15 @@ bool Addtile::valuecommand(string user_input, Tile &tile,
 }
 */
 
+
 //------------------------------------------------------------------------------
 void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
                          int &tile_counter)
 {
+
   Position p1;
   Position center(0,0);
+  Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   try
   {
     string str3 = user_input.substr(user_input.find_first_of("("),
@@ -75,6 +83,28 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
       bool ok = true;
       bool twisted = false;
       int found_tile = 1;
+
+      if(p1.getX() > max_x_)
+      {
+        max_x_ = p1.getX();
+      }
+      if(p1.getY() > max_y_)
+      {
+        max_y_ = p1.getY();
+      }
+      if(p1.getX() < min_x_)
+      {
+        min_x_ = p1.getX();
+      }
+      if(p1.getY() < min_y_)
+      {
+        min_y_ = p1.getY();
+      }
+
+      cout << "X max: " << max_x_ << " Y max: " << max_y_ << endl;
+
+      cout << "X min: " << min_x_ << " Y min: " << min_y_ << endl;
+
 
       if((tile_counter == 0) && (t1.getColor() != COLOR_RED || p1 != center))
       {
@@ -189,7 +219,7 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
       {
         for (auto& x: karte)
         {
-          if(*x.first == p1)
+          if(*x.first == p1 && *x.second != empty_tile)
           {
             ok = false;
             cout << "Invalid coordinates - field not empty" << endl;

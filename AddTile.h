@@ -23,6 +23,10 @@
 class Addtile:public Command
 {
   public:
+    static signed int max_x_;
+    static signed int max_y_;
+    static signed int min_x_;
+    static signed int min_y_;
 
     Addtile();
     //~Addtile();

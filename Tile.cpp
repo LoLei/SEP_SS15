@@ -75,6 +75,9 @@ std::string Tile::getColorOut()
     case COLOR_RED:
       return "red";
       break;
+    case EMPTY_C:
+      return "empty";
+      break;
   }
   return "fail";
 }
@@ -91,6 +94,9 @@ std::string Tile::getTypeOut()
       break;
     case TYPE_CURVE_2:
       return "\\";
+      break;
+    case EMPTY_T:
+      return "empty";
       break;
   }
     return "fail";
@@ -122,7 +128,7 @@ Color Tile::notTopColor()
   }
   else
   {
-    return COLOR_WHITE; // wrong?
+    return EMPTY_C;
   }
 }
 
@@ -141,7 +147,7 @@ Color Tile::getColorLeft()
       return notTopColor();
       break;
     default:
-      return COLOR_WHITE; // wrong?
+      return EMPTY_C;
   }
 }
 
@@ -160,7 +166,7 @@ Color Tile::getColorRight()
       return topcolor_;
       break;
     default:
-      return COLOR_WHITE; // wrong?
+      return EMPTY_C;
   }
 }
 
@@ -185,7 +191,7 @@ Color Tile::getColorButtom()
       return notTopColor();
       break;
     default:
-      return COLOR_WHITE; // wrong?
+      return EMPTY_C;
   }
 }
 
@@ -200,6 +206,7 @@ Tile::Type Tile::charToType(char c)
       return TYPE_CROSS;
     case '\\':
       return TYPE_CURVE_2;
+    default:
+      return EMPTY_T;
   }
-  return TYPE_CROSS;
 }

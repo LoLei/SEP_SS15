@@ -27,6 +27,7 @@ class Tile
     //
     enum Type
     {
+      EMPTY_T = 0,
       TYPE_CROSS = 1,
       TYPE_CURVE_1 = 2,
       TYPE_CURVE_2 = 3
