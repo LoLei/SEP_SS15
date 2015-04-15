@@ -1,0 +1,32 @@
+
+addtile (0,0) +
+addtile (1,0) /
+addtile (1,1) \
+addtile (2,1) +
+addtile (2,2) \
+quit
+
+
+addtile (0,0) +
+addtile (1,0) /
+addtile (1,1) +
+addtile (2,1) \
+addtile (3,1) /
+addtile (3,0) +
+quit
+
+
+addtile (0,0) \
+addtile (1,0) +
+addtile (1,1) /
+addtile (0,1) \
+quit
+
+addtile (0,0) /
+addtile (1,0) \
+addtile (1,1) /
+addtile (1,2) \
+addtile (1,3) /
+addtile (0,3) \
+addtile (-1,3) /
+addtile (-1,2) \
