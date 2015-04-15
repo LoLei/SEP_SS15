@@ -81,13 +81,30 @@ string Game::userInputToCommand(string user_input)
 //------------------------------------------------------------------------------
 void Game::printTiles(std::map<Position*, Tile*> karte)
 {
-  cout << endl << "___ für testzwecke ___" << endl;
+  /*cout << endl << "___ für testzwecke ___" << endl;
   for (auto& x: karte)
   {
     cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
          << x.second->getTypeOut() << endl;
   }
-  cout << "___" << endl;
+  cout << "___" << endl;*/
+
+  for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
+  {
+    for(signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
+    {
+      Position pos1(x,y);
+      for (auto& x: karte)
+      {
+        if(*x.first == pos1)
+        {
+          cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
+          << x.second->getTypeOut() << endl;
+          break;
+        }
+      }
+    }
+  }
 }
 
 //------------------------------------------------------------------------------
