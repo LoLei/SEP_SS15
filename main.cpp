@@ -23,11 +23,9 @@
 //
 int main(int argc, char **argv)
 {
-  std::string file_name;
-  std::string flag = argv[1];
+  std::string file_name = "outputfile";
   int graphic_mode = 0;
-
-  if (flag == "-g")
+  if(argc == 3 && argv[1] == "-g")
   {
     graphic_mode = 1;
     file_name = argv[2];
