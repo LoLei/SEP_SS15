@@ -16,6 +16,7 @@
 #include <iostream>
 #include <map>
 #include "Position.h"
+#include "Game.h"
 #include "Tile.h"
 #include "Command.h"
 #include "WriteException.h"
