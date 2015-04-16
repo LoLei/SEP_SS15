@@ -18,6 +18,14 @@
 #include "Tile.h"
 #include "Command.h"
 
+struct customKeyComparator : std::binary_function<Position*, Position*, bool>
+{
+  bool operator() (Position *lhs, Position *rhs) const
+  {
+    return *lhs < *rhs;  // This calls the operator < in your class
+  }
+};
+
 //struct customKeyComparator
 //{
 //  bool operator()(const Position a, const Position b) const

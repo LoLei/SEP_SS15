@@ -32,12 +32,12 @@ class Addtile:public Command
 
 //    bool valuecommand(std::string input, Tile &tile, Position &position, const Color color);
 
-    void addNewTile(std::string user_input, std::map<Position*, Tile*> &karte,
+    void addNewTile(std::string user_input, std::map<Position*, Tile*, customKeyComparator> &karte,
                          int &tile_counter);
 
-    bool completeMap(std::map<Position*, Tile*> &karte, int &tile_counter);
+    bool completeMap(std::map<Position*, Tile*, customKeyComparator> &karte, int &tile_counter);
 
-    bool sortMap(std::map<Position*, Tile*> &karte, int &tile_counter);
+    bool sortMap(std::map<Position*, Tile*, customKeyComparator> &karte, int &tile_counter);
 };
 
 #endif //ADDTILE_H_INCLUDED

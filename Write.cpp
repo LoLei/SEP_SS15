@@ -32,7 +32,7 @@ int Write::execute(Game& board, std::vector<std::string>& params)
 }
 
 //------------------------------------------------------------------------------
-void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &karte,
+void Write::createNewFile(std::string user_input, std::map<Position*, Tile*, customKeyComparator> &karte,
   int &tile_counter)
 {
   std::string file_name;
@@ -68,7 +68,7 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
       file_header.minY = x.first->getY();
       break;
     }
-    std::map<Position*, Tile*>::reverse_iterator rit;
+    std::map<Position*, Tile*, customKeyComparator>::reverse_iterator rit;
     for (rit = karte.rbegin(); rit != karte.rend(); ++rit)
     {
       file_header.maxX = rit->first->getX();

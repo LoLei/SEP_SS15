@@ -77,7 +77,7 @@ string Game::userInputToCommand(string user_input)
 }
 
 //------------------------------------------------------------------------------
-void Game::printTiles(std::map<Position*, Tile*> karte)
+void Game::printTiles(std::map<Position*, Tile*, customKeyComparator> karte)
 {
   for (auto& x: karte)
   {
@@ -87,7 +87,7 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
 }
 
 //------------------------------------------------------------------------------
-void Game::freeTiles(std::map<Position*, Tile*> karte)
+void Game::freeTiles(std::map<Position*, Tile*, customKeyComparator> karte)
 {
   for (auto& x: karte)
   {
@@ -100,7 +100,7 @@ void Game::freeTiles(std::map<Position*, Tile*> karte)
 void Game::run()
 {
   setRunning(true);
-  std::map<Position*, Tile*> karte;
+  std::map<Position*, Tile*, customKeyComparator> karte;
 
   int tile_counter = 0;
 

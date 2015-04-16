@@ -53,7 +53,7 @@ bool Addtile::valuecommand(string user_input, Tile &tile,
 */
 
 //------------------------------------------------------------------------------
-void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
+void Addtile::addNewTile(string user_input, std::map<Position*, Tile*, customKeyComparator> &karte,
                          int &tile_counter)
 {
   Position p1;
@@ -222,9 +222,9 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::completeMap(std::map<Position*, Tile*> &karte, int &tile_counter)
+bool Addtile::completeMap(std::map<Position*, Tile*, customKeyComparator> &karte, int &tile_counter)
 {
-  std::map<Position*, int> grenzTiles;
+  std::map<Position*, int, customKeyComparator> grenzTiles;
   for (auto& y: karte)
   {
     int found_tile = 0;
@@ -274,7 +274,7 @@ bool Addtile::completeMap(std::map<Position*, Tile*> &karte, int &tile_counter)
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::sortMap(std::map<Position*, Tile*> &karte, int &tile_counter)
+bool Addtile::sortMap(std::map<Position*, Tile*, customKeyComparator> &karte, int &tile_counter)
 {
   return true;
 }
