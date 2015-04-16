@@ -118,15 +118,15 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
             // If position is empty or tile was forced, to not switch player
             if (board_tiles.side != 0)
             {
+              // Switch active player
               // Save position
               pos = file.tellp();
-              // Toggle active player
-              switch (file_header.active_player)
+              switch (x.second->getPlayerColor())
               {
-              case AP_WHITE:
+              case (AP_WHITE):
                 file_header.active_player = AP_RED;
                 break;
-              case AP_RED:
+              case (AP_RED) :
                 file_header.active_player = AP_WHITE;
                 break;
               }

@@ -87,6 +87,7 @@ class Tile
     std::string getColorOut();
     std::string getTypeOut();
     std::string getPlayerColorOut();
+    int getPlayerColor();
 
     //--------------------------------------------------------------------------
     // Operator Methods

@@ -174,6 +174,23 @@ std::string Tile::getPlayerColorOut()
   return "fail";
 }
 
+int Tile::getPlayerColor()
+{
+  switch (of_activeplayer_)
+  {
+  case COLOR_WHITE:
+    return 1;
+    break;
+  case COLOR_RED:
+    return 2;
+    break;
+  case EMPTY_C:
+    return 0;
+    break;
+  }
+  return -1;
+}
+
 std::string Tile::getTypeOut()
 {
   switch (side_)
