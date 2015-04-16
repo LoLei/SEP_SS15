@@ -23,8 +23,18 @@
 //
 int main(int argc, char **argv)
 {
+  std::string file_name;
+  std::string flag = argv[1];
+  int graphic_mode = 0;
+
+  if (flag == "-g")
+  {
+    graphic_mode = 1;
+    file_name = argv[2];
+  }
+
   Game trax;
   std::cout << " === GAME === " << std::endl;
-  trax.run();
+  trax.run(file_name, graphic_mode);
   return 0;
 }

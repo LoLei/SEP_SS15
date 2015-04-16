@@ -175,7 +175,7 @@ void Game::freeTiles(std::map<Position*, Tile*> karte)
 }
 
 //------------------------------------------------------------------------------
-void Game::run()
+void Game::run(std::string file_name, int graphic_mode)
 {
   setRunning(true);
 
@@ -203,10 +203,8 @@ void Game::run()
     }
     else if(command == "write")
     {
-      //TODO
       Write createNewFile;
       createNewFile.createNewFile(user_input,karte,tile_counter);
-      std::cout << "write" << std::endl;
     }
     else if(command == "addtile")
     {
@@ -218,6 +216,12 @@ void Game::run()
         newTile.addNewTile(forAddtile,karte,tile_counter,getActivePlayer());
       }
       togglePlayer();
+    }
+    if (graphic_mode == 1)
+    {
+      user_input = "write " + file_name;
+      Write createNewFile;
+      createNewFile.createNewFile(user_input, karte, tile_counter);
     }
     else
     {
