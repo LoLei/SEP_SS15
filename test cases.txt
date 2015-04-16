@@ -33,3 +33,4 @@ addtile (-1,2) \
 addtile (-1,4) \
 addtile (-2,4) \
 addtile (0,-1) +
+addtile (-1,0) /

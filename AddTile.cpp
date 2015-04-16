@@ -103,9 +103,9 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
     cout << endl;
     return;
   }
-  if(tile_counter)
+  if(tile_counter && !adaptTile(karte, t1, p1))
   {
-    adaptTile(karte, t1, p1);
+    return;
   }
 
   for(auto& x: karte)
@@ -223,59 +223,61 @@ bool Addtile::completeMap(std::map<Position*, Tile*> &karte,
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   for(auto& y: karte)
   {
-    if(*y.second == empty_tile)
+    if(*y.second != empty_tile)
     {
-      int found_tile = 0;
-      Color Li = EMPTY_C;
-      Color Re = EMPTY_C;
-      Color Ob = EMPTY_C;
-      Color Un = EMPTY_C;
-      
-      Position p1 = *(y.first);
-      Position *left = new Position(p1.getX() - 1,p1.getY());
-      Position *right = new Position(p1.getX()+1,p1.getY());
-      Position *top = new Position(p1.getX(),p1.getY()-1);
-      Position *buttom = new Position(p1.getX(),p1.getY()+1);
-      for(auto& x: karte)
+      continue;
+    }
+    int found_tile = 0;
+    Color Li = EMPTY_C;
+    Color Re = EMPTY_C;
+    Color Ob = EMPTY_C;
+    Color Un = EMPTY_C;
+    
+    Position p1 = *(y.first);
+    Position left(p1.getX() - 1,p1.getY());
+    Position right(p1.getX()+1,p1.getY());
+    Position top(p1.getX(),p1.getY()-1);
+    Position buttom(p1.getX(),p1.getY()+1);
+    for(auto& x: karte)
+    {
+      if(*x.second == empty_tile)
       {
-        if(*x.second != empty_tile)
-        {
-          if(*(x.first) == *left)
-          {
-            found_tile++;
-            Li = x.second->getColorRight();
-          }
-          else if(*(x.first) == *right)
-          {
-            found_tile++;
-            Re = x.second->getColorLeft();
-          }
-          else if(*(x.first) == *top)
-          {
-            found_tile++;
-            Ob = x.second->getColorButtom();
-          }
-          else if(*(x.first) == *buttom)
-          {
-            found_tile++;
-            Un = x.second->getColorTop();
-          }
-          else
-          {
-            continue;
-          }
-        }
+        continue;
       }
-      delete left;
-      delete right;
-      delete top;
-      delete buttom;
-      if(found_tile > 2)
+      if(*(x.first) == left)
       {
-        Tile neu(Li, Re, Ob, Un);
-        forAddtile = "addtile " + y.first->toString() + " " + neu.getTypeOut();
-        return true;
+        found_tile++;
+        Li = x.second->getColorRight();
       }
+      else if(*(x.first) == right)
+      {
+        found_tile++;
+        Re = x.second->getColorLeft();
+      }
+      else if(*(x.first) == top)
+      {
+        found_tile++;
+        Ob = x.second->getColorButtom();
+      }
+      else if(*(x.first) == buttom)
+      {
+        found_tile++;
+        Un = x.second->getColorTop();
+      }
+      else
+      {
+        continue;
+      }
+    }
+    if(found_tile >= 2)
+    {
+      Tile neu(Li, Re, Ob, Un);
+      if(neu == empty_tile)
+      {
+        continue; 
+      }
+      forAddtile = "addtile " + y.first->toString() + " " + neu.getTypeOut();
+      return true;
     }
   }
   return false;

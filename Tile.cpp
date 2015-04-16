@@ -20,7 +20,7 @@ Tile::Tile(Type side, Color topcolor)
 
 Tile::Tile(Color Li, Color Re, Color Ob, Color Un)
 {
-  if(Ob == Un || Li == Re)
+  if((Ob == Un && Ob != EMPTY_C) || (Li == Re && Li != EMPTY_C))
   {
     side_ = TYPE_CROSS;
     if(Ob == EMPTY_C)
@@ -41,7 +41,7 @@ Tile::Tile(Color Li, Color Re, Color Ob, Color Un)
     }
     topcolor_ = Ob;
   }
-  if(Ob == Li || Re == Un)
+  else if((Ob == Li && Ob != EMPTY_C) || (Re == Un && Re != EMPTY_C))
   {
     side_ = TYPE_CURVE_1;
     if(Ob == EMPTY_C)
@@ -62,7 +62,7 @@ Tile::Tile(Color Li, Color Re, Color Ob, Color Un)
     }
     topcolor_ = Ob;
   }
-  if(Ob == Re || Li == Un)
+  else if((Ob == Re && Ob != EMPTY_C) || (Li == Un && Li != EMPTY_C))
   {
     side_ = TYPE_CURVE_2;
     if(Ob == EMPTY_C)
@@ -81,7 +81,12 @@ Tile::Tile(Color Li, Color Re, Color Ob, Color Un)
     {
       Re = Ob;
     }
-    topcolor_ = Ob;
+    else topcolor_ = Ob;
+  }
+  else
+  {
+    side_ = EMPTY_T;
+    topcolor_ = EMPTY_C;
   }
 }
 

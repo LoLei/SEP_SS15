@@ -25,10 +25,16 @@ int main(int argc, char **argv)
 {
   std::string file_name = "outputfile";
   int graphic_mode = 0;
-  if(argc == 3 && argv[1] == "-g")
+  if(argc == 3)
+
   {
-    graphic_mode = 1;
-    file_name = argv[2];
+    std::string flag = argv[1];
+    if(flag == "-g")
+    {
+      graphic_mode = 1;
+      file_name = argv[2];
+      std::cout << " === GRAFIC MODE === " << std::endl;
+    }
   }
 
   Game trax;
