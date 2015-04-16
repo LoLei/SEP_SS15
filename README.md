@@ -15,6 +15,7 @@ Repository for SEP SS15 Basisbeispiel
 - [x] ~~Implement board through AddTile (std::array)~~
 - [x] ~~Make structs into classes~~
 - [x] ~~Make write command (Provided map is sorted and with empty tiles)~~
+- [ ] Make commands into vector (see Fragestunde.md)
 - [ ] Fix invalid parameters and wrong parameter count error messages
 - [ ] Add exception class for other exceptions too (must be public)
 - [ ] Figure out best way how to include exception classes in other files
