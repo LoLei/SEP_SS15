@@ -15,6 +15,7 @@ Tile::Tile(Type side, Color topcolor)
 {
   side_ = side;
   topcolor_ = topcolor;
+  of_activeplayer_ = EMPTY_C;
 }
 
 Tile::Tile(Color Li, Color Re, Color Ob, Color Un)
@@ -89,6 +90,7 @@ Tile::Tile(const Tile & src)
 {
   side_ = src.side_;
   topcolor_ = src.topcolor_;
+  of_activeplayer_ = src.of_activeplayer_;
 }
 
 //------------------------------------------------------------------------------
@@ -100,6 +102,12 @@ Tile::~Tile() throw()
 void Tile::setColor(Color topcolor)
 {
   topcolor_ = topcolor;
+}
+
+//------------------------------------------------------------------------------
+void Tile::setPlayer(Color of_activeplayer)
+{
+  of_activeplayer_ = of_activeplayer;
 }
 
 //------------------------------------------------------------------------------
@@ -135,6 +143,23 @@ void Tile::setType(char c)
 std::string Tile::getColorOut()
 {
   switch (topcolor_)
+  {
+    case COLOR_WHITE:
+      return "W";
+      break;
+    case COLOR_RED:
+      return "R";
+      break;
+    case EMPTY_C:
+      return "0";
+      break;
+  }
+  return "fail";
+}
+
+std::string Tile::getPlayerColorOut()
+{
+  switch (of_activeplayer_)
   {
     case COLOR_WHITE:
       return "W";

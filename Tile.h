@@ -45,6 +45,11 @@ class Tile
     //
     Color topcolor_;
 
+    //--------------------------------------------------------------------------
+    // Color of the active Curve
+    //
+    Color of_activeplayer_;
+
   public:
 
     //--------------------------------------------------------------------------
@@ -64,6 +69,7 @@ class Tile
     //
     void setColor(Color topcolor);
     void setType(char c);
+    void setPlayer(Color of_activeplayer);
 
     //--------------------------------------------------------------------------
     // Getter Methods
@@ -80,6 +86,7 @@ class Tile
     //
     std::string getColorOut();
     std::string getTypeOut();
+    std::string getPlayerColorOut();
 
     //--------------------------------------------------------------------------
     // Operator Methods

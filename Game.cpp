@@ -143,6 +143,23 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
     }
     cout << endl;
   }
+
+  cout << endl << "active player:" << endl;
+  for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
+  {
+    for(signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
+    {
+      Position pos1(x,y);
+      for (auto& x: karte)
+      {
+        if(*x.first == pos1)
+        {
+          cout << x.first->toString() << ": " << x.second->getPlayerColorOut() << endl;
+          break;
+        }
+      }
+    }
+  }
   //---
 
 }
@@ -194,12 +211,13 @@ void Game::run()
     else if(command == "addtile")
     {
       Addtile newTile;
-      newTile.addNewTile(user_input,karte,tile_counter);
+      newTile.addNewTile(user_input,karte,tile_counter,getActivePlayer());
       string forAddtile;
       while(newTile.completeMap(karte, tile_counter, forAddtile)) 
       {
-        newTile.addNewTile(forAddtile,karte,tile_counter);
+        newTile.addNewTile(forAddtile,karte,tile_counter,getActivePlayer());
       }
+      togglePlayer();
     }
     else
     {

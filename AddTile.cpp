@@ -82,11 +82,11 @@ bool Addtile::valideInput(string user_input, Tile &tile, Position &position)
 
 //------------------------------------------------------------------------------
 void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
-                         int &tile_counter)
+                         int &tile_counter, Color active_player)
 {
-
   Position p1;
   Tile t1(Tile::EMPTY_T, COLOR_RED);
+  t1.setPlayer(active_player);
   // look up if the userinput is correct
   if(!(valideInput(user_input,t1,p1)))
   {
