@@ -64,16 +64,16 @@ void Position::setY(const signed int y)
 bool Position::parse(const string input)
 {
   int string_size = input.size();
-  if(input[0] == '(' && input[string_size-1] == ')'
-     && input.find(",") != string::npos)
+  if (input[0] == '(' && input[string_size - 1] == ')'
+    && input.find(",") != string::npos)
   {
     int coomma_index = input.find(",");
-    string string_x = input.substr(1,coomma_index-1);
-    string string_y = input.substr(coomma_index+1,string_size-coomma_index);
+    string string_x = input.substr(1, coomma_index - 1);
+    string string_y = input.substr(coomma_index + 1, string_size - coomma_index);
     try
     {
-      x_ = std::stoi(string_x,nullptr);
-      y_ = std::stoi(string_y,nullptr);
+      x_ = std::stoi(string_x, nullptr);
+      y_ = std::stoi(string_y, nullptr);
     }
     catch (const std::invalid_argument &ia)
     {
@@ -119,11 +119,11 @@ bool Position::operator<(const Position &position) const
 {
   if ((x_ < position.x_) && (y_ == position.y_))
   {
-  return true;
+    return true;
   }
   if (x_ > position.x_ && y_ < position.y_)
   {
-  return true;
+    return true;
   }
   if (x_ == position.x_ && y_ < position.y_)
   {
@@ -131,6 +131,6 @@ bool Position::operator<(const Position &position) const
   }
   else
   {
-  return false;
+    return false;
   }
 }

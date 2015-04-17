@@ -32,7 +32,7 @@ int Write::execute(Game& board, std::vector<std::string>& params)
 }
 
 //------------------------------------------------------------------------------
-void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &karte,
+void Write::createNewFile(std::string user_input, std::map<Position*, Tile*, customKeyComparator> &karte,
   int &tile_counter)
 {
   std::string file_name;

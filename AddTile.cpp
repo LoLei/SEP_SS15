@@ -81,7 +81,7 @@ bool Addtile::valideInput(string user_input, Tile &tile, Position &position)
 }
 
 //------------------------------------------------------------------------------
-void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
+void Addtile::addNewTile(string user_input, std::map<Position*, Tile*, customKeyComparator> &karte,
                          int &tile_counter, Color active_player)
 {
   Position p1;
@@ -160,7 +160,7 @@ bool Addtile::abfrage(bool abfrage1, bool &twisted, bool &lonely_tile, Tile &t1)
   }
 
 //------------------------------------------------------------------------------
-bool Addtile::adaptTile(std::map<Position*, Tile*> karte, 
+bool Addtile::adaptTile(std::map<Position*, Tile*, customKeyComparator> karte,
                         Tile &t1, Position p1)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
@@ -217,7 +217,7 @@ bool Addtile::adaptTile(std::map<Position*, Tile*> karte,
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::completeMap(std::map<Position*, Tile*> &karte, 
+bool Addtile::completeMap(std::map<Position*, Tile*, customKeyComparator> &karte,
                           int &tile_counter, string &forAddtile)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
@@ -284,7 +284,7 @@ bool Addtile::completeMap(std::map<Position*, Tile*> &karte,
 }
 
 //------------------------------------------------------------------------------
-void Addtile::fillEmptyTiles(std::map<Position*, Tile*> &karte)
+void Addtile::fillEmptyTiles(std::map<Position*, Tile*, customKeyComparator> &karte)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   bool wenn;

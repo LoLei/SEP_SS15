@@ -19,7 +19,9 @@
 #include "Game.h"
 #include "Tile.h"
 #include "Command.h"
+#include "Game.h"
 #include "WriteException.h"
+#include "Karte.h"
 
 class Write :public Command
 {
@@ -30,7 +32,7 @@ public:
 
   int execute(Game& board, std::vector<std::string>& params);
 
-  void createNewFile(std::string user_input, std::map<Position*, Tile*> &karte,
+  void createNewFile(std::string user_input, std::map<Position*, Tile*, customKeyComparator> &karte,
     int &tile_counter);
 
   /*void togglePlayerWrite(FileHeader file_header);*/
