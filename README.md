@@ -23,8 +23,5 @@ Repository for SEP SS15 Basisbeispiel
 - [ ] Add exception class for other exceptions too (must be public)
 - [ ] Figure out best way how to include exception classes in other files
 - [ ] Implement try and catch in regular files using exception files
-- [ ] Win and draw conditions
-
-
 - [ ] Win conditions
 - [ ] Draw/Tie
