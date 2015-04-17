@@ -40,7 +40,7 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*, cus
   {
     // Takes parameter after write as file_name
     file_name = user_input.substr(6);
-    long pos;
+    std::streamoff pos;
 
     class FileHeader
     {
