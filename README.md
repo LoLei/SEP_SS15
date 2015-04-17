@@ -28,3 +28,10 @@ Repository for SEP SS15 Basisbeispiel
 ### Low priority
 - [ ] Make commands into vector (see Fragestunde.md)
 - [ ] Make write only append to file, not write a new one each time
+
+### Vor Abgabe
+- [ ] Remove all output
+- [ ] Compile with pluto and makefile
+- [ ] Check valgrind
+- [ ] Remove redundant/commented code
+- [ ] Make code coding standard conform
