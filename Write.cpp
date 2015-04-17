@@ -98,47 +98,36 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*, cus
     // Write tiles into file
     BoardTiles board_tiles;
 
-    // Write
-    for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
+    // Write with simple sorted map loop
+    for (auto& x : karte)
     {
-      for(signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
+      // Write type and color
+      board_tiles.side = x.second->getType();
+      board_tiles.top_color = x.second->getColor();
+
+      file << board_tiles.side;
+      file << board_tiles.top_color;
+
+      // If position is empty or tile was forced, to not switch player
+      if (board_tiles.side != 0)
       {
-        Position pos1(x,y);
-        for (auto& x: karte)
+        // Switch active player
+        // Save position
+        pos = file.tellp();
+        switch (x.second->getPlayerColor())
         {
-          if(*x.first == pos1)
-          {
-            // Write type and color
-            board_tiles.side = x.second->getType();
-            board_tiles.top_color = x.second->getColor();
-
-            file << board_tiles.side;
-            file << board_tiles.top_color;
-
-            // If position is empty or tile was forced, to not switch player
-            if (board_tiles.side != 0)
-            {
-              // Switch active player
-              // Save position
-              pos = file.tellp();
-              switch (x.second->getPlayerColor())
-              {
-              case (AP_WHITE):
-                file_header.active_player = AP_RED;
-                break;
-              case (AP_RED) :
-                file_header.active_player = AP_WHITE;
-                break;
-              }
-              // Go to active player offset and write
-              file.seekp(AP_OFFSET);
-              file << file_header.active_player;
-              // Go back to where we left off
-              file.seekp(pos);
-            }
-            break;
-          }
+        case (AP_WHITE) :
+          file_header.active_player = AP_RED;
+          break;
+        case (AP_RED) :
+          file_header.active_player = AP_WHITE;
+          break;
         }
+        // Go to active player offset and write
+        file.seekp(AP_OFFSET);
+        file << file_header.active_player;
+        // Go back to where we left off
+        file.seekp(pos);
       }
     }
     file.close();
