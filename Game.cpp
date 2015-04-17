@@ -44,6 +44,8 @@ void Game::togglePlayer()
     case COLOR_RED:
       activeplayer_ = COLOR_WHITE;
       break;
+    default:
+      break;
   }
 }
 
@@ -79,11 +81,87 @@ string Game::userInputToCommand(string user_input)
 //------------------------------------------------------------------------------
 void Game::printTiles(std::map<Position*, Tile*, customKeyComparator> karte)
 {
+  /*cout << endl << "___ für testzwecke ___" << endl;
   for (auto& x: karte)
   {
     cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
          << x.second->getTypeOut() << endl;
   }
+  cout << "___" << endl;*/
+/*
+  for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
+  {
+    for(signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
+    {
+      Position pos1(x,y);
+      for (auto& x: karte)
+      {
+        if(*x.first == pos1)
+        {
+          cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
+          << x.second->getTypeOut() << endl;
+          break;
+        }
+      }
+    }
+  }
+  */
+  // ----
+  cout << "    |";
+  for (signed int i = Addtile::min_x_; i <= Addtile::max_x_; i++)
+    cout << std::setfill (' ') << std::setw (3) << i << std::setw (4) << "||";
+  cout << endl;
+  int spalten1 = Addtile::max_x_ - Addtile::min_x_ + 1;
+  cout << "    |";
+  while(spalten1--)
+  {
+    cout << std::setfill ('=') << std::setw (7) << "||";
+  }
+  cout << endl;
+  for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
+  {
+    cout << std::setfill (' ') << std::setw (2) << y << ": |";
+    int spalten = Addtile::max_x_ - Addtile::min_x_ + 1;
+    for(signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
+    {
+      Position pos1(x,y);
+      for (auto& x: karte)
+      {
+        if(*x.first == pos1)
+        {
+          //cout << " " << x.first->toString();
+          cout << " " << x.second->getColorOut() << " " << x.second->getTypeOut() << " ||";
+          break;
+        }
+      }
+    }
+    cout << endl;
+    cout << "    |";
+    while(spalten--)
+    {
+      cout << std::setfill ('=') << std::setw (7) << "||";
+    }
+    cout << endl;
+  }
+
+  cout << endl << "active player:" << endl;
+  for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
+  {
+    for(signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
+    {
+      Position pos1(x,y);
+      for (auto& x: karte)
+      {
+        if(*x.first == pos1)
+        {
+          cout << x.first->toString() << ": " << x.second->getPlayerColorOut() << endl;
+          break;
+        }
+      }
+    }
+  }
+  //---
+
 }
 
 //------------------------------------------------------------------------------
@@ -97,7 +175,7 @@ void Game::freeTiles(std::map<Position*, Tile*, customKeyComparator> karte)
 }
 
 //------------------------------------------------------------------------------
-void Game::run()
+void Game::run(std::string file_name, int graphic_mode)
 {
   setRunning(true);
   std::map<Position*, Tile*, customKeyComparator> karte;
@@ -124,17 +202,25 @@ void Game::run()
     }
     else if(command == "write")
     {
-      //TODO
       Write createNewFile;
       createNewFile.createNewFile(user_input,karte,tile_counter);
-      std::cout << "write" << std::endl;
     }
     else if(command == "addtile")
     {
       Addtile newTile;
-      //Position last_pos;
-      newTile.addNewTile(user_input,karte,tile_counter);
-      //while(newTile.completeMap(karte,tile_counter)) {}
+      newTile.addNewTile(user_input,karte,tile_counter,getActivePlayer());
+      string forAddtile;
+      while(newTile.completeMap(karte, tile_counter, forAddtile)) 
+      {
+        newTile.addNewTile(forAddtile,karte,tile_counter,getActivePlayer());
+      }
+      togglePlayer();
+    }
+    if (graphic_mode == 1)
+    {
+      user_input = "write " + file_name;
+      Write createNewFile;
+      createNewFile.createNewFile(user_input, karte, tile_counter);
     }
     else
     {

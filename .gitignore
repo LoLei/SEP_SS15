@@ -64,3 +64,8 @@
 *.psess
 *.vsp
 *.psd
+/file_test
+/file_test_loop
+/file_test_max3
+/file_test_max4
+/file_test2

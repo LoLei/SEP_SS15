@@ -66,7 +66,7 @@ class Game
     // ...
     // @param
     //
-    void run();
+    void run(std::string file_name, int graphic_mode);
 
     //--------------------------------------------------------------------------
     // toggle Player Methode

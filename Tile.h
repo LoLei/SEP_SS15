@@ -27,6 +27,7 @@ class Tile
     //
     enum Type
     {
+      EMPTY_T = 0,
       TYPE_CROSS = 1,
       TYPE_CURVE_1 = 2,
       TYPE_CURVE_2 = 3
@@ -44,6 +45,11 @@ class Tile
     //
     Color topcolor_;
 
+    //--------------------------------------------------------------------------
+    // Color of the active Curve
+    //
+    Color of_activeplayer_;
+
   public:
 
     //--------------------------------------------------------------------------
@@ -51,6 +57,7 @@ class Tile
     //
     Tile(Type side, Color orientation);
     Tile(const Tile &);
+    Tile(Color Li, Color Re, Color Ob, Color Un);
 
     //--------------------------------------------------------------------------
     // Destructor
@@ -62,6 +69,7 @@ class Tile
     //
     void setColor(Color topcolor);
     void setType(char c);
+    void setPlayer(Color of_activeplayer);
 
     //--------------------------------------------------------------------------
     // Getter Methods
@@ -78,6 +86,8 @@ class Tile
     //
     std::string getColorOut();
     std::string getTypeOut();
+    std::string getPlayerColorOut();
+    int getPlayerColor();
 
     //--------------------------------------------------------------------------
     // Operator Methods

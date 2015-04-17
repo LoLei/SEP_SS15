@@ -17,6 +17,7 @@
 //
 enum Color
 {
+  EMPTY_C = 0,
   COLOR_WHITE = 1,
   COLOR_RED = 2
 };

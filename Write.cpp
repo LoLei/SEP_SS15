@@ -32,7 +32,7 @@ int Write::execute(Game& board, std::vector<std::string>& params)
 }
 
 //------------------------------------------------------------------------------
-void Write::createNewFile(std::string user_input, std::map<Position*, Tile*, customKeyComparator> &karte,
+void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &karte,
   int &tile_counter)
 {
   std::string file_name;
@@ -61,26 +61,14 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*, cus
     };
 
     FileHeader file_header;
+    //--------------------------------------------------------------------------
     // Find max and min coordinates
-    for (auto& x : karte)
-    {
-      file_header.minX = x.first->getX();
-      file_header.minY = x.first->getY();
-      break;
-    }
-    std::map<Position*, Tile*, customKeyComparator>::reverse_iterator rit;
-    for (rit = karte.rbegin(); rit != karte.rend(); ++rit)
-    {
-      file_header.maxX = rit->first->getX();
-      file_header.maxY = rit->first->getY();
-      break;
-    }
-    // Other way
-    /*file_header.minX = karte.begin()->first->getX();
-    file_header.minY = karte.begin()->first->getY();
-    
-    file_header.maxX = karte.end()->first->getX();
-    file_header.maxY = karte.end()->first->getY();*/
+    // Min
+    file_header.minX = Addtile::min_x_;
+    file_header.minY = Addtile::min_y_;
+    // Max
+    file_header.maxX = Addtile::max_x_;
+    file_header.maxY = Addtile::max_y_;
 
     // Write values into header
     file_header.signature = "TRAX";
@@ -106,42 +94,56 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*, cus
 
     //--------------------------------------------------------------------------//
     // Write each line of the board from (minX,minY) to (maxX,maxY)
-    // from left to right
+    // from left to right, top to bottom
     // Write tiles into file
     BoardTiles board_tiles;
 
-    // TODO Write
-
-    for (auto& x : karte)
+    // Write
+    for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
     {
-      // Write type and color
-      // Ideally 0 for both if position has no tile
-      board_tiles.side = x.second->getType();
-      board_tiles.top_color = x.second->getColor();
-
-      file << board_tiles.side;
-      file << board_tiles.top_color;
-
-      // Save position
-      pos = file.tellp();
-      // Toggle active player
-      switch (file_header.active_player)
+      for(signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
       {
-      case AP_WHITE:
-        file_header.active_player = AP_RED;
-        break;
-      case AP_RED:
-        file_header.active_player = AP_WHITE;
-        break;
+        Position pos1(x,y);
+        for (auto& x: karte)
+        {
+          if(*x.first == pos1)
+          {
+            // Write type and color
+            board_tiles.side = x.second->getType();
+            board_tiles.top_color = x.second->getColor();
+
+            file << board_tiles.side;
+            file << board_tiles.top_color;
+
+            // If position is empty or tile was forced, to not switch player
+            if (board_tiles.side != 0)
+            {
+              // Switch active player
+              // Save position
+              pos = file.tellp();
+              switch (x.second->getPlayerColor())
+              {
+              case (AP_WHITE):
+                file_header.active_player = AP_RED;
+                break;
+              case (AP_RED) :
+                file_header.active_player = AP_WHITE;
+                break;
+              }
+              // Go to active player offset and write
+              file.seekp(AP_OFFSET);
+              file << file_header.active_player;
+              // Go back to where we left off
+              file.seekp(pos);
+            }
+            break;
+          }
+        }
       }
-      // Go to active player offset and write
-      file.seekp(AP_OFFSET);
-      file << file_header.active_player;
-      // Go back to where we left off
-      file.seekp(pos);
     }
     file.close();
   }
+  //------------------------------------------------------------------------------
   catch (WriteException& e1)
   {
     std::cout << e1.what() << file_name << std::endl;
