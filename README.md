@@ -18,10 +18,13 @@ Repository for SEP SS15 Basisbeispiel
 - [x] ~~Make -g flag working~~
 - [x] ~~Make AddTile check if valid move~~
 - [x] ~~Forced tiles~~
-- [ ] Make commands into vector (see Fragestunde.md)
 - [ ] Fix issues
 - [ ] Add exception class for other exceptions too (must be public)
 - [ ] Figure out best way how to include exception classes in other files
 - [ ] Implement try and catch in regular files using exception files
 - [ ] Win conditions
 - [ ] Draw/Tie
+
+### Low priority
+- [ ] Make commands into vector (see Fragestunde.md)
+- [ ] Make write only append to file, not write a new one each time
