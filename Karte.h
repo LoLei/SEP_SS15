@@ -26,27 +26,6 @@ struct customKeyComparator : std::binary_function<Position*, Position*, bool>
   }
 };
 
-//struct customKeyComparator
-//{
-//  bool operator()(const Position a, const Position b) const
-//  {
-//    int i = a.getX();
-//    /*int i = a.getXConst();
-//    if ((a.getX() < b.getX()) && (a.getY() == b.getY()))
-//    {
-//      return true;
-//    }
-//    if (a.getX() > b.getX() && a.getY() < b.getY())
-//    {
-//      return true;
-//    }
-//    else
-//    {
-//      return false;
-//    }*/
-//  }
-//};
-
 class Karte
 {
 public:
