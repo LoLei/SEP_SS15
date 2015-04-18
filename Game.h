@@ -92,7 +92,7 @@ class Game
     //
     //~Game();
 
-    void printTiles(std::map<Position*, Tile*, customKeyComparator> karte);
-    void freeTiles(std::map<Position*, Tile*, customKeyComparator> karte);
+    void printTiles(std::map<Position*, Tile*> karte);
+    void freeTiles(std::map<Position*, Tile*> karte);
 };
 #endif // GAME_H

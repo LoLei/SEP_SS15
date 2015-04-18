@@ -115,15 +115,40 @@ bool Position::operator!=(const Position &position) const
 }
 
 //------------------------------------------------------------------------------
+bool Position::operator>(const Position &position) const
+{
+  /*return !(*this == position);*/
+
+  if (x_ > position.x_ && y_ > position.y_)
+  {
+    return true;
+  }
+  if (x_ > position.x_ && y_ == position.y_)
+  {
+    return true;
+  }
+  if (x_ == position.x_ && y_ > position.y_)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+//------------------------------------------------------------------------------
 bool Position::operator<(const Position &position) const
 {
-  if ((x_ < position.x_) && (y_ == position.y_))
+  /*return !(*this == position);*/
+
+  if (x_ < position.x_ && y_ < position.y_)
   {
-  return true;
+    return true;
   }
-  if (x_ > position.x_ && y_ < position.y_)
+  if (x_ < position.x_ && y_ == position.y_)
   {
-  return true;
+    return true;
   }
   if (x_ == position.x_ && y_ < position.y_)
   {
@@ -131,6 +156,6 @@ bool Position::operator<(const Position &position) const
   }
   else
   {
-  return false;
+    return false;
   }
 }

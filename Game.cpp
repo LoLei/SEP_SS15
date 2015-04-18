@@ -79,15 +79,15 @@ string Game::userInputToCommand(string user_input)
 }
 
 //------------------------------------------------------------------------------
-void Game::printTiles(std::map<Position*, Tile*, customKeyComparator> karte)
+void Game::printTiles(std::map<Position*, Tile*> karte)
 {
-  cout << endl << "simple output with ordered map" << endl;
+  /*cout << endl << "___ für testzwecke ___" << endl;
   for (auto& x: karte)
   {
     cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
          << x.second->getTypeOut() << endl;
   }
-  cout << "___" << endl;
+  cout << "___" << endl;*/
 /*
   for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
   {
@@ -165,7 +165,7 @@ void Game::printTiles(std::map<Position*, Tile*, customKeyComparator> karte)
 }
 
 //------------------------------------------------------------------------------
-void Game::freeTiles(std::map<Position*, Tile*, customKeyComparator> karte)
+void Game::freeTiles(std::map<Position*, Tile*> karte)
 {
   for (auto& x: karte)
   {
@@ -178,7 +178,8 @@ void Game::freeTiles(std::map<Position*, Tile*, customKeyComparator> karte)
 void Game::run(std::string file_name, int graphic_mode)
 {
   setRunning(true);
-  std::map<Position*, Tile*, customKeyComparator> karte;
+
+  std::map<Position*, Tile*> karte;
 
   int tile_counter = 0;
 
