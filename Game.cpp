@@ -9,6 +9,7 @@
 //
 
 #include "Game.h"
+#include "Karte.h"
 
 using std::cout;
 using std::endl;
@@ -81,13 +82,27 @@ string Game::userInputToCommand(string user_input)
 //------------------------------------------------------------------------------
 void Game::printTiles(std::map<Position*, Tile*> karte)
 {
-  /*cout << endl << "___ für testzwecke ___" << endl;
+  cout << endl << "Alte nicht sortierte Karte:" << endl;
   for (auto& x: karte)
   {
     cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
          << x.second->getTypeOut() << endl;
   }
-  cout << "___" << endl;*/
+  cout << "___" << endl;
+
+  std::map<Position*, Tile*, customKeyComparator> karte2;
+  for (auto& x : karte)
+  {
+    karte2.emplace(x.first, x.second);
+  }
+  cout << endl << "Neue sortierte Karte:" << endl;
+  for (auto& x : karte2)
+  {
+    cout << x.first->toString() << ": " << x.second->getColorOut() << " "
+      << x.second->getTypeOut() << endl;
+  }
+
+  //----------------------------------------------------------------------------
 /*
   for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
   {

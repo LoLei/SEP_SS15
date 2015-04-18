@@ -76,7 +76,6 @@ class Position
 
     virtual bool operator==(const Position&) const;
     virtual bool operator!=(const Position&) const;
-    virtual bool operator>(const Position&) const;
     virtual bool operator<(const Position&) const;
 };
 #endif // POSITION_H
