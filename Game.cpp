@@ -219,7 +219,7 @@ void Game::run(std::string file_name, int graphic_mode)
     else if(command == "write")
     {
       Write createNewFile;
-      createNewFile.createNewFile(user_input,karte,tile_counter);
+      createNewFile.createNewFile(user_input,karte,tile_counter,getActivePlayer());
     }
     else if(command == "addtile")
     {
@@ -236,7 +236,7 @@ void Game::run(std::string file_name, int graphic_mode)
     {
       user_input = "write " + file_name;
       Write createNewFile;
-      createNewFile.createNewFile(user_input, karte, tile_counter);
+      createNewFile.createNewFile(user_input, karte, tile_counter,getActivePlayer());
     }
     else
     {

@@ -33,7 +33,7 @@ int Write::execute(Game& board, std::vector<std::string>& params)
 
 //------------------------------------------------------------------------------
 void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &karte,
-  int &tile_counter)
+  int &tile_counter, Color active_player)
 {
   std::string file_name;
   try
@@ -62,6 +62,7 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
 
     FileHeader file_header;
     //--------------------------------------------------------------------------
+    // Write values into header
     // Find max and min coordinates
     // Min
     file_header.minX = Addtile::min_x_;
@@ -69,10 +70,9 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
     // Max
     file_header.maxX = Addtile::max_x_;
     file_header.maxY = Addtile::max_y_;
-
-    // Write values into header
+    // Signature and active player
     file_header.signature = "TRAX";
-    file_header.active_player = AP_RED;
+    file_header.active_player = active_player;
   
     // Open file for writing
     // file_name is either argv[2] or command after write, i.e. user_input
@@ -114,29 +114,6 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
 
             file << board_tiles.side;
             file << board_tiles.top_color;
-
-            // If position is empty or tile was forced, to not switch player
-            if (board_tiles.side != 0)
-            {
-              // Switch active player
-              // Save position
-              pos = file.tellp();
-              switch (x.second->getPlayerColor())
-              {
-              case (AP_WHITE):
-                file_header.active_player = AP_RED;
-                break;
-              case (AP_RED) :
-                file_header.active_player = AP_WHITE;
-                break;
-              }
-              // Go to active player offset and write
-              file.seekp(AP_OFFSET);
-              file << file_header.active_player;
-              // Go back to where we left off
-              file.seekp(pos);
-            }
-            break;
           }
         }
       }
@@ -153,9 +130,3 @@ void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &ka
     std::cout << "Error: Wrong parameter count!" << std::endl;
   }
 }
-
-//------------------------------------------------------------------------------
-//void Write::togglePlayerWrite(FileHeader file_header)
-//{
-//  switch (file_header.active_player)
-//}
