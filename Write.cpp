@@ -12,16 +12,6 @@
 
 #include "Write.h"
 
-#define AP_OFFSET     4
-#define AP_WHITE      1
-#define AP_RED        2
-#define NO_FIGURE     0
-#define SIDE_CROSS    1
-#define SIDE_CURVE_1  2
-#define SIDE_CURVE_2  3
-#define TOP_WHITE     1
-#define TOP_RED       2
-
 Write::Write() : Command("Write")
 {
 }

@@ -90,13 +90,24 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
   }
   cout << "___" << endl;
 
-  std::map<Position*, Tile*, customKeyComparator> karte2;
-  for (auto& x : karte)
+  std::map<Position*, Tile*, customKeyComparator> map_sorted;
+  for (signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
   {
-    karte2.emplace(x.first, x.second);
+    for (signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
+    {
+      Position pos1(x, y);
+      for (auto& x : karte)
+      {
+        if (*x.first == pos1)
+        {
+          map_sorted.emplace(x.first, x.second);
+        }
+      }
+    }
   }
+  // For win conditions maybe
   cout << endl << "Neue sortierte Karte:" << endl;
-  for (auto& x : karte2)
+  for (auto& x : map_sorted)
   {
     cout << x.first->toString() << ": " << x.second->getColorOut() << " "
       << x.second->getTypeOut() << endl;
