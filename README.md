@@ -24,6 +24,7 @@ Repository for SEP SS15 Basisbeispiel
 - [ ] Implement try and catch in regular files using exception files
 - [ ] Win conditions
 - [ ] Draw/Tie
+- [ ] Add desctructor to every class (coding standard)
 
 ### Low priority
 - [ ] Make commands into vector (see Fragestunde.md)
