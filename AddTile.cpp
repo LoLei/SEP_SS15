@@ -132,6 +132,8 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
   }
   tile_counter++;
 
+  setMaximas(p1);
+
   if(tile_counter > 2)
   {
     fillEmptyTiles(karte);
@@ -160,7 +162,7 @@ bool Addtile::abfrage(bool abfrage1, bool &twisted, bool &lonely_tile, Tile &t1)
   }
 
 //------------------------------------------------------------------------------
-bool Addtile::adaptTile(std::map<Position*, Tile*> karte, 
+bool Addtile::adaptTile(std::map<Position*, Tile*> karte,
                         Tile &t1, Position p1)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
@@ -217,7 +219,7 @@ bool Addtile::adaptTile(std::map<Position*, Tile*> karte,
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::completeMap(std::map<Position*, Tile*> &karte, 
+bool Addtile::completeMap(std::map<Position*, Tile*> &karte,
                           int &tile_counter, string &forAddtile)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
@@ -232,7 +234,7 @@ bool Addtile::completeMap(std::map<Position*, Tile*> &karte,
     Color Re = EMPTY_C;
     Color Ob = EMPTY_C;
     Color Un = EMPTY_C;
-    
+
     Position p1 = *(y.first);
     Position left(p1.getX() - 1,p1.getY());
     Position right(p1.getX()+1,p1.getY());
@@ -274,7 +276,7 @@ bool Addtile::completeMap(std::map<Position*, Tile*> &karte,
       Tile neu(Li, Re, Ob, Un);
       if(neu == empty_tile)
       {
-        continue; 
+        continue;
       }
       forAddtile = "addtile " + y.first->toString() + " " + neu.getTypeOut();
       return true;
