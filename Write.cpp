@@ -23,9 +23,9 @@ int Write::execute(Game& board, std::vector<std::string>& params)
 
 //------------------------------------------------------------------------------
 void Write::createNewFile(std::string user_input, std::map<Position*, Tile*> &karte,
-  int &tile_counter, Color active_player, bool &error_set)
+  int &tile_counter, Color active_player, int &error_set)
 {
-  if (!((tile_counter == 0) && (error_set == true)))
+  if (!((tile_counter == 0) && (error_set == 1)))
   {
     std::string file_name;
     try

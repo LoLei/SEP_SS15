@@ -209,7 +209,7 @@ void Game::run(std::string file_name, int graphic_mode)
   std::map<Position*, Tile*> karte;
 
   int tile_counter = 0;
-  bool error_set = false;
+  int error_set = 0;
 
   do
   {
@@ -240,7 +240,8 @@ void Game::run(std::string file_name, int graphic_mode)
     else if(command == "addtile")
     {
       Addtile newTile;
-      if((error_set = !newTile.addNewTile(user_input,karte,tile_counter,getActivePlayer())))
+      error_set = newTile.addNewTile(user_input,karte,tile_counter,getActivePlayer());
+      if(error_set == 0)
       {
         string forAddtile;
         while(newTile.completeMap(karte, forAddtile))
@@ -255,6 +256,10 @@ void Game::run(std::string file_name, int graphic_mode)
           createNewFile.createNewFile(user_input, karte, tile_counter,
             getActivePlayer(),error_set);
         }
+      }
+      else if(error_set == 4)
+      {
+        setRunning(false);
       }
     }
     else

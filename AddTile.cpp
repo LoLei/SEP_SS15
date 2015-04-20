@@ -63,8 +63,16 @@ bool Addtile::valideInput(string user_input, Tile &tile, Position &position)
               user_input.find_first_of("+\\/"));
     if(position.parse(string_position) && one_type)
     {
-      char tile_type = user_input.at(user_input.find_last_of("+\\/"));
-      tile.setType(tile_type);
+      try
+      {
+        char tile_type = user_input.at(user_input.find_last_of("+\\/"));
+        tile.setType(tile_type);
+      }
+      catch(...)
+      {
+        cout << "Invalid parameters" << endl;
+        return false;
+      }
     }
     else
     {
@@ -81,16 +89,23 @@ bool Addtile::valideInput(string user_input, Tile &tile, Position &position)
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
+int Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
                          int &tile_counter, Color active_player)
 {
+  //für das autom. ergänzen
+  if(tile_counter == 64)
+  {
+    cout << "Invalid move - not enough tiles left" << endl;
+    return 3;
+  }
+
   Position p1;
   Tile t1(Tile::EMPTY_T, COLOR_RED);
   t1.setPlayer(active_player);
   // look up if the userinput is correct
   if(!(valideInput(user_input,t1,p1)))
   {
-    return false;
+    return 1;
   }
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   // number of tiles beside the setted tile
@@ -100,11 +115,11 @@ bool Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
   {
     cout << "Invalid coordinates - first tile must be set on (0,0)";
     cout << endl;
-    return false;
+    return 2;
   }
   if(tile_counter && !adaptTile(karte, t1, p1))
   {
-    return false;
+    return 2;
   }
 
   for(auto& x: karte)
@@ -112,7 +127,7 @@ bool Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
     if(*x.first == p1 && *x.second != empty_tile)
     {
       cout << "Invalid coordinates - field not empty" << endl;
-      return false;
+      return 2;
     }
   }
 
@@ -144,7 +159,7 @@ bool Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
   }
 
   // falls alles geklappt hatt
-  return true;
+  return 0;
 }
 
 //------------------------------------------------------------------------------

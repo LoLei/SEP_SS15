@@ -34,3 +34,76 @@ addtile (-1,4) \
 addtile (-2,4) \
 addtile (0,-1) +
 addtile (-1,0) /
+
+addtile (0,0) +
+addtile (1,0) +
+addtile (2,0) +
+addtile (3,0) +
+addtile (4,0) +
+addtile (5,0) +
+addtile (6,0) +
+addtile (7,0) +
+
+addtile (0,1) +
+addtile (1,1) +
+addtile (2,1) +
+addtile (3,1) +
+addtile (4,1) +
+addtile (5,1) +
+addtile (6,1) +
+addtile (7,1) +
+
+addtile (0,2) +
+addtile (1,2) +
+addtile (2,2) +
+addtile (3,2) +
+addtile (4,2) +
+addtile (5,2) +
+addtile (6,2) +
+addtile (7,2) +
+
+addtile (0,3) +
+addtile (1,3) +
+addtile (2,3) +
+addtile (3,3) +
+addtile (4,3) +
+addtile (5,3) +
+addtile (6,3) +
+addtile (7,3) +
+
+addtile (0,4) +
+addtile (1,4) +
+addtile (2,4) +
+addtile (3,4) +
+addtile (4,4) +
+addtile (5,4) +
+addtile (6,4) +
+addtile (7,4) +
+
+addtile (0,5) +
+addtile (1,5) +
+addtile (2,5) +
+addtile (3,5) +
+addtile (4,5) +
+addtile (5,5) +
+addtile (6,5) +
+addtile (7,5) +
+
+addtile (0,6) +
+addtile (1,6) +
+addtile (2,6) +
+addtile (3,6) +
+addtile (4,6) +
+addtile (5,6) +
+addtile (6,6) +
+addtile (7,6) +
+
+addtile (0,7) +
+addtile (1,7) +
+addtile (2,7) +
+addtile (3,7) +
+addtile (4,7) +
+addtile (5,7) +
+addtile (6,7) +
+addtile (7,7) +
+
