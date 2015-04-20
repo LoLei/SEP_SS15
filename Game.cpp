@@ -82,6 +82,7 @@ string Game::userInputToCommand(string user_input)
 //------------------------------------------------------------------------------
 void Game::printTiles(std::map<Position*, Tile*> karte)
 {
+  /*
   cout << endl << "Alte nicht sortierte Karte:" << endl;
   for (auto& x: karte)
   {
@@ -112,7 +113,7 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
     cout << x.first->toString() << ": " << x.second->getColorOut() << " "
       << x.second->getTypeOut() << endl;
   }
-
+*/
   //----------------------------------------------------------------------------
 /*
   for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
@@ -169,7 +170,7 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
     }
     cout << endl;
   }
-
+/*
   cout << endl << "active player:" << endl;
   for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
   {
@@ -187,7 +188,7 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
     }
   }
   //---
-
+*/
 }
 
 //------------------------------------------------------------------------------
@@ -235,19 +236,21 @@ void Game::run(std::string file_name, int graphic_mode)
     else if(command == "addtile")
     {
       Addtile newTile;
-      newTile.addNewTile(user_input,karte,tile_counter,getActivePlayer());
-      string forAddtile;
-      while(newTile.completeMap(karte, tile_counter, forAddtile)) 
+      if(!newTile.addNewTile(user_input,karte,tile_counter,getActivePlayer()))
       {
-        newTile.addNewTile(forAddtile,karte,tile_counter,getActivePlayer());
+        string forAddtile;
+        while(newTile.completeMap(karte, tile_counter, forAddtile))
+        {
+          newTile.addNewTile(forAddtile,karte,tile_counter,getActivePlayer());
+        }
+        togglePlayer();
+        if (graphic_mode == 1)
+        {
+          user_input = "write " + file_name;
+          Write createNewFile;
+          createNewFile.createNewFile(user_input, karte, tile_counter,getActivePlayer());
+        }
       }
-      togglePlayer();
-    }
-    if (graphic_mode == 1)
-    {
-      user_input = "write " + file_name;
-      Write createNewFile;
-      createNewFile.createNewFile(user_input, karte, tile_counter,getActivePlayer());
     }
     else
     {

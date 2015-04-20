@@ -81,7 +81,7 @@ bool Addtile::valideInput(string user_input, Tile &tile, Position &position)
 }
 
 //------------------------------------------------------------------------------
-void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
+int Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
                          int &tile_counter, Color active_player)
 {
   Position p1;
@@ -90,7 +90,7 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
   // look up if the userinput is correct
   if(!(valideInput(user_input,t1,p1)))
   {
-    return;
+    return 1;
   }
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   // number of tiles beside the setted tile
@@ -100,11 +100,11 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
   {
     cout << "Invalid coordinates - first tile must be set on (0,0)";
     cout << endl;
-    return;
+    return 1;
   }
   if(tile_counter && !adaptTile(karte, t1, p1))
   {
-    return;
+    return 1;
   }
 
   for(auto& x: karte)
@@ -112,7 +112,7 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
     if(*x.first == p1 && *x.second != empty_tile)
     {
       cout << "Invalid coordinates - field not empty" << endl;
-      return;
+      return 1;
     }
   }
 
@@ -121,22 +121,30 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
   {
     if(*y.first == p1 && *y.second == empty_tile)
     {
+      delete y.second;
       karte[y.first] = new Tile(t1);
       replace = false;
     }
   }
+
+  // tile einfügen
   if(replace)
   {
     karte.emplace(new Position(p1),new Tile(t1));
   }
   tile_counter++;
 
+  // spielfeld vergrößern
   setMaximas(p1);
 
+  // zwischenfelder mit leeren einträgen füllen
   if(tile_counter > 2)
   {
     fillEmptyTiles(karte);
   }
+
+  // falls alles geklappt hatt
+  return 0;
 }
 
 //------------------------------------------------------------------------------
