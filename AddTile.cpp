@@ -82,7 +82,8 @@ bool Addtile::valideInput(string user_input, Tile &tile, Position &position)
 
 //------------------------------------------------------------------------------
 int Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
-                         int &tile_counter, Color active_player)
+                         int &tile_counter, Color active_player,
+                         bool &error_set)
 {
   Position p1;
   Tile t1(Tile::EMPTY_T, COLOR_RED);
@@ -100,6 +101,7 @@ int Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
   {
     cout << "Invalid coordinates - first tile must be set on (0,0)";
     cout << endl;
+    error_set = true;
     return 1;
   }
   if(tile_counter && !adaptTile(karte, t1, p1))
