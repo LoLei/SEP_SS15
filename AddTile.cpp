@@ -95,7 +95,6 @@ void Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   // number of tiles beside the setted tile
 
-  setMaximas(p1);
   Position center(0,0);
   if((tile_counter == 0) && (t1.getColor() != COLOR_RED || p1 != center))
   {
