@@ -56,12 +56,12 @@ bool Addtile::valideInput(string user_input, Tile &tile, Position &position)
 {
   try
   {
-    string str3 = user_input.substr(user_input.find_first_of("("),
+    string string_position = user_input.substr(user_input.find_first_of("("),
                                     user_input.find_last_of(")") -
                                     user_input.find_first_of("(") + 1);
     bool one_type = (user_input.find_last_of("+\\/") ==
               user_input.find_first_of("+\\/"));
-    if(position.parse(str3) && one_type)
+    if(position.parse(string_position) && one_type)
     {
       char tile_type = user_input.at(user_input.find_last_of("+\\/"));
       tile.setType(tile_type);
@@ -81,9 +81,8 @@ bool Addtile::valideInput(string user_input, Tile &tile, Position &position)
 }
 
 //------------------------------------------------------------------------------
-int Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
-                         int &tile_counter, Color active_player,
-                         bool &error_set)
+bool Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
+                         int &tile_counter, Color active_player)
 {
   Position p1;
   Tile t1(Tile::EMPTY_T, COLOR_RED);
@@ -91,7 +90,7 @@ int Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
   // look up if the userinput is correct
   if(!(valideInput(user_input,t1,p1)))
   {
-    return 1;
+    return false;
   }
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   // number of tiles beside the setted tile
@@ -101,12 +100,11 @@ int Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
   {
     cout << "Invalid coordinates - first tile must be set on (0,0)";
     cout << endl;
-    error_set = true;
-    return 1;
+    return false;
   }
   if(tile_counter && !adaptTile(karte, t1, p1))
   {
-    return 1;
+    return false;
   }
 
   for(auto& x: karte)
@@ -114,7 +112,7 @@ int Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
     if(*x.first == p1 && *x.second != empty_tile)
     {
       cout << "Invalid coordinates - field not empty" << endl;
-      return 1;
+      return false;
     }
   }
 
@@ -146,7 +144,7 @@ int Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
   }
 
   // falls alles geklappt hatt
-  return 0;
+  return true;
 }
 
 //------------------------------------------------------------------------------
@@ -228,8 +226,7 @@ bool Addtile::adaptTile(std::map<Position*, Tile*> karte,
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::completeMap(std::map<Position*, Tile*> &karte,
-                          int &tile_counter, string &forAddtile)
+bool Addtile::completeMap(std::map<Position*, Tile*> &karte, string &forAddtile)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   for(auto& y: karte)

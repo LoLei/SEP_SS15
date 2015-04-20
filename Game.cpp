@@ -217,6 +217,8 @@ void Game::run(std::string file_name, int graphic_mode)
     string user_input;
     std::getline(std::cin, user_input);
 
+    // std::std::vector<string> commands;
+
     // If user enters blank line, prompt again
     if (user_input == "")
     {
@@ -238,14 +240,12 @@ void Game::run(std::string file_name, int graphic_mode)
     else if(command == "addtile")
     {
       Addtile newTile;
-      if(!newTile.addNewTile(user_input,karte,tile_counter,getActivePlayer(),
-        error_set))
+      if((error_set = !newTile.addNewTile(user_input,karte,tile_counter,getActivePlayer())))
       {
         string forAddtile;
-        while(newTile.completeMap(karte, tile_counter, forAddtile))
+        while(newTile.completeMap(karte, forAddtile))
         {
-          newTile.addNewTile(forAddtile, karte, tile_counter, getActivePlayer(),
-            error_set);
+          newTile.addNewTile(forAddtile, karte, tile_counter, getActivePlayer());
         }
         togglePlayer();
         if (graphic_mode == 1)

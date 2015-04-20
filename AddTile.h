@@ -34,12 +34,12 @@ class Addtile:public Command
     int execute(Game& board, std::vector<std::string>& params);
     bool valideInput(std::string user_input, Tile &tile, Position &position);
     void setMaximas(Position reference);
-    int addNewTile(std::string user_input, std::map<Position*, Tile*> &karte,
-      int &tile_counter, Color active_player, bool &error_set);
+    bool addNewTile(std::string user_input, std::map<Position*, Tile*> &karte,
+      int &tile_counter, Color active_player);
     bool abfrage(bool abfrage, bool &twisted, bool &lonely_tile, Tile &t1);
     bool adaptTile(std::map<Position*, Tile*> karte, Tile &t1, Position p1);
 
-    bool completeMap(std::map<Position*, Tile*> &karte, int &tile_counter,
+    bool completeMap(std::map<Position*, Tile*> &karte,
                      std::string &forAddtile);
     void fillEmptyTiles(std::map<Position*, Tile*> &karte);
 };
