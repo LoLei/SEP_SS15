@@ -20,6 +20,7 @@
 #include <cctype>
 #include <map>
 #include <iomanip>
+#include <sstream>
 
 //------------------------------------------------------------------------------
 // Game Class
@@ -43,7 +44,7 @@ class Game
     //
     bool running_;
 
-    std::string userInputToCommand(std::string);
+    void userInputToCommand(std::vector<std::string> &v);
 
   public:
 

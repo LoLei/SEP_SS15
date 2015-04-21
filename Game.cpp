@@ -57,8 +57,9 @@ Color Game::getActivePlayer()
 }
 
 //------------------------------------------------------------------------------
-string Game::userInputToCommand(string user_input)
+void Game::userInputToCommand(std::vector<string> &vector)
 {
+  /*
   try
   {
     // get first word in line -> command
@@ -77,6 +78,31 @@ string Game::userInputToCommand(string user_input)
     cout << "Invalid parameters(command)" << endl;
     return "";
   }
+  */
+
+  std::string user_input;
+
+  std::getline( std::cin, user_input );
+
+  std::istringstream is( user_input );
+
+  std::string word;
+
+  while ( is >> word )
+  {
+    vector.push_back( word );
+  }
+
+/*
+  int i = 0;
+  for (std::vector<std::string>::iterator it = vector.begin() ; it != vector.end(); ++it)
+  {
+    std::cout << i << " : _" <<  *it << "_" << std::endl;
+    i++;
+  }
+  */
+  //std::cout << vector.size() << std::endl;
+
 }
 
 //------------------------------------------------------------------------------
@@ -214,46 +240,52 @@ void Game::run(std::string file_name, int graphic_mode)
   do
   {
     std::cout << "sep> ";
-    string user_input;
-    std::getline(std::cin, user_input);
+    //string user_input;
+    //std::getline(std::cin, user_input);
 
-    // std::std::vector<string> commands;
-
+    std::vector<string> command;
+    userInputToCommand(command);
+/*
     // If user enters blank line, prompt again
     if (user_input == "")
     {
       continue;
     }
+*/  if(command.size() == 0)
+    {
+      continue;
+    }
 
-    string command = userInputToCommand(user_input);
+    //string command = userInputToCommand(user_input);
+
     // choose case of command
-    if(command == "quit")
+    if(command[0] == "quit")
     {
       setRunning(false);
     }
-    else if(command == "write")
+    else if(command[0] == "write")
     {
       Write createNewFile;
-      createNewFile.createNewFile(user_input,karte,tile_counter,
+      createNewFile.createNewFile(command[1],karte,tile_counter,
         getActivePlayer(),error_set);
     }
-    else if(command == "addtile")
+    else if(command[0] == "addtile")
     {
       Addtile newTile;
-      error_set = newTile.addNewTile(user_input,karte,tile_counter,getActivePlayer());
+      error_set = newTile.addNewTile(command,karte,tile_counter,getActivePlayer());
       if(error_set == 0)
       {
-        string forAddtile;
-        while(newTile.completeMap(karte, forAddtile))
+        //string forAddtile;
+        while(newTile.completeMap(karte, command))
         {
-          newTile.addNewTile(forAddtile, karte, tile_counter, getActivePlayer());
+          newTile.addNewTile(command, karte, tile_counter, getActivePlayer());
         }
         togglePlayer();
         if (graphic_mode == 1)
         {
-          user_input = "write " + file_name;
+          //user_input = "write " + file_name;
           Write createNewFile;
-          createNewFile.createNewFile(user_input, karte, tile_counter,
+          createNewFile.createNewFile(file_name, karte, tile_counter,
             getActivePlayer(),error_set);
         }
       }

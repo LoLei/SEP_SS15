@@ -52,8 +52,32 @@ void Addtile::setMaximas(Position reference)
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::valideInput(string user_input, Tile &tile, Position &position)
+bool Addtile::valideInput(std::vector<string> v, Tile &tile, Position &position)
 {
+  if(v.size() != 3)
+  {
+    cout << "Error: Wrong parameter count!" << endl;
+    return false;
+  }
+  if(position.parse(v[1]))
+  {
+    try
+    {
+      tile.setType(v[2][0]);
+    }
+    catch(...)
+    {
+      cout << "Invalid parameters" << endl;
+      return false;
+    }
+  }
+  else
+  {
+    cout << "Invalid parameters" << endl;
+    return false;
+  }
+
+  /*
   try
   {
     string string_position = user_input.substr(user_input.find_first_of("("),
@@ -85,11 +109,12 @@ bool Addtile::valideInput(string user_input, Tile &tile, Position &position)
     cout << "Error: Wrong parameter count!" << endl;
     return false;
   }
+  */
   return true;
 }
 
 //------------------------------------------------------------------------------
-int Addtile::addNewTile(string user_input, std::map<Position*, Tile*> &karte,
+int Addtile::addNewTile(std::vector<string> user_input, std::map<Position*, Tile*> &karte,
                          int &tile_counter, Color active_player)
 {
   //für das autom. ergänzen
@@ -241,7 +266,7 @@ bool Addtile::adaptTile(std::map<Position*, Tile*> karte,
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::completeMap(std::map<Position*, Tile*> &karte, string &forAddtile)
+bool Addtile::completeMap(std::map<Position*, Tile*> &karte, std::vector<string> &forAddtile)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   for(auto& y: karte)
@@ -299,7 +324,8 @@ bool Addtile::completeMap(std::map<Position*, Tile*> &karte, string &forAddtile)
       {
         continue;
       }
-      forAddtile = "addtile " + y.first->toString() + " " + neu.getTypeOut();
+      forAddtile[1] = y.first->toString();
+      forAddtile[2] = neu.getTypeOut();
       return true;
     }
   }

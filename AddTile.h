@@ -14,6 +14,7 @@
 #include <string>
 #include <iostream>
 #include <map>
+#include <vector>
 #include "Position.h"
 #include "Tile.h"
 #include "Command.h"
@@ -32,15 +33,15 @@ class Addtile:public Command
     //~Addtile();
 
     int execute(Game& board, std::vector<std::string>& params);
-    bool valideInput(std::string user_input, Tile &tile, Position &position);
+    bool valideInput(std::vector<std::string> v, Tile &tile, Position &position);
     void setMaximas(Position reference);
-    int addNewTile(std::string user_input, std::map<Position*, Tile*> &karte,
-      int &tile_counter, Color active_player);
+    int addNewTile(std::vector<std::string> v, std::map<Position*, Tile*> &karte,
+                   int &tile_counter, Color active_player);
     bool abfrage(bool abfrage, bool &twisted, bool &lonely_tile, Tile &t1);
     bool adaptTile(std::map<Position*, Tile*> karte, Tile &t1, Position p1);
 
     bool completeMap(std::map<Position*, Tile*> &karte,
-                     std::string &forAddtile);
+                     std::vector<std::string> &forAddtile);
     void fillEmptyTiles(std::map<Position*, Tile*> &karte);
 };
 
