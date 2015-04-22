@@ -16,6 +16,11 @@ Write::Write() : Command("Write")
 }
 
 //------------------------------------------------------------------------------
+Write::~Write()
+{
+}
+
+//------------------------------------------------------------------------------
 int Write::execute(Game& board, std::vector<std::string>& user_input)
 {
   std::string file_name = user_input[1];

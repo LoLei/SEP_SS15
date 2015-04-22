@@ -22,6 +22,11 @@ Addtile::Addtile() : Command("Addtile")
 }
 
 //------------------------------------------------------------------------------
+Addtile::~Addtile()
+{
+}
+
+//------------------------------------------------------------------------------
 bool Addtile::valideInput(std::vector<string> user_input, Tile &tile,
   Position &position)
 {

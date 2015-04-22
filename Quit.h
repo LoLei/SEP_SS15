@@ -27,6 +27,11 @@ class Quit:public Command
     Quit();
 
     //--------------------------------------------------------------------------
+    // Destructor
+    //
+    virtual ~Quit();
+
+    //--------------------------------------------------------------------------
     // execute method
     // Executes command
     // 
@@ -36,12 +41,6 @@ class Quit:public Command
     // @return int 0 if everything worked
     //
     int execute(Game& board, std::vector<std::string>& params);
-
-  //private:
-    //--------------------------------------------------------------------------
-    // Destructor
-    //
-    //~Quit();
 };
 
 #endif //QUIT_H_INCLUDED
