@@ -18,21 +18,23 @@ Repository for SEP SS15 Basisbeispiel
 - [x] ~~Make -g flag working~~
 - [x] ~~Make AddTile check if valid move~~
 - [x] ~~Forced tiles~~
+- [x] ~~Add desctructor to every class (coding standard)~~
 - [ ] Fix issues
 - [ ] Add exception class for other exceptions too (must be public)
 - [ ] Figure out best way how to include exception classes in other files
 - [ ] Implement try and catch in regular files using exception files
 - [ ] Win conditions
 - [ ] Draw/Tie
-- [ ] Add desctructor to every class (coding standard)
+
 
 ### Low priority
 - [ ] Make commands into vector (see Fragestunde.md)
 - [ ] Make write only append to file, not write a new one each time
 
 ### Vor Abgabe
+- [x] ~~Make code coding standard conform~~
 - [ ] Remove all output
 - [ ] Compile with pluto and makefile
 - [ ] Check valgrind
 - [ ] Remove redundant/commented code
-- [ ] Make code coding standard conform
+
