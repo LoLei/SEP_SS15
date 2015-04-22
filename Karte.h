@@ -63,7 +63,7 @@ class Karte
     //--------------------------------------------------------------------------
     // Destructor
     //
-    //~Addtile();
+    virtual ~Karte();
 };
 
 #endif //KARTE_H_INCLUDED
