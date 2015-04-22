@@ -24,5 +24,6 @@ int Quit::execute(Game& board, std::vector<std::string>& params)
     return 1;
   }
   board.setRunning(false);
+  std::cout << "Bye!" << std::endl;
   return 0;
 }
