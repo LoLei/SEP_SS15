@@ -29,9 +29,6 @@ public:
   //~Write();
 
   int execute(Game& board, std::vector<std::string>& params);
-
-  void createNewFile(std::string user_input, std::map<Position*, Tile*> &karte,
-    int &tile_counter, Color active_player, int &error_set);
 };
 
 #endif //WRITE_H_INCLUDED

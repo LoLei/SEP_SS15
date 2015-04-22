@@ -20,6 +20,11 @@ Game::Game()
 {
   activeplayer_ = COLOR_WHITE;
   starttile_ = NULL;
+  tile_counter_ = 0;
+  max_x_ = 0;
+  max_y_ = 0;
+  min_x_ = 0;
+  min_y_ = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -32,6 +37,27 @@ void Game::setStartTile(Tile* starttile)
 void Game::setRunning(bool running)
 {
   running_ = running;
+}
+
+//------------------------------------------------------------------------------
+void Game::setMaximas(Position reference)
+{
+  if(reference.getX() > max_x_)
+  {
+    max_x_ = reference.getX();
+  }
+  if(reference.getY() > max_y_)
+  {
+    max_y_ = reference.getY();
+  }
+  if(reference.getX() < min_x_)
+  {
+    min_x_ = reference.getX();
+  }
+  if(reference.getY() < min_y_)
+  {
+    min_y_ = reference.getY();
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -57,60 +83,48 @@ Color Game::getActivePlayer()
 }
 
 //------------------------------------------------------------------------------
-void Game::userInputToCommand(std::vector<string> &vector)
+int Game::getNumberOfTiles()
 {
-  /*
-  try
-  {
-    // get first word in line -> command
-    string first_word = user_input.substr(user_input.find_first_not_of(" "),
-                             user_input.size());
-    string command = first_word.substr(0,first_word.find_first_of(" "));
-    // make lower case
-    for(std::size_t it = 0; it != command.size(); it++)
-    {
-      command[it] = tolower(command[it]);
-    }
-      return command;
-  }
-  catch(...)
-  {
-    cout << "Invalid parameters(command)" << endl;
-    return "";
-  }
-  */
-
-  std::string user_input;
-
-  std::getline( std::cin, user_input );
-
-  std::istringstream is( user_input );
-
-  std::string word;
-
-  while ( is >> word )
-  {
-    vector.push_back( word );
-  }
-
-/*
-  int i = 0;
-  for (std::vector<std::string>::iterator it = vector.begin() ; it != vector.end(); ++it)
-  {
-    std::cout << i << " : _" <<  *it << "_" << std::endl;
-    i++;
-  }
-  */
-  //std::cout << vector.size() << std::endl;
-
+  return tile_counter_;
 }
 
 //------------------------------------------------------------------------------
-void Game::printTiles(std::map<Position*, Tile*> karte)
+void Game::riseNumberOfTiles()
+{
+  tile_counter_++;
+}
+//------------------------------------------------------------------------------
+int Game::userInputToCommand(std::vector<string> &vector_input)
+{
+  std::string string_input;
+  std::getline(std::cin, string_input);
+  std::istringstream is(string_input);
+  std::string word;
+
+  while(is >> word)
+  {
+    vector_input.push_back(word);
+  }
+  // If user enters blank line, prompt again
+  if(vector_input.size() == 0)
+  {
+    return 1;
+  }
+
+  // make lower case
+  for(std::size_t it = 0; it != vector_input[0].size(); it++)
+  {
+    vector_input[0][it] = tolower(vector_input[0][it]);
+  }
+  return 0;
+}
+
+//------------------------------------------------------------------------------
+void Game::printTiles(std::map<Position*, Tile*> field)
 {
   /*
-  cout << endl << "Alte nicht sortierte Karte:" << endl;
-  for (auto& x: karte)
+  cout << endl << "Alte nicht sortierte field:" << endl;
+  for (auto& x: field)
   {
     cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
          << x.second->getTypeOut() << endl;
@@ -118,12 +132,12 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
   cout << "___" << endl;
 
   std::map<Position*, Tile*, customKeyComparator> map_sorted;
-  for (signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
+  for (signed int y = min_y_; y <= max_y_; y++)
   {
-    for (signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
+    for (signed int x = min_x_; x <= max_x_; x++)
     {
       Position pos1(x, y);
-      for (auto& x : karte)
+      for (auto& x : field)
       {
         if (*x.first == pos1)
         {
@@ -133,7 +147,7 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
     }
   }
   // For win conditions maybe
-  cout << endl << "Neue sortierte Karte:" << endl;
+  cout << endl << "Neue sortierte field:" << endl;
   for (auto& x : map_sorted)
   {
     cout << x.first->toString() << ": " << x.second->getColorOut() << " "
@@ -141,48 +155,28 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
   }
 */
   //----------------------------------------------------------------------------
-/*
-  for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
-  {
-    for(signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
-    {
-      Position pos1(x,y);
-      for (auto& x: karte)
-      {
-        if(*x.first == pos1)
-        {
-          cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
-          << x.second->getTypeOut() << endl;
-          break;
-        }
-      }
-    }
-  }
-  */
-  // ----
   cout << "    |";
-  for (signed int i = Addtile::min_x_; i <= Addtile::max_x_; i++)
+  for (signed int i = min_x_; i <= max_x_; i++)
     cout << std::setfill (' ') << std::setw (3) << i << std::setw (4) << "||";
   cout << endl;
-  int spalten1 = Addtile::max_x_ - Addtile::min_x_ + 1;
+  int spalten1 = max_x_ - min_x_ + 1;
   cout << "    |";
   while(spalten1--)
   {
     cout << std::setfill ('=') << std::setw (7) << "||";
   }
   cout << endl;
-  for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
+  for(signed int y = min_y_; y <= max_y_; y++)
   {
     cout << std::setfill (' ') << std::setw (2) << y << ": |";
-    int spalten = Addtile::max_x_ - Addtile::min_x_ + 1;
-    for(signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
+    int spalten = max_x_ - min_x_ + 1;
+    for(signed int x = min_x_; x <= max_x_; x++)
     {
       Position pos1(x,y);
-      for (auto& x: karte)
+      for (auto& x: field)
       {
         if(*x.first == pos1)
         {
-          //cout << " " << x.first->toString();
           cout << " " << x.second->getColorOut() << " " << x.second->getTypeOut() << " ||";
           break;
         }
@@ -196,31 +190,12 @@ void Game::printTiles(std::map<Position*, Tile*> karte)
     }
     cout << endl;
   }
-/*
-  cout << endl << "active player:" << endl;
-  for(signed int y = Addtile::min_y_; y <= Addtile::max_y_; y++)
-  {
-    for(signed int x = Addtile::min_x_; x <= Addtile::max_x_; x++)
-    {
-      Position pos1(x,y);
-      for (auto& x: karte)
-      {
-        if(*x.first == pos1)
-        {
-          cout << x.first->toString() << ": " << x.second->getPlayerColorOut() << endl;
-          break;
-        }
-      }
-    }
-  }
-  //---
-*/
 }
 
 //------------------------------------------------------------------------------
-void Game::freeTiles(std::map<Position*, Tile*> karte)
+void Game::freeTiles(std::map<Position*, Tile*> field)
 {
-  for (auto& x: karte)
+  for (auto& x: field)
   {
     delete x.first;
     delete x.second;
@@ -232,61 +207,58 @@ void Game::run(std::string file_name, int graphic_mode)
 {
   setRunning(true);
 
-  std::map<Position*, Tile*> karte;
-
-  int tile_counter = 0;
   int error_set = 0;
+
+  Write createNewFile;
+  Quit turnOff;
+  Addtile addNewTile;
 
   do
   {
     std::cout << "sep> ";
-    //string user_input;
-    //std::getline(std::cin, user_input);
-
-    std::vector<string> command;
-    userInputToCommand(command);
-/*
+    // get user input into a vactor
+    std::vector<string> user_input;
     // If user enters blank line, prompt again
-    if (user_input == "")
+    if(userInputToCommand(user_input))
     {
       continue;
     }
-*/  if(command.size() == 0)
-    {
-      continue;
-    }
-
-    //string command = userInputToCommand(user_input);
 
     // choose case of command
-    if(command[0] == "quit")
+    if(user_input[0] == "quit")
     {
-      setRunning(false);
+      turnOff.execute(*this, user_input);
+      //setRunning(false);
     }
-    else if(command[0] == "write")
+
+    // ------------------------------------------write
+    else if(user_input[0] == "write")
     {
-      Write createNewFile;
-      createNewFile.createNewFile(command[1],karte,tile_counter,
-        getActivePlayer(),error_set);
-    }
-    else if(command[0] == "addtile")
-    {
-      Addtile newTile;
-      error_set = newTile.addNewTile(command,karte,tile_counter,getActivePlayer());
-      if(error_set == 0)
+      // case: filename without whitespace!
+      if(user_input.size() != 2)
       {
-        //string forAddtile;
-        while(newTile.completeMap(karte, command))
+        cout << "Error: Wrong parameter count!" << endl;
+        continue;
+      }
+      createNewFile.execute(*this, user_input);
+    }
+
+    // --------------------------------------------------------addtile
+    else if(user_input[0] == "addtile")
+    {
+      error_set = addNewTile.execute(*this, user_input);
+
+      if (!((tile_counter_ == 0) && (error_set == 1)))
+      {
+        while(addNewTile.completeMap(field, user_input))
         {
-          newTile.addNewTile(command, karte, tile_counter, getActivePlayer());
+          addNewTile.execute(*this, user_input);
         }
         togglePlayer();
         if (graphic_mode == 1)
         {
-          //user_input = "write " + file_name;
-          Write createNewFile;
-          createNewFile.createNewFile(file_name, karte, tile_counter,
-            getActivePlayer(),error_set);
+          user_input[1] = file_name;
+          createNewFile.execute(*this, user_input);
         }
       }
       else if(error_set == 4)
@@ -294,12 +266,13 @@ void Game::run(std::string file_name, int graphic_mode)
         setRunning(false);
       }
     }
+    // --------------------------------------------------------
     else
     {
       continue;
     }
   } while( running_ );
 
-  printTiles(karte);
-  freeTiles(karte);
+  printTiles(field);
+  freeTiles(field);
 }

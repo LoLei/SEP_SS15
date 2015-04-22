@@ -18,31 +18,28 @@
 #include "Position.h"
 #include "Tile.h"
 #include "Command.h"
-
+#include "Game.h"
 
 
 class Addtile:public Command
 {
   public:
-    static signed int max_x_;
-    static signed int max_y_;
-    static signed int min_x_;
-    static signed int min_y_;
 
     Addtile();
     //~Addtile();
 
     int execute(Game& board, std::vector<std::string>& params);
-    bool valideInput(std::vector<std::string> v, Tile &tile, Position &position);
-    void setMaximas(Position reference);
-    int addNewTile(std::vector<std::string> v, std::map<Position*, Tile*> &karte,
-                   int &tile_counter, Color active_player);
+
+    bool valideInput(std::vector<std::string> user_input, Tile &tile, Position &position);
+
     bool abfrage(bool abfrage, bool &twisted, bool &lonely_tile, Tile &t1);
+
     bool adaptTile(std::map<Position*, Tile*> karte, Tile &t1, Position p1);
 
     bool completeMap(std::map<Position*, Tile*> &karte,
                      std::vector<std::string> &forAddtile);
-    void fillEmptyTiles(std::map<Position*, Tile*> &karte);
+
+    void fillEmptyTiles(Game& board);
 };
 
 #endif //ADDTILE_H_INCLUDED

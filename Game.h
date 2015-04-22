@@ -15,6 +15,8 @@
 #include "AddTile.h"
 #include "Position.h"
 #include "Write.h"
+#include "Command.h"
+#include "Quit.h"
 #include <iostream>
 #include <string>
 #include <cctype>
@@ -44,14 +46,28 @@ class Game
     //
     bool running_;
 
-    void userInputToCommand(std::vector<std::string> &v);
+    //--------------------------------------------------------------------------
+    // counts the tiles
+    //
+    int tile_counter_;
+
+    int userInputToCommand(std::vector<std::string> &user_input);
 
   public:
+
+    signed int max_x_;
+    signed int max_y_;
+    signed int min_x_;
+    signed int min_y_;
+
+    void setMaximas(Position reference);
 
     //--------------------------------------------------------------------------
     // Constructor
     //
     Game();
+
+    std::map<Position*, Tile*> field;
 
     //Game(Type side, Color orientation);
 
@@ -75,7 +91,7 @@ class Game
     // @param
     //
     void togglePlayer();
-
+    void riseNumberOfTiles();
     //--------------------------------------------------------------------------
     // Setter Methods
     //
@@ -87,6 +103,7 @@ class Game
     // Getter Methods
     //
     Color getActivePlayer();
+    int getNumberOfTiles();
 
     //--------------------------------------------------------------------------
     // Destructor
