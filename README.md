@@ -25,6 +25,7 @@ Repository for SEP SS15 Basisbeispiel
 - [ ] Implement try and catch in regular files using exception files
 - [ ] Win conditions
 - [ ] Draw/Tie
+- [ ] Do not include header files in header files
 
 
 ### Low priority
