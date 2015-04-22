@@ -1,12 +1,12 @@
 //------------------------------------------------------------------------------
-// Filename: Write.h
-// Description: Used for writing binary file
-// Authors: Lorenz Leitner
-// Tutor: Philipp Loibl
-// Group: 11574
-// Created: 14.04.2015
-// Last change: 14.04.2015
+// Write.h
+//
+// Group: Group 11574, study assistant Philip Loibl
+//
+// Authors: 
+// Lorenz Leitner 1430211
 //------------------------------------------------------------------------------
+//
 
 #ifndef WRITE_H_INCLUDED
 #define WRITE_H_INCLUDED
@@ -21,14 +21,44 @@
 #include "Command.h"
 #include "WriteException.h"
 
+//------------------------------------------------------------------------------
+// Write Class
+// Class for writing binary files containing the game board
+//
 class Write :public Command
 {
-public:
+  private:
+    //--------------------------------------------------------------------------
+    // Private copy constructor
+    //
+    Write(const Write& original);
 
-  Write();
-  //~Write();
+    //--------------------------------------------------------------------------
+    // Private assignment operator
+    //
+    Write& operator=(const Write& original);
 
-  int execute(Game& board, std::vector<std::string>& params);
+  public:
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    Write();
+
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
+    //~Write();
+
+    //--------------------------------------------------------------------------
+    // execute method
+    // Executes command write, creates file
+    // 
+    // @param board the game board
+    // @param user_input the input the user enters, will be file name
+    //
+    // @return int 0 if everything worked
+    //
+    int execute(Game& board, std::vector<std::string>& user_input);
 };
 
 #endif //WRITE_H_INCLUDED

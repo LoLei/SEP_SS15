@@ -1,10 +1,10 @@
 //------------------------------------------------------------------------------
 // Game.cpp
 //
-// Group: Group 9, study assistant Philip Loibl
+// Group: Group 11574, study assistant Philip Loibl
 //
-// Authors: Markus Pichler 1331070
-//
+// Authors: 
+// Markus Pichler 1331070
 //------------------------------------------------------------------------------
 //
 
@@ -179,7 +179,8 @@ void Game::printTiles(std::map<Position*, Tile*> field)
       {
         if(*x.first == pos1)
         {
-          cout << " " << x.second->getColorOut() << " " << x.second->getTypeOut() << " ||";
+          cout << " " << x.second->getColorOut() << " "
+          << x.second->getTypeOut() << " ||";
           break;
         }
       }
@@ -193,7 +194,7 @@ void Game::printTiles(std::map<Position*, Tile*> field)
     cout << endl;
   }*/
 
-    //----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     cout << "(white|red)" << endl;
   cout << "    |";
   for (signed int i = min_x_; i <= max_x_; i++)
@@ -217,8 +218,10 @@ void Game::printTiles(std::map<Position*, Tile*> field)
       {
         if(*x.first == pos1)
         {
-          cout << " " << x.second->getColorOut() << " " << x.second->getTypeOut();
-          cout << "(" << x.second->white_id_ << "|" << x.second->red_id_ << ")" << " ||";
+          cout << " " << x.second->getColorOut() << " "
+            << x.second->getTypeOut();
+          cout << "(" << x.second->white_id_ << "|" << x.second->red_id_
+            << ")" << " ||";
           break;
         }
       }

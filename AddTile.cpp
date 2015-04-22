@@ -1,12 +1,12 @@
 //------------------------------------------------------------------------------
-// Filename: AddTile.cpp
-// Description: ...
-// Authors: Pichler
-// Tutor: Philipp Loibl
-// Group: 11574
-// Created: 01.04.2015
-// Last change: 01.04.2015
+// AddTile.cpp
+//
+// Group: Group 11574, study assistant Philip Loibl
+//
+// Authors: 
+// Markus Pichler 1331070
 //------------------------------------------------------------------------------
+//
 
 #include "AddTile.h"
 
@@ -15,12 +15,15 @@ using std::endl;
 using std::string;
 
 //------------------------------------------------------------------------------
+// Constructor
+//
 Addtile::Addtile() : Command("Addtile")
 {
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::valideInput(std::vector<string> user_input, Tile &tile, Position &position)
+bool Addtile::valideInput(std::vector<string> user_input, Tile &tile,
+  Position &position)
 {
   if(user_input.size() != 3)
   {
@@ -71,7 +74,8 @@ int Addtile::execute(Game& board, std::vector<string>& user_input)
   // number of tiles beside the setted tile
 
   Position center(0,0);
-  if((board.getNumberOfTiles() == 0) && (t1.getColor() != COLOR_RED || p1 != center))
+  if((board.getNumberOfTiles() == 0)
+    && (t1.getColor() != COLOR_RED || p1 != center))
   {
     cout << "Invalid coordinates - first tile must be set on (0,0)";
     cout << endl;
@@ -222,7 +226,8 @@ bool Addtile::adaptTile(std::map<Position*, Tile*> karte,
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::completeMap(std::map<Position*, Tile*> &karte, std::vector<string> &forAddtile)
+bool Addtile::completeMap(std::map<Position*, Tile*> &karte,
+  std::vector<string> &forAddtile)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   for(auto& y: karte)

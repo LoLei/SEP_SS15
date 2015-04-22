@@ -1,12 +1,12 @@
 //------------------------------------------------------------------------------
-// Filename: AddTile.h
-// Description: ...
-// Authors: Pichler
-// Tutor: Philipp Loibl
-// Group: 11574
-// Created: 01.04.2015
-// Last change: 01.04.2015
+// Quit.h
+//
+// Group: Group 11574, study assistant Philip Loibl
+//
+// Authors: 
+// Markus Pichler 1331070
 //------------------------------------------------------------------------------
+//
 
 #ifndef QUIT_H_INCLUDED
 #define QUIT_H_INCLUDED
@@ -21,12 +21,27 @@
 class Quit:public Command
 {
   public:
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
     Quit();
 
+    //--------------------------------------------------------------------------
+    // execute method
+    // Executes command
+    // 
+    // @param board the game board
+    // @param user_input the input the user enters
+    //
+    // @return int 0 if everything worked
+    //
     int execute(Game& board, std::vector<std::string>& params);
 
   //private:
-  //  ~Quit();
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
+    //~Quit();
 };
 
 #endif //QUIT_H_INCLUDED

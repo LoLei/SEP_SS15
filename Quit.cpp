@@ -1,12 +1,12 @@
 //------------------------------------------------------------------------------
-// Filename: Quit.cpp
-// Description: ...
-// Authors: Pichler
-// Tutor: Philipp Loibl
-// Group: 11574
-// Created: 01.04.2015
-// Last change: 01.04.2015
+// Quit.cpp
+//
+// Group: Group 11574, study assistant Philip Loibl
+//
+// Authors: 
+// Markus Pichler 1331070
 //------------------------------------------------------------------------------
+//
 
 #include "Quit.h"
 

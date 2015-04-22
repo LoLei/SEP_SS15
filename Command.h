@@ -1,9 +1,10 @@
 //------------------------------------------------------------------------------
-// Filename: Command.h
-// Description: Class representing a general command
-// Authors: Tutors
-// Tutor: Tutors
-// Group: 42
+// Command.h
+// From Palme website
+// Group: Group 11574, study assistant Philip Loibl
+//
+// Authors: 
+// Tutors
 // Created: 08.08.2011
 // Last change: 02.09.2011
 //------------------------------------------------------------------------------
@@ -21,12 +22,12 @@ class Command
   private:
     //--------------------------------------------------------------------------
     // Private copy constructor
-
+    //
     Command(const Command& original);
 
     //--------------------------------------------------------------------------
     // Private assignment operator
-
+    //
     Command& operator=(const Command& original);
 
     //--------------------------------------------------------------------------

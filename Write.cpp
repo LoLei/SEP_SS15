@@ -1,43 +1,51 @@
 //------------------------------------------------------------------------------
-// Filename: Write.cpp
-// Description: Used for writing binary file
-//              First only as write command
-//              Later as automatic write if -g flag is set
-// Authors: Lorenz Leitner
-// Tutor: Philipp Loibl
-// Group: 11574
-// Created: 14.04.2015
-// Last change: 14.04.2015
+// Write.cpp
+//
+// Group: Group 11574, study assistant Philip Loibl
+//
+// Authors: 
+// Lorenz Leitner 1430211
 //------------------------------------------------------------------------------
+//
 
 #include "Write.h"
 
+//------------------------------------------------------------------------------
 Write::Write() : Command("Write")
 {
 }
 
-int Write::execute(Game& board, std::vector<std::string>& params)
+//------------------------------------------------------------------------------
+int Write::execute(Game& board, std::vector<std::string>& user_input)
 {
-  std::string file_name = params[1];
+  std::string file_name = user_input[1];
   try
   {
-    //std::streamoff pos; //why?
-
+    //--------------------------------------------------------------------------
+    // FileHeader Class
+    // Simple struct replacement for easier reading of file variables
+    // File header information in binary file
+    //
     class FileHeader
     {
     public:
-      char *signature;    // char[4] // TRAX
-      char active_player; // char // white (1) or red (2)
-      signed char minX;   // s8
-      signed char minY;   // s8
-      signed char maxX;   // s8
-      signed char maxY;   // s8
+      char *signature_;    // char[4] // TRAX
+      char active_player_; // char // white (1) or red (2)
+      signed char minim_x_;   // s8
+      signed char minim_y_;   // s8
+      signed char maxim_x_;   // s8
+      signed char maxim_y_;   // s8
     };
 
+    //--------------------------------------------------------------------------
+    // BoardTiles Class
+    // Simple struct replacement for easier reading of file variables
+    // Actual tiles in binary file
+    //
     class BoardTiles
     {
     public:
-      char side;      // no figure (0), cross (1), Kurve1 "/" (2), Kurve2 "\" (3)
+      char side;    // no figure (0), cross (1), Kurve1 "/" (2), Kurve2 "\" (3)
       char top_color; // no figure (0), white end (1), red end (2) // offset 1
     };
 
@@ -45,15 +53,13 @@ int Write::execute(Game& board, std::vector<std::string>& params)
     //--------------------------------------------------------------------------
     // Write values into header
     // Find max and min coordinates
-    // Min
-    file_header.minX = board.min_x_;
-    file_header.minY = board.min_y_;
-    // Max
-    file_header.maxX = board.max_x_;
-    file_header.maxY = board.max_y_;
+    file_header.minim_x_ = board.min_x_;
+    file_header.minim_y_ = board.min_y_;
+    file_header.maxim_x_ = board.max_x_;
+    file_header.maxim_y_ = board.max_y_;
     // Signature and active player;
-    file_header.signature = static_cast<char*>("TRAX");
-    file_header.active_player = board.getActivePlayer();
+    file_header.signature_ = static_cast<char*>("TRAX");
+    file_header.active_player_ = board.getActivePlayer();
 
     // Open file for writing
     // file_name is either argv[2] or command after write, i.e. user_input
@@ -66,15 +72,16 @@ int Write::execute(Game& board, std::vector<std::string>& params)
     }
 
     // Write header into file
-    file << file_header.signature;
-    file << file_header.active_player;
-    file << file_header.minX;
-    file << file_header.minY;
-    file << file_header.maxX;
-    file << file_header.maxY;
+    file << file_header.signature_;
+    file << file_header.active_player_;
+    file << file_header.minim_x_;
+    file << file_header.minim_y_;
+    file << file_header.maxim_x_;
+    file << file_header.maxim_y_;
 
-    //--------------------------------------------------------------------------//
-    // Write each line of the board from (minX,minY) to (maxX,maxY)
+    //--------------------------------------------------------------------------
+    // Write each line of the board
+    // from (minim_x_,minim_y_) to (maxim_x_,maxim_y_)
     // from left to right, top to bottom
     // Write tiles into file
     BoardTiles board_tiles;
@@ -101,7 +108,7 @@ int Write::execute(Game& board, std::vector<std::string>& params)
     }
     file.close();
   }
-  //------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
   catch (WriteException& e1)
   {
     std::cout << e1.what() << file_name << std::endl;

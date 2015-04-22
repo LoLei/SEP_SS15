@@ -1,10 +1,10 @@
 //------------------------------------------------------------------------------
 // Tile.cpp
 //
-// Group: Group 9, study assistant Philip Loibl
+// Group: Group 11574, study assistant Philip Loibl
 //
-// Authors: Markus Pichler 1331070
-//
+// Authors: 
+// Markus Pichler 1331070
 //------------------------------------------------------------------------------
 //
 

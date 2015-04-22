@@ -1,10 +1,10 @@
 //------------------------------------------------------------------------------
 // Game.h
 //
-// Group: Group 9, study assistant Philip Loibl
+// Group: Group 11574, study assistant Philip Loibl
 //
-// Authors: Markus Pichler 1331070
-//
+// Authors: 
+// Markus Pichler 1331070
 //------------------------------------------------------------------------------
 //
 
@@ -26,6 +26,7 @@
 
 //------------------------------------------------------------------------------
 // Game Class
+// Class concerning the active game
 //
 class Game
 {
@@ -51,7 +52,23 @@ class Game
     //
     int tile_counter_;
 
+    //--------------------------------------------------------------------------
+    // userInputToCommand method
+    // parses the user input as commands
+    //
+    // @param user_input input entered from the user
+    //
     int userInputToCommand(std::vector<std::string> &user_input);
+
+    //--------------------------------------------------------------------------
+    // Private copy constructor
+    //
+    Game(const Game& original);
+
+    //--------------------------------------------------------------------------
+    // Private assignment operator
+    //
+    Game& operator=(const Game& original);
 
   public:
 
@@ -60,6 +77,11 @@ class Game
     signed int min_x_;
     signed int min_y_;
 
+    //--------------------------------------------------------------------------
+    // setMaximas method
+    // sets the maximum coordinates
+    // @param reference position which is used as a reference to set coordinates
+    //
     void setMaximas(Position reference);
 
     //--------------------------------------------------------------------------
@@ -67,42 +89,70 @@ class Game
     //
     Game();
 
+    //--------------------------------------------------------------------------
+    // map
+    // Store tiles
+    //
     std::map<Position*, Tile*> field;
 
-    //Game(Type side, Color orientation);
-
     //--------------------------------------------------------------------------
-    // Copy Constructor
-    // Makes a copy of another Game Object.
-    // @param original Original to copy.
-    //
-    // Game(const Game &);
-
-    //--------------------------------------------------------------------------
-    // Run Methode
-    // ...
-    // @param
+    // run method
+    // Starts the game
+    // @param file_name file name to write file
+    // @param graphic_mode used to test if grapic mode is enabled
     //
     void run(std::string file_name, int graphic_mode);
 
     //--------------------------------------------------------------------------
-    // toggle Player Methode
-    // ...
-    // @param
+    // toggle Player method
+    // Switches the active player
     //
     void togglePlayer();
+
+    //--------------------------------------------------------------------------
+    // riseNumberOfTiles method
+    // Increases the tile counter
+    //
     void riseNumberOfTiles();
+
     //--------------------------------------------------------------------------
     // Setter Methods
     //
+
+    //--------------------------------------------------------------------------
+    // setStartTile method
+    // Sets the first tile
+    //
+    // @param starttile the first tile
+    //
     void setStartTile(Tile* starttile);
 
+    //--------------------------------------------------------------------------
+    // setRunning method
+    // Toggles if the game is run
+    //
+    // @param running true if game shall be run, false if it should stop
+    //
     void setRunning(bool running);
 
     //--------------------------------------------------------------------------
     // Getter Methods
     //
+
+    //--------------------------------------------------------------------------
+    // getActivePlayer method
+    // Gets the current active player
+    //
+    // @return Color activeplayer_
+    //
     Color getActivePlayer();
+
+    //--------------------------------------------------------------------------
+    // getNumberOfTiles method
+    // Gets the current number of tiles
+    //
+    // @return int tile_counter
+    //
     int getNumberOfTiles();
 
     //--------------------------------------------------------------------------
@@ -110,7 +160,20 @@ class Game
     //
     //~Game();
 
+    //--------------------------------------------------------------------------
+    // printTiles method
+    // redundant
+    //
+    // @return Color activeplayer_
+    //
     void printTiles(std::map<Position*, Tile*> karte);
+
+    //--------------------------------------------------------------------------
+    // freeTiles method
+    // deletes tiles
+    //
+    // @param karte map of tiles
+    //
     void freeTiles(std::map<Position*, Tile*> karte);
 };
 #endif // GAME_H
