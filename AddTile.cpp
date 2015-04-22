@@ -59,6 +59,8 @@ int Addtile::execute(Game& board, std::vector<string>& user_input)
 
   Position p1;
   Tile t1(Tile::EMPTY_T, COLOR_RED);
+  t1.white_id_ = Tile::id_counter_++;
+    t1.red_id_ = Tile::id_counter_++;
   t1.setPlayer(board.getActivePlayer());
   // look up if the userinput is correct
   if(!(valideInput(user_input,t1,p1)))
@@ -96,8 +98,8 @@ int Addtile::execute(Game& board, std::vector<string>& user_input)
     {
       delete y.second;
       board.field[y.first] = new Tile(t1);
-      y.second->white_id_ = Tile::id_counter_++;
-      y.second->red_id_ = Tile::id_counter_++;
+      //y.second->white_id_ = Tile::id_counter_++;
+      //y.second->red_id_ = Tile::id_counter_++;
       replace = false;
     }
   }
@@ -105,8 +107,6 @@ int Addtile::execute(Game& board, std::vector<string>& user_input)
   // tile einfügen
   if(replace)
   {
-    t1.white_id_ = Tile::id_counter_++;
-    t1.red_id_ = Tile::id_counter_++;
     board.field.emplace(new Position(p1),new Tile(t1));
   }
   board.riseNumberOfTiles();
@@ -126,8 +126,9 @@ int Addtile::execute(Game& board, std::vector<string>& user_input)
 
 //------------------------------------------------------------------------------
 bool Addtile::abfrage(bool abfrage1, bool &twisted, bool &lonely_tile, Tile &t1,
-                      Color c1,Tile* t2)
+                      Color c1,Tile& t2)
   {
+    cout << t1.red_id_ << t2.red_id_ << t1.white_id_ << t2.white_id_ << endl;
     lonely_tile = false;
     if(abfrage1)
       {
@@ -139,11 +140,11 @@ bool Addtile::abfrage(bool abfrage1, bool &twisted, bool &lonely_tile, Tile &t1,
         t1.setColor(t1.notTopColor());
         if(c1 == COLOR_RED)
         {
-          t1.red_id_ = t2->red_id_;
+          t1.red_id_ = t2.red_id_;
         }
         if(c1 == COLOR_WHITE)
         {
-          t1.white_id_ = t2->white_id_;
+          t1.white_id_ = t2.white_id_;
         }
         twisted = true;
       }
@@ -151,14 +152,15 @@ bool Addtile::abfrage(bool abfrage1, bool &twisted, bool &lonely_tile, Tile &t1,
       {
         if(c1 == COLOR_RED)
         {
-          t1.red_id_ = t2->red_id_;
+          t1.red_id_ = t2.red_id_;
         }
         if(c1 == COLOR_WHITE)
         {
-          t1.white_id_ = t2->white_id_;
+          t1.white_id_ = t2.white_id_;
         }
         twisted = true;
       }
+    cout << t1.red_id_ << t2.red_id_ << t1.white_id_ << t2.white_id_ << endl;
     return true;
   }
 
@@ -184,25 +186,25 @@ bool Addtile::adaptTile(std::map<Position*, Tile*> karte,
     }
     if(*(x.first) == left &&
        !abfrage(x.second->getColorRight() != t1.getColorLeft(),
-                twisted, lonely_tile, t1, t1.getColorLeft(),x.second))
+                twisted, lonely_tile, t1, t1.getColorLeft(),*x.second))
     {
       return false;
     }
     else if(*(x.first) == right &&
        !abfrage(x.second->getColorLeft() != t1.getColorRight(),
-                twisted, lonely_tile, t1,t1.getColorRight(),x.second))
+                twisted, lonely_tile, t1,t1.getColorRight(),*x.second))
     {
       return false;
     }
     else if(*(x.first) == top &&
        !abfrage(x.second->getColorButtom() != t1.getColorTop(),
-                twisted, lonely_tile, t1,t1.getColorTop(),x.second))
+                twisted, lonely_tile, t1,t1.getColorTop(),*x.second))
     {
       return false;
     }
     else if(*(x.first) == buttom &&
        !abfrage(x.second->getColorTop() != t1.getColorButtom(),
-                twisted, lonely_tile, t1,t1.getColorButtom(),x.second))
+                twisted, lonely_tile, t1,t1.getColorButtom(),*x.second))
     {
       return false;
     }

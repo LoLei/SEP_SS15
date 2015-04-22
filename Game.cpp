@@ -194,6 +194,7 @@ void Game::printTiles(std::map<Position*, Tile*> field)
   }*/
 
     //----------------------------------------------------------------------------
+    cout << "(white|red)" << endl;
   cout << "    |";
   for (signed int i = min_x_; i <= max_x_; i++)
     cout << std::setfill (' ') << std::setw (5) << i << std::setw (7) << "||";
