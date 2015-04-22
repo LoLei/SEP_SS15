@@ -23,6 +23,8 @@
 
 class Addtile:public Command
 {
+  private:
+    //Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   public:
 
     Addtile();
@@ -32,7 +34,8 @@ class Addtile:public Command
 
     bool valideInput(std::vector<std::string> user_input, Tile &tile, Position &position);
 
-    bool abfrage(bool abfrage, bool &twisted, bool &lonely_tile, Tile &t1);
+    bool abfrage(bool abfrage, bool &twisted, bool &lonely_tile, Tile &t1,
+                 Color c1, Tile* t2);
 
     bool adaptTile(std::map<Position*, Tile*> karte, Tile &t1, Position p1);
 

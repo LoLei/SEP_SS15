@@ -10,12 +10,15 @@
 
 #include "Tile.h"
 
+int Tile::id_counter_ = 0;
 //------------------------------------------------------------------------------
 Tile::Tile(Type side, Color topcolor)
 {
   side_ = side;
   topcolor_ = topcolor;
   of_activeplayer_ = EMPTY_C;
+  white_id_ = 0;
+  red_id_ = 0;
 }
 
 Tile::Tile(Color Li, Color Re, Color Ob, Color Un)
@@ -96,6 +99,8 @@ Tile::Tile(const Tile & src)
   side_ = src.side_;
   topcolor_ = src.topcolor_;
   of_activeplayer_ = src.of_activeplayer_;
+  white_id_ = src.white_id_;
+  red_id_ = src.red_id_;
 }
 
 //------------------------------------------------------------------------------

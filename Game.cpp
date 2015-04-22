@@ -25,6 +25,7 @@ Game::Game()
   max_y_ = 0;
   min_x_ = 0;
   min_y_ = 0;
+  Tile::id_counter_ = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -155,6 +156,7 @@ void Game::printTiles(std::map<Position*, Tile*> field)
   }
 */
   //----------------------------------------------------------------------------
+  /*
   cout << "    |";
   for (signed int i = min_x_; i <= max_x_; i++)
     cout << std::setfill (' ') << std::setw (3) << i << std::setw (4) << "||";
@@ -187,6 +189,44 @@ void Game::printTiles(std::map<Position*, Tile*> field)
     while(spalten--)
     {
       cout << std::setfill ('=') << std::setw (7) << "||";
+    }
+    cout << endl;
+  }*/
+
+    //----------------------------------------------------------------------------
+  cout << "    |";
+  for (signed int i = min_x_; i <= max_x_; i++)
+    cout << std::setfill (' ') << std::setw (5) << i << std::setw (7) << "||";
+  cout << endl;
+  int spalten1 = max_x_ - min_x_ + 1;
+  cout << "    |";
+  while(spalten1--)
+  {
+    cout << std::setfill ('=') << std::setw (12) << "||";
+  }
+  cout << endl;
+  for(signed int y = min_y_; y <= max_y_; y++)
+  {
+    cout << std::setfill (' ') << std::setw (2) << y << ": |";
+    int spalten = max_x_ - min_x_ + 1;
+    for(signed int x = min_x_; x <= max_x_; x++)
+    {
+      Position pos1(x,y);
+      for (auto& x: field)
+      {
+        if(*x.first == pos1)
+        {
+          cout << " " << x.second->getColorOut() << " " << x.second->getTypeOut();
+          cout << "(" << x.second->white_id_ << "|" << x.second->red_id_ << ")" << " ||";
+          break;
+        }
+      }
+    }
+    cout << endl;
+    cout << "    |";
+    while(spalten--)
+    {
+      cout << std::setfill ('=') << std::setw (12) << "||";
     }
     cout << endl;
   }

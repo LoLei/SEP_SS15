@@ -105,5 +105,9 @@ class Tile
     //
     Type charToType(char c);
 
+    int white_id_;
+    int red_id_;
+    static int id_counter_;
+
 };
 #endif // TILE_H
