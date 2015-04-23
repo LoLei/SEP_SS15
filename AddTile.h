@@ -15,22 +15,10 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include "OutOfMemoryException.h"
-#include "InvalidCoordinatesException.h"
-#include "NotEmptyFieldException.h"
-#include "NotConnectedFieldException.h"
-#include "InvalidParameterException.h"
-#include "ConnectedColorsMismatchException.h"
-#include "NotEnoughTilesException.h"
-#include "WrongParameterException.h"
-
-#include "Position.h"
-#include "Tile.h"
 #include "Command.h"
 #include "Game.h"
 
-class Game;
-class Command;
+
 class Tile;
 class Position;
 
@@ -50,6 +38,11 @@ class AddTile:public Command
     // Private assignment operator
     //
     AddTile& operator=(const AddTile& original);
+
+    //--------------------------------------------------------------------------
+    // Private member empty tile
+    //
+    Tile* empty_tile_;
 
   public:
     //--------------------------------------------------------------------------
@@ -95,10 +88,11 @@ class AddTile:public Command
     // @param lonely_tile if tile is placed not adjacent to two other tiles
     // @param tile the current tile
     //
-    // @return bool true if no error
+    // @return bool true if everything worked
     //
     bool abfrage(bool abfrage, bool &twisted, bool &lonely_tile, Tile &t1,
-                 Color c1, Tile& t2);
+                 Color c1, Tile& t2, std::vector<int> &red,
+                 std::vector<int> &white);
 
     //--------------------------------------------------------------------------
     // adaptTile method
@@ -108,9 +102,9 @@ class AddTile:public Command
     // @param tile the current tile
     // @param position the current position
     //
-    // @return bool true if no error
+    // @return int 0 if everything worked 8 or 9 is somebody won
     //
-    bool adaptTile(std::map<Position*, Tile*> karte, Tile &t1, Position p1);
+    int adaptTile(std::map<Position*, Tile*> karte, Tile &t1, Position p1);
 
     //--------------------------------------------------------------------------
     // completeMap method
