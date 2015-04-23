@@ -20,14 +20,15 @@ Repository for SEP SS15 Basisbeispiel
 - [x] ~~Forced tiles~~
 - [x] ~~Add desctructor to every class (coding standard)~~
 - [x] ~~Add exception class for other exceptions too (must be public)~~
-- [ ] Fix issues
 - [x] ~~Implement try and catch in regular files using exception files~~
 - [x] ~~Win condition columns and rows~~
+- [ ] Fix issues
 - [ ] Figure out best way how to include exception classes in other files (baseexception class ?)
 - [ ] Win condition loop
 - [ ] Draw/Tie
 - [ ] Do not include header files in header files
 - [ ] Merge loop win condition with try catch master (master 3-21)
+- [ ] Check OutOfMemeroy exception on functionality
 
 ### Low priority
 - [x] ~~Make commands into vector (see Fragestunde.md)~~
