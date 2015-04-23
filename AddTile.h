@@ -15,10 +15,19 @@
 #include <iostream>
 #include <map>
 #include <vector>
-//#include "Position.h"
-//#include "Tile.h"
-//#include "Command.h"
-//#include "Game.h"
+#include "OutOfMemoryException.h"
+#include "InvalidCoordinatesException.h"
+#include "NotEmptyFieldException.h"
+#include "NotConnectedFieldException.h"
+#include "InvalidParameterException.h"
+#include "ConnectedColorsMismatchException.h"
+#include "NotEnoughTilesException.h"
+#include "WrongParameterException.h"
+
+#include "Position.h"
+#include "Tile.h"
+#include "Command.h"
+#include "Game.h"
 
 class Game;
 class Command;

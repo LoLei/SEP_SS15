@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// WrongParameterException.h
+// ConnectedColorsMismatchException.h
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
@@ -7,31 +7,31 @@
 // Verena Niederwanger 1430778
 //------------------------------------------------------------------------------
 //
-
-#ifndef WRONGPARAMETER_H
-#define WRONGPARAMETER_H
+#ifndef CONNECTEDCOLORSMISMATCH_H
+#define CONNECTEDCOLORSMISMATCH_H
 
 #include <exception>
 #include <iostream>
 
 //------------------------------------------------------------------------------
-// WrongParameterException Class
-// Class for error messages concerning parameter errors
+// ConnectedColorsMismatchException Class
+// Class for error messages concerning connected colors mismatch
 //
-class WrongParameterException : public std::exception
+class ConnectedColorsMismatchException : public std::exception
 {
   private:
     //--------------------------------------------------------------------------
     // Private assignment operator
     //
-    WrongParameterException& operator=(const WrongParameterException& original);
+    ConnectedColorsMismatchException& operator=(const ConnectedColorsMismatchException& original);
+
 
   public:
     //--------------------------------------------------------------------------
     // Constructor
-    // Constructs the excpeption
+    // Constructs the exception
     //
-    WrongParameterException();
+    ConnectedColorsMismatchException();
 
     //--------------------------------------------------------------------------
     // Copy Constructor
@@ -39,12 +39,12 @@ class WrongParameterException : public std::exception
     //
     // @param the exception to be copied
     //
-    WrongParameterException(WrongParameterException const &src);
+    ConnectedColorsMismatchException(ConnectedColorsMismatchException const &src);
 
     //--------------------------------------------------------------------------
     // Destructor
     //
-    virtual ~WrongParameterException() throw();
+    virtual ~ConnectedColorsMismatchException() throw();
 
     //--------------------------------------------------------------------------
     // what method

@@ -10,7 +10,6 @@
 //
 
 #include "WriteException.h"
-#include <iostream>
 
 //------------------------------------------------------------------------------
 WriteException::WriteException() : exception()

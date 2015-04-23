@@ -1,34 +1,32 @@
 //------------------------------------------------------------------------------
-// UsageException.cpp
+// NotEmptyFieldException.cpp
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
-// Authors:
+// Authors: 
 // Verena Niederwanger 1430778
 //------------------------------------------------------------------------------
 //
-
-#include "UsageException.h"
+#include "NotEmptyFieldException.h"
 
 //------------------------------------------------------------------------------
-UsageException::UsageException() : exception()
+NotEmptyFieldException::NotEmptyFieldException() : exception()
 {
 }
 
 //------------------------------------------------------------------------------
-UsageException::UsageException(UsageException const &src)
+NotEmptyFieldException::NotEmptyFieldException(NotEmptyFieldException const &src)
 : exception(src)
 {
 }
 
 //------------------------------------------------------------------------------
-UsageException::~UsageException() throw()
+NotEmptyFieldException::~NotEmptyFieldException() throw()
 {
 }
 
 //------------------------------------------------------------------------------
-const char *UsageException::what() const throw()
+const char *NotEmptyFieldException::what() const throw()
 {
-  return "Usage: <program>";
-  //<programm> mit argv[0] ersetzen
+  return "Invalid coordinates - field not empty";
 }

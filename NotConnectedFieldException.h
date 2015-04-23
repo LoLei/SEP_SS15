@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// WrongParameterException.h
+// NotConnectedFieldException.h
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
@@ -7,31 +7,30 @@
 // Verena Niederwanger 1430778
 //------------------------------------------------------------------------------
 //
-
-#ifndef WRONGPARAMETER_H
-#define WRONGPARAMETER_H
+#ifndef NOTCONNECTEDFIELD_H
+#define NOTCONNECTEDFIELD_H
 
 #include <exception>
 #include <iostream>
 
 //------------------------------------------------------------------------------
-// WrongParameterException Class
-// Class for error messages concerning parameter errors
+// NotConnectedFieldException Class
+// Class for error messages concerning fields which are not connected
 //
-class WrongParameterException : public std::exception
+class NotConnectedFieldException : public std::exception
 {
   private:
     //--------------------------------------------------------------------------
     // Private assignment operator
     //
-    WrongParameterException& operator=(const WrongParameterException& original);
+    NotConnectedFieldException& operator=(const NotConnectedFieldException& original);
 
   public:
     //--------------------------------------------------------------------------
     // Constructor
-    // Constructs the excpeption
+    // Constructs the exception
     //
-    WrongParameterException();
+    NotConnectedFieldException();
 
     //--------------------------------------------------------------------------
     // Copy Constructor
@@ -39,12 +38,12 @@ class WrongParameterException : public std::exception
     //
     // @param the exception to be copied
     //
-    WrongParameterException(WrongParameterException const &src);
+    NotConnectedFieldException(NotConnectedFieldException const &src);
 
     //--------------------------------------------------------------------------
     // Destructor
     //
-    virtual ~WrongParameterException() throw();
+    virtual ~NotConnectedFieldException() throw();
 
     //--------------------------------------------------------------------------
     // what method

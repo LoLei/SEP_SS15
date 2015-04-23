@@ -1,34 +1,32 @@
 //------------------------------------------------------------------------------
-// UsageException.cpp
+// EmptyBoardException.cpp
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
-// Authors:
+// Authors: 
 // Verena Niederwanger 1430778
 //------------------------------------------------------------------------------
 //
-
-#include "UsageException.h"
+#include "EmptyBoardException.h"
 
 //------------------------------------------------------------------------------
-UsageException::UsageException() : exception()
+EmptyBoardException::EmptyBoardException() : exception()
 {
 }
 
 //------------------------------------------------------------------------------
-UsageException::UsageException(UsageException const &src)
+EmptyBoardException::EmptyBoardException(EmptyBoardException const &src)
 : exception(src)
 {
 }
 
 //------------------------------------------------------------------------------
-UsageException::~UsageException() throw()
+EmptyBoardException::~EmptyBoardException() throw()
 {
 }
 
 //------------------------------------------------------------------------------
-const char *UsageException::what() const throw()
+const char *EmptyBoardException::what() const throw()
 {
-  return "Usage: <program>";
-  //<programm> mit argv[0] ersetzen
+  return "Board is empty!";
 }

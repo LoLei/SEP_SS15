@@ -1,34 +1,32 @@
 //------------------------------------------------------------------------------
-// UsageException.cpp
+// InvalidCoordinatesException.cpp
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
-// Authors:
+// Authors: 
 // Verena Niederwanger 1430778
 //------------------------------------------------------------------------------
 //
-
-#include "UsageException.h"
+#include "InvalidCoordinatesException.h"
 
 //------------------------------------------------------------------------------
-UsageException::UsageException() : exception()
+InvalidCoordinatesException::InvalidCoordinatesException() : exception()
 {
 }
 
 //------------------------------------------------------------------------------
-UsageException::UsageException(UsageException const &src)
+InvalidCoordinatesException::InvalidCoordinatesException(InvalidCoordinatesException const &src)
 : exception(src)
 {
 }
 
 //------------------------------------------------------------------------------
-UsageException::~UsageException() throw()
+InvalidCoordinatesException::~InvalidCoordinatesException() throw()
 {
 }
 
 //------------------------------------------------------------------------------
-const char *UsageException::what() const throw()
+const char *InvalidCoordinatesException::what() const throw()
 {
-  return "Usage: <program>";
-  //<programm> mit argv[0] ersetzen
+  return "Invalid coordinates - first tile must be set on (0,0)";
 }

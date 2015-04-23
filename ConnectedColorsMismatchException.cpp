@@ -1,34 +1,32 @@
 //------------------------------------------------------------------------------
-// UsageException.cpp
+// ConnectedColorsMismatchException.cpp
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
-// Authors:
+// Authors: 
 // Verena Niederwanger 1430778
 //------------------------------------------------------------------------------
 //
-
-#include "UsageException.h"
+#include "ConnectedColorsMismatchException.h"
 
 //------------------------------------------------------------------------------
-UsageException::UsageException() : exception()
+ConnectedColorsMismatchException::ConnectedColorsMismatchException() : exception()
 {
 }
 
 //------------------------------------------------------------------------------
-UsageException::UsageException(UsageException const &src)
+ConnectedColorsMismatchException::ConnectedColorsMismatchException(ConnectedColorsMismatchException const &src)
 : exception(src)
 {
 }
 
 //------------------------------------------------------------------------------
-UsageException::~UsageException() throw()
+ConnectedColorsMismatchException::~ConnectedColorsMismatchException() throw()
 {
 }
 
 //------------------------------------------------------------------------------
-const char *UsageException::what() const throw()
+const char *ConnectedColorsMismatchException::what() const throw()
 {
-  return "Usage: <program>";
-  //<programm> mit argv[0] ersetzen
+  return "Invalid move - connected line colors mismatch";
 }

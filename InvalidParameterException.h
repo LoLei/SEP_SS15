@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// WrongParameterException.h
+// InvalidParameterException.h
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
@@ -7,31 +7,30 @@
 // Verena Niederwanger 1430778
 //------------------------------------------------------------------------------
 //
-
-#ifndef WRONGPARAMETER_H
-#define WRONGPARAMETER_H
+#ifndef INVALIDPARAMETER_H
+#define INVALIDPARAMETER_H
 
 #include <exception>
 #include <iostream>
 
 //------------------------------------------------------------------------------
-// WrongParameterException Class
-// Class for error messages concerning parameter errors
+// InvalidParameterException Class
+// Class for error messages concerning invalid Parameters
 //
-class WrongParameterException : public std::exception
+class InvalidParameterException : public std::exception
 {
   private:
     //--------------------------------------------------------------------------
     // Private assignment operator
     //
-    WrongParameterException& operator=(const WrongParameterException& original);
+    InvalidParameterException& operator=(const InvalidParameterException& original);
 
   public:
     //--------------------------------------------------------------------------
     // Constructor
-    // Constructs the excpeption
+    // Constructs the exception
     //
-    WrongParameterException();
+    InvalidParameterException();
 
     //--------------------------------------------------------------------------
     // Copy Constructor
@@ -39,12 +38,12 @@ class WrongParameterException : public std::exception
     //
     // @param the exception to be copied
     //
-    WrongParameterException(WrongParameterException const &src);
+    InvalidParameterException(InvalidParameterException const &src);
 
     //--------------------------------------------------------------------------
     // Destructor
     //
-    virtual ~WrongParameterException() throw();
+    virtual ~InvalidParameterException() throw();
 
     //--------------------------------------------------------------------------
     // what method

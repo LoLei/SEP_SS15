@@ -12,6 +12,7 @@
 #define USAGE_H
 
 #include <exception>
+#include <iostream>
 
 //------------------------------------------------------------------------------
 // UsageException Class

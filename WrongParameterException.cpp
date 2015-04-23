@@ -9,7 +9,6 @@
 //
 
 #include "WrongParameterException.h"
-#include <iostream>
 
 //------------------------------------------------------------------------------
 WrongParameterException::WrongParameterException() : exception()

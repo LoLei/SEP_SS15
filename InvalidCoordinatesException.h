@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// WrongParameterException.h
+// InvalidCoordinatesException.h
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
@@ -8,30 +8,31 @@
 //------------------------------------------------------------------------------
 //
 
-#ifndef WRONGPARAMETER_H
-#define WRONGPARAMETER_H
+#ifndef INVALIDCOORDINATES_H
+#define INVALIDCOORDINATES_H
 
 #include <exception>
 #include <iostream>
 
 //------------------------------------------------------------------------------
-// WrongParameterException Class
-// Class for error messages concerning parameter errors
+// InvalidCoordinatesException Class
+// Class for error messages concerning invalid coordinates
 //
-class WrongParameterException : public std::exception
+class InvalidCoordinatesException : public std::exception
 {
   private:
     //--------------------------------------------------------------------------
     // Private assignment operator
     //
-    WrongParameterException& operator=(const WrongParameterException& original);
+    InvalidCoordinatesException& operator=(const InvalidCoordinatesException& original);
 
   public:
+
     //--------------------------------------------------------------------------
     // Constructor
-    // Constructs the excpeption
+    // Constructs the exception
     //
-    WrongParameterException();
+    InvalidCoordinatesException();
 
     //--------------------------------------------------------------------------
     // Copy Constructor
@@ -39,12 +40,12 @@ class WrongParameterException : public std::exception
     //
     // @param the exception to be copied
     //
-    WrongParameterException(WrongParameterException const &src);
+    InvalidCoordinatesException(InvalidCoordinatesException const &src);
 
     //--------------------------------------------------------------------------
     // Destructor
     //
-    virtual ~WrongParameterException() throw();
+    virtual ~InvalidCoordinatesException() throw();
 
     //--------------------------------------------------------------------------
     // what method

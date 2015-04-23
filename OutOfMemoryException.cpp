@@ -9,7 +9,6 @@
 //
 
 #include "OutOfMemoryException.h"
-#include <iostream>
 
 //------------------------------------------------------------------------------
 OutOfMemoryException::OutOfMemoryException() : exception()

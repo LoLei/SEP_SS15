@@ -12,6 +12,7 @@
 #define UNKNOWNCOMMAND_H
 
 #include <exception>
+#include <iostream>
 
 //------------------------------------------------------------------------------
 // UnknownCommandException Class

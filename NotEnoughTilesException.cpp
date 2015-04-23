@@ -1,34 +1,32 @@
 //------------------------------------------------------------------------------
-// UsageException.cpp
+// NotEnoughTilesException.cpp
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
-// Authors:
+// Authors: 
 // Verena Niederwanger 1430778
 //------------------------------------------------------------------------------
 //
-
-#include "UsageException.h"
+#include "NotEnoughTilesException.h"
 
 //------------------------------------------------------------------------------
-UsageException::UsageException() : exception()
+NotEnoughTilesException::NotEnoughTilesException() : exception()
 {
 }
 
 //------------------------------------------------------------------------------
-UsageException::UsageException(UsageException const &src)
+NotEnoughTilesException::NotEnoughTilesException(NotEnoughTilesException const &src)
 : exception(src)
 {
 }
 
 //------------------------------------------------------------------------------
-UsageException::~UsageException() throw()
+NotEnoughTilesException::~NotEnoughTilesException() throw()
 {
 }
 
 //------------------------------------------------------------------------------
-const char *UsageException::what() const throw()
+const char *NotEnoughTilesException::what() const throw()
 {
-  return "Usage: <program>";
-  //<programm> mit argv[0] ersetzen
+  return "Invalid move - not enough tiles left";
 }

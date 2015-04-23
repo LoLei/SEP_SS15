@@ -12,6 +12,7 @@
 #define OUTOFMEMORY_H
 
 #include <exception>
+#include <iostream>
 
 //------------------------------------------------------------------------------
 // OutOfMemoryException Class

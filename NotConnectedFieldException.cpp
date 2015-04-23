@@ -1,34 +1,32 @@
 //------------------------------------------------------------------------------
-// UsageException.cpp
+// NotConnectedFieldException.cpp
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
-// Authors:
+// Authors: 
 // Verena Niederwanger 1430778
 //------------------------------------------------------------------------------
 //
-
-#include "UsageException.h"
+#include "NotConnectedFieldException.h"
 
 //------------------------------------------------------------------------------
-UsageException::UsageException() : exception()
+NotConnectedFieldException::NotConnectedFieldException() : exception()
 {
 }
 
 //------------------------------------------------------------------------------
-UsageException::UsageException(UsageException const &src)
+NotConnectedFieldException::NotConnectedFieldException(NotConnectedFieldException const &src)
 : exception(src)
 {
 }
 
 //------------------------------------------------------------------------------
-UsageException::~UsageException() throw()
+NotConnectedFieldException::~NotConnectedFieldException() throw()
 {
 }
 
 //------------------------------------------------------------------------------
-const char *UsageException::what() const throw()
+const char *NotConnectedFieldException::what() const throw()
 {
-  return "Usage: <program>";
-  //<programm> mit argv[0] ersetzen
+  return "Invalid coordinates - field not connected to tile";
 }

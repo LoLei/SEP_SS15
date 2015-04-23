@@ -9,7 +9,6 @@
 //
 
 #include "UnknownCommandException.h"
-#include <iostream>
 
 //------------------------------------------------------------------------------
 UnknownCommandException::UnknownCommandException() : exception()

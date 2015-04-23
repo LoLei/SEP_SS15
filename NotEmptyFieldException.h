@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// WrongParameterException.h
+// NotEmptyFieldException.h
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
@@ -8,30 +8,30 @@
 //------------------------------------------------------------------------------
 //
 
-#ifndef WRONGPARAMETER_H
-#define WRONGPARAMETER_H
+#ifndef NOTEMPTYFIELD_H
+#define NOTEMPTYFIELD_H
 
 #include <exception>
 #include <iostream>
 
 //------------------------------------------------------------------------------
-// WrongParameterException Class
-// Class for error messages concerning parameter errors
+// NotEmptyFieldException Class
+// Class for error messages concerning not empty fields
 //
-class WrongParameterException : public std::exception
+class NotEmptyFieldException : public std::exception
 {
   private:
     //--------------------------------------------------------------------------
     // Private assignment operator
     //
-    WrongParameterException& operator=(const WrongParameterException& original);
+    NotEmptyFieldException& operator=(const NotEmptyFieldException& original);
 
   public:
     //--------------------------------------------------------------------------
     // Constructor
-    // Constructs the excpeption
+    // Constructs the exception
     //
-    WrongParameterException();
+    NotEmptyFieldException();
 
     //--------------------------------------------------------------------------
     // Copy Constructor
@@ -39,12 +39,12 @@ class WrongParameterException : public std::exception
     //
     // @param the exception to be copied
     //
-    WrongParameterException(WrongParameterException const &src);
+    NotEmptyFieldException(NotEmptyFieldException const &src);
 
     //--------------------------------------------------------------------------
     // Destructor
     //
-    virtual ~WrongParameterException() throw();
+    virtual ~NotEmptyFieldException() throw();
 
     //--------------------------------------------------------------------------
     // what method

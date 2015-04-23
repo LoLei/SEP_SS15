@@ -40,18 +40,21 @@ int main(int argc, char **argv)
           file_name = argv[2];
           break;
         default:
-          std::cout << "Usage: " << argv[0] << std::endl;
-          return 2;
+          throw UsageException();
       }
     }
     else if(argc != 1 && argc != 3)
     {
-      std::cout << "Usage: " << argv[0] << std::endl;
-      return 2;
+      throw UsageException();
     }
 
     Game trax;
     trax.run(file_name, graphic_mode);
+  }
+  catch (UsageException& e1)
+  {
+    std::cout << e1.what() << argv[0] << std::endl;
+    return 2;
   }
   catch(...)
   {

@@ -30,7 +30,7 @@ class WriteException : public std::exception
   public:
     //--------------------------------------------------------------------------
     // Constructor
-    // Constructs the excpeption
+    // Constructs the exception
     //
     WriteException();
 

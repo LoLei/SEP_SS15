@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// WrongParameterException.h
+// NotEnoughTilesException.h
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
@@ -7,31 +7,30 @@
 // Verena Niederwanger 1430778
 //------------------------------------------------------------------------------
 //
-
-#ifndef WRONGPARAMETER_H
-#define WRONGPARAMETER_H
+#ifndef NOTENOUGHTILES_H
+#define NOTENOUGHTILES_H
 
 #include <exception>
 #include <iostream>
 
 //------------------------------------------------------------------------------
-// WrongParameterException Class
-// Class for error messages concerning parameter errors
+// NotEnoughTilesException Class
+// Class for error messages concerning not enough tiles
 //
-class WrongParameterException : public std::exception
+class NotEnoughTilesException : public std::exception
 {
   private:
     //--------------------------------------------------------------------------
     // Private assignment operator
     //
-    WrongParameterException& operator=(const WrongParameterException& original);
+    NotEnoughTilesException& operator=(const NotEnoughTilesException& original);
 
   public:
     //--------------------------------------------------------------------------
     // Constructor
-    // Constructs the excpeption
+    // Constructs the exception
     //
-    WrongParameterException();
+    NotEnoughTilesException();
 
     //--------------------------------------------------------------------------
     // Copy Constructor
@@ -39,12 +38,12 @@ class WrongParameterException : public std::exception
     //
     // @param the exception to be copied
     //
-    WrongParameterException(WrongParameterException const &src);
+    NotEnoughTilesException(NotEnoughTilesException const &src);
 
     //--------------------------------------------------------------------------
     // Destructor
     //
-    virtual ~WrongParameterException() throw();
+    virtual ~NotEnoughTilesException() throw();
 
     //--------------------------------------------------------------------------
     // what method
