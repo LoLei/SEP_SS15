@@ -254,8 +254,6 @@ void Game::freeTiles(std::map<Position*, Tile*> field)
 //------------------------------------------------------------------------------
 void Game::run(std::string file_name, int graphic_mode)
 {
-  try
-  {
     setRunning(true);
 
     int return_value = 0;
@@ -266,99 +264,101 @@ void Game::run(std::string file_name, int graphic_mode)
 
     do
     {
-      std::cout << "sep> ";
-      // get user input into a vactor
-      std::vector<string> user_input;
-      // If user enters blank line, prompt again
-      if (userInputToCommand(user_input))
+      try
       {
-        continue;
-      }
-
-      // choose case of command
-      if (user_input[0] == "quit")
-      {
-        turnOff.execute(*this, user_input);
-        //setRunning(false);
-      }
-
-      // ------------------------------------------write
-      else if (user_input[0] == "write")
-      {
-        // case: filename without whitespace!
-        if (user_input.size() != 2)
+        std::cout << "sep> ";
+        // get user input into a vactor
+        std::vector<string> user_input;
+        // If user enters blank line, prompt again
+        if (userInputToCommand(user_input))
         {
-          throw WrongParameterException();
+          continue;
         }
-        if (tile_counter_ == 0)
-        {
-          throw EmptyBoardException();
-        }
-        else
-        {
-          createNewFile.execute(*this, user_input);
-        }
-      }
 
-      // --------------------------------------------------------addtile
-      else if (user_input[0] == "addtile")
-      {
-        return_value = addNewTile.execute(*this, user_input);
-        if (!(return_value == 8 || return_value == 9))
+        // choose case of command
+        if (user_input[0] == "quit")
         {
-          while (addNewTile.completeMap(field, user_input))
+          turnOff.execute(*this, user_input);
+          //setRunning(false);
+        }
+
+        // ------------------------------------------write
+        else if (user_input[0] == "write")
+        {
+          // case: filename without whitespace!
+          if (user_input.size() != 2)
           {
-            return_value = addNewTile.execute(*this, user_input);
+            throw WrongParameterException();
           }
-        }
-        if (!((tile_counter_ == 0) && (return_value == 1)))
-        {
-          togglePlayer();
-          if (graphic_mode == 1)
+          if (tile_counter_ == 0)
           {
-            user_input[1] = file_name;
+            throw EmptyBoardException();
+          }
+          else
+          {
             createNewFile.execute(*this, user_input);
           }
         }
-        // if auto complete
-        if (return_value == 3)
-        {
-          setRunning(false);
-        }
-        // if someone won
-        if (return_value == 8 || return_value == 9)
-        {
-          setRunning(false);
-        }
 
-        // if nobody won and tiles are not available
-        if (return_value == 4)
+        // --------------------------------------------------------addtile
+        else if (user_input[0] == "addtile")
         {
-          setRunning(false);
+          return_value = addNewTile.execute(*this, user_input);
+          if (!(return_value == 8 || return_value == 9))
+          {
+            while (addNewTile.completeMap(field, user_input))
+            {
+              return_value = addNewTile.execute(*this, user_input);
+            }
+          }
+          if (!((tile_counter_ == 0) && (return_value == 1)))
+          {
+            togglePlayer();
+            if (graphic_mode == 1)
+            {
+              user_input[1] = file_name;
+              createNewFile.execute(*this, user_input);
+            }
+          }
+          // if auto complete
+          if (return_value == 3)
+          {
+            setRunning(false);
+          }
+          // if someone won
+          if (return_value == 8 || return_value == 9)
+          {
+            setRunning(false);
+          }
+
+          // if nobody won and tiles are not available
+          if (return_value == 4)
+          {
+            setRunning(false);
+          }
+        }
+        // --------------------------------------------------------
+        else
+        {
+          throw UnknownCommandException();
         }
       }
-      // --------------------------------------------------------
-      else
+      catch (EmptyBoardException& e1)
       {
-        throw UnknownCommandException();
+        std::cout << e1.what() << std::endl;
+      }
+      catch (WrongParameterException& e1)
+      {
+        std::cout << e1.what() << std::endl;
+        //continue;
+      }
+      catch (UnknownCommandException& e1)
+      {
+        std::cout << e1.what() << std::endl;
+        //continue;
       }
     } while (running_);
 
     printTiles(field);
     freeTiles(field);
-  }
-  catch (EmptyBoardException& e1)
-  {
-    std::cout << e1.what() << std::endl;
-  }
-  catch (WrongParameterException& e1)
-  {
-    std::cout << e1.what() << std::endl;
-    //continue;
-  }
-  catch (UnknownCommandException& e1)
-  {
-    std::cout << e1.what() << std::endl;
-    //continue;
-  }
 }

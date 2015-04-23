@@ -131,5 +131,4 @@ int Write::execute(Game& board, std::vector<std::string>& user_input)
     std::cout << e1.what() << std::endl;
     return 1;
   }
-  
 }
