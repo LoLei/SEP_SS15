@@ -19,23 +19,30 @@ Repository for SEP SS15 Basisbeispiel
 - [x] ~~Make AddTile check if valid move~~
 - [x] ~~Forced tiles~~
 - [x] ~~Add desctructor to every class (coding standard)~~
+- [x] ~~Add exception class for other exceptions too (must be public)~~
 - [ ] Fix issues
-- [ ] Add exception class for other exceptions too (must be public)
-- [ ] Figure out best way how to include exception classes in other files
-- [ ] Implement try and catch in regular files using exception files
-- [ ] Win conditions
+- [x] ~~Implement try and catch in regular files using exception files~~
+- [x] ~~Win condition columns and rows~~
+- [ ] Figure out best way how to include exception classes in other files (baseexception class ?)
+- [ ] Win condition loop
 - [ ] Draw/Tie
 - [ ] Do not include header files in header files
-
+- [ ] Merge loop win condition with try catch master (master 3-21)
 
 ### Low priority
-- [ ] Make commands into vector (see Fragestunde.md)
+- [x] ~~Make commands into vector (see Fragestunde.md)~~
 - [ ] Make write only append to file, not write a new one each time
 
 ### Vor Abgabe
 - [x] ~~Make code coding standard conform~~
+- [x] ~~Remove all output~~
+- [x] ~~Compile with pluto and makefile~~
+- [x] ~~Check valgrind~~
+- [x] ~~Remove redundant/commented code~~
+
+### Vor Ausbesserungsabgae
+- [ ] Make code coding standard conform
 - [ ] Remove all output
 - [ ] Compile with pluto and makefile
 - [ ] Check valgrind
 - [ ] Remove redundant/commented code
-
