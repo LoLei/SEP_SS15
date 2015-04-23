@@ -3,7 +3,7 @@
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
-// Authors: 
+// Authors:
 // Markus Pichler 1331070
 //------------------------------------------------------------------------------
 //
@@ -15,43 +15,48 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include "Position.h"
-#include "Tile.h"
-#include "Command.h"
-#include "Game.h"
+//#include "Position.h"
+//#include "Tile.h"
+//#include "Command.h"
+//#include "Game.h"
+
+class Game;
+class Command;
+class Tile;
+class Position;
 
 //------------------------------------------------------------------------------
 // AddTile Class
 // Class to add tiles
 //
-class Addtile:public Command
+class AddTile:public Command
 {
   private:
     //--------------------------------------------------------------------------
     // Private copy constructor
     //
-    Addtile(const Addtile& original);
+    AddTile(const AddTile& original);
 
     //--------------------------------------------------------------------------
     // Private assignment operator
     //
-    Addtile& operator=(const Addtile& original);
+    AddTile& operator=(const AddTile& original);
 
   public:
     //--------------------------------------------------------------------------
     // Constructor
     //
-    Addtile();
+    AddTile();
 
     //--------------------------------------------------------------------------
     // Destructor
     //
-    virtual ~Addtile();
+    virtual ~AddTile();
 
     //--------------------------------------------------------------------------
     // execute method
     // Executes command
-    // 
+    //
     // @param board the game board
     // @param user_input the input the user enters
     //
@@ -62,7 +67,7 @@ class Addtile:public Command
     //--------------------------------------------------------------------------
     // valideInput method
     // Checks if command is correct
-    // 
+    //
     // @param user_input the input the user enters
     // @param tile the current tile
     // @param position the current position
@@ -75,7 +80,7 @@ class Addtile:public Command
     //--------------------------------------------------------------------------
     // abfrage method
     // Checks if move is correct
-    // 
+    //
     // @param abfrage if true starts query
     // @param twisted if tile is twisted
     // @param lonely_tile if tile is placed not adjacent to two other tiles
@@ -89,7 +94,7 @@ class Addtile:public Command
     //--------------------------------------------------------------------------
     // adaptTile method
     // Turns tile so colors connect
-    // 
+    //
     // @param karte the game board of fields
     // @param tile the current tile
     // @param position the current position
@@ -101,7 +106,7 @@ class Addtile:public Command
     //--------------------------------------------------------------------------
     // completeMap method
     // Fills map with forced tiles
-    // 
+    //
     // @param karte the game board of fields
     // @param forAddtile the new string to use as a command
     //
@@ -113,10 +118,19 @@ class Addtile:public Command
     //--------------------------------------------------------------------------
     // fillEmptyTiles method
     // Fills map with empty tiles
-    // 
+    //
     // @param board the current board
     //
     void fillEmptyTiles(Game& board);
+
+    //--------------------------------------------------------------------------
+    // checkWin method
+    // checks board if someone won
+    //
+    // @param board the current board
+    //
+    int checkWin(Game& board, Tile t1);
+    int winLength(Game& board, Tile t1, std::string color);
 };
 
 #endif //ADDTILE_H_INCLUDED

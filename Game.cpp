@@ -3,7 +3,7 @@
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
-// Authors: 
+// Authors:
 // Markus Pichler 1331070
 //------------------------------------------------------------------------------
 //
@@ -256,11 +256,11 @@ void Game::run(std::string file_name, int graphic_mode)
 {
   setRunning(true);
 
-  int error_set = 0;
+  int return_value = 0;
 
   Write createNewFile;
   Quit turnOff;
-  Addtile addNewTile;
+  AddTile addNewTile;
 
   do
   {
@@ -295,14 +295,16 @@ void Game::run(std::string file_name, int graphic_mode)
     // --------------------------------------------------------addtile
     else if(user_input[0] == "addtile")
     {
-      error_set = addNewTile.execute(*this, user_input);
-
-      if (!((tile_counter_ == 0) && (error_set == 1)))
+      return_value = addNewTile.execute(*this, user_input);
+      if(!(return_value == 8 || return_value == 9))
       {
         while(addNewTile.completeMap(field, user_input))
         {
-          addNewTile.execute(*this, user_input);
+          return_value = addNewTile.execute(*this, user_input);
         }
+      }
+      if (!((tile_counter_ == 0) && (return_value == 1)))
+      {
         togglePlayer();
         if (graphic_mode == 1)
         {
@@ -310,7 +312,19 @@ void Game::run(std::string file_name, int graphic_mode)
           createNewFile.execute(*this, user_input);
         }
       }
-      else if(error_set == 4)
+      // if auto complete
+      if(return_value == 3)
+      {
+        setRunning(false);
+      }
+      // if someone won
+      if(return_value == 8 || return_value == 9)
+      {
+        setRunning(false);
+      }
+
+      // if nobody won and tiles are not available
+      if(return_value == 4)
       {
         setRunning(false);
       }
@@ -318,6 +332,7 @@ void Game::run(std::string file_name, int graphic_mode)
     // --------------------------------------------------------
     else
     {
+      cout << "Error: Unknown command!" << endl;
       continue;
     }
   } while( running_ );

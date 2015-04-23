@@ -3,7 +3,7 @@
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
-// Authors: 
+// Authors:
 // Markus Pichler 1331070
 //------------------------------------------------------------------------------
 //
@@ -149,6 +149,18 @@ void Tile::setType(char c)
   }
 }
 
+int Tile::getId(std::string color)
+{
+  if(color == "red")
+  {
+    return red_id_;
+  }
+  if(color == "white")
+  {
+    return white_id_;
+  }
+  return 0;
+}
 //---------------------for Test cases----------
 std::string Tile::getColorOut()
 {

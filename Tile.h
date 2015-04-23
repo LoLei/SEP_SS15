@@ -3,7 +3,7 @@
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
-// Authors: 
+// Authors:
 // Markus Pichler 1331070
 //------------------------------------------------------------------------------
 //
@@ -60,7 +60,7 @@ class Tile
   public:
     //--------------------------------------------------------------------------
     // Constructor method
-    // 
+    //
     // @param side the type of tile
     // @param color the top color
     //
@@ -179,6 +179,7 @@ class Tile
     std::string getTypeOut();
     std::string getPlayerColorOut();
     int getPlayerColor();
+    int getId(std::string color);
 
     //--------------------------------------------------------------------------
     // Operator Methods

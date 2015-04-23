@@ -3,7 +3,7 @@
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
-// Authors: 
+// Authors:
 // Lorenz Leitner 1430211
 // Markus Pichler 1331070
 //------------------------------------------------------------------------------
@@ -26,22 +26,37 @@
 //
 int main(int argc, char **argv)
 {
-  std::string file_name = "outputfile";
-  int graphic_mode = 0;
-  if(argc == 3)
-
+  try
   {
-    std::string flag = argv[1];
-    if(flag == "-g")
+    std::string file_name = "outputfile";
+    int graphic_mode = 0;
+    std::string flag;
+    if(argc == 3 && argv[1][0] == '-' && (flag = argv[1]).size() == 2)
     {
-      graphic_mode = 1;
-      file_name = argv[2];
-      std::cout << " === GRAFIC MODE === " << std::endl;
+      switch(argv[1][1])
+      {
+        case 'g':
+          graphic_mode = 1;
+          file_name = argv[2];
+          break;
+        default:
+          std::cout << "Usage: " << argv[0] << std::endl;
+          return 2;
+      }
     }
-  }
+    else if(argc != 1 && argc != 3)
+    {
+      std::cout << "Usage: " << argv[0] << std::endl;
+      return 2;
+    }
 
-  Game trax;
-  std::cout << " === GAME === " << std::endl;
-  trax.run(file_name, graphic_mode);
+    Game trax;
+    trax.run(file_name, graphic_mode);
+  }
+  catch(...)
+  {
+    std::cout << "Error: Out of Memory!" << std::endl;
+    return 1;
+  }
   return 0;
 }

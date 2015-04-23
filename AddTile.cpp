@@ -3,7 +3,7 @@
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
-// Authors: 
+// Authors:
 // Markus Pichler 1331070
 //------------------------------------------------------------------------------
 //
@@ -17,17 +17,17 @@ using std::string;
 //------------------------------------------------------------------------------
 // Constructor
 //
-Addtile::Addtile() : Command("Addtile")
+AddTile::AddTile() : Command("Addtile")
 {
 }
 
 //------------------------------------------------------------------------------
-Addtile::~Addtile()
+AddTile::~AddTile()
 {
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::valideInput(std::vector<string> user_input, Tile &tile,
+bool AddTile::valideInput(std::vector<string> user_input, Tile &tile,
   Position &position)
 {
   if(user_input.size() != 3)
@@ -56,9 +56,10 @@ bool Addtile::valideInput(std::vector<string> user_input, Tile &tile,
 }
 
 //------------------------------------------------------------------------------
-int Addtile::execute(Game& board, std::vector<string>& user_input)
+int AddTile::execute(Game& board, std::vector<string>& user_input)
 {
-  //für das autom. ergänzen
+  // number of tiles beside the setted tile
+  // for auto complete
   if(board.getNumberOfTiles() == 64)
   {
     cout << "Invalid move - not enough tiles left" << endl;
@@ -67,8 +68,7 @@ int Addtile::execute(Game& board, std::vector<string>& user_input)
 
   Position p1;
   Tile t1(Tile::EMPTY_T, COLOR_RED);
-  t1.white_id_ = Tile::id_counter_++;
-    t1.red_id_ = Tile::id_counter_++;
+
   t1.setPlayer(board.getActivePlayer());
   // look up if the userinput is correct
   if(!(valideInput(user_input,t1,p1)))
@@ -76,7 +76,9 @@ int Addtile::execute(Game& board, std::vector<string>& user_input)
     return 1;
   }
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
-  // number of tiles beside the setted tile
+
+  t1.white_id_ = Tile::id_counter_++;
+  t1.red_id_ = Tile::id_counter_++;
 
   Position center(0,0);
   if((board.getNumberOfTiles() == 0)
@@ -129,15 +131,25 @@ int Addtile::execute(Game& board, std::vector<string>& user_input)
     fillEmptyTiles(board);
   }
 
+  // return 0 if nobody won 9 red 8 white
+  return checkWin(board, t1);
+
+  // if nobody won and tiles are not available
+  if(board.getNumberOfTiles() == 64)
+  {
+    cout << "No more tiles left. Game ends in a draw!" << endl;
+    return 4;
+  }
+
   // falls alles geklappt hatt
   return 0;
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::abfrage(bool abfrage1, bool &twisted, bool &lonely_tile, Tile &t1,
+bool AddTile::abfrage(bool abfrage1, bool &twisted, bool &lonely_tile, Tile &t1,
                       Color c1,Tile& t2)
   {
-    cout << t1.red_id_ << t2.red_id_ << t1.white_id_ << t2.white_id_ << endl;
+    //cout << t1.red_id_ << t2.red_id_ << t1.white_id_ << t2.white_id_ << endl;
     lonely_tile = false;
     if(abfrage1)
       {
@@ -147,11 +159,11 @@ bool Addtile::abfrage(bool abfrage1, bool &twisted, bool &lonely_tile, Tile &t1,
           return false;
         }
         t1.setColor(t1.notTopColor());
-        if(c1 == COLOR_RED)
+        if(c1 == COLOR_WHITE)
         {
           t1.red_id_ = t2.red_id_;
         }
-        if(c1 == COLOR_WHITE)
+        if(c1 == COLOR_RED)
         {
           t1.white_id_ = t2.white_id_;
         }
@@ -169,12 +181,12 @@ bool Addtile::abfrage(bool abfrage1, bool &twisted, bool &lonely_tile, Tile &t1,
         }
         twisted = true;
       }
-    cout << t1.red_id_ << t2.red_id_ << t1.white_id_ << t2.white_id_ << endl;
+    //cout << t1.red_id_ << t2.red_id_ << t1.white_id_ << t2.white_id_ << endl;
     return true;
   }
 
 //------------------------------------------------------------------------------
-bool Addtile::adaptTile(std::map<Position*, Tile*> karte,
+bool AddTile::adaptTile(std::map<Position*, Tile*> karte,
                         Tile &t1, Position p1)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
@@ -231,7 +243,7 @@ bool Addtile::adaptTile(std::map<Position*, Tile*> karte,
 }
 
 //------------------------------------------------------------------------------
-bool Addtile::completeMap(std::map<Position*, Tile*> &karte,
+bool AddTile::completeMap(std::map<Position*, Tile*> &karte,
   std::vector<string> &forAddtile)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
@@ -299,7 +311,7 @@ bool Addtile::completeMap(std::map<Position*, Tile*> &karte,
 }
 
 //------------------------------------------------------------------------------
-void Addtile::fillEmptyTiles(Game& board)
+void AddTile::fillEmptyTiles(Game& board)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   bool wenn;
@@ -323,4 +335,56 @@ void Addtile::fillEmptyTiles(Game& board)
       }
     }
   }
+}
+
+//------------------------------------------------------------------------------
+int AddTile::checkWin(Game& board, Tile t1)
+{
+  if(winLength(board,t1,"white"))
+  {
+    return 8;
+  }
+  if(winLength(board,t1,"red"))
+  {
+    return 9;
+  }
+  return 0;
+}
+
+//------------------------------------------------------------------------------
+int AddTile::winLength(Game& board, Tile t1, string color)
+{
+  // if white line goes over 8 lines or columns
+  signed int min_x = 0;
+  signed int min_y = 0;
+  signed int max_x = 0;
+  signed int max_y = 0;
+  for(auto& x: board.field)
+  {
+    if(x.second->getId(color) == t1.getId(color))
+    {
+      if(+x.first->getX() > max_x)
+      {
+        max_x = +x.first->getX();
+      }
+      if(+x.first->getY() > max_y)
+      {
+        max_y = +x.first->getY();
+      }
+      if(+x.first->getX() < min_x)
+      {
+        min_x = +x.first->getX();
+      }
+      if(+x.first->getY() < min_y)
+      {
+        min_y = +x.first->getY();
+      }
+    }
+    if(max_x - min_x >= 8 || max_y - min_y >= 8)
+    {
+      cout << "Player " << color << " wins!" << endl;
+      return 1;
+    }
+  }
+  return 0;
 }
