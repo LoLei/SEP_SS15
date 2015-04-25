@@ -53,6 +53,16 @@ class Tile
     Color of_activeplayer_;
 
     //--------------------------------------------------------------------------
+    // int white Id to identify tile
+    //
+    int white_id_;
+
+    //--------------------------------------------------------------------------
+    // int red Id to identify tile
+    //
+    int red_id_;
+
+    //--------------------------------------------------------------------------
     // Private assignment operator
 
     Tile& operator=(const Tile& original);
@@ -118,6 +128,22 @@ class Tile
     void setPlayer(Color of_activeplayer);
 
     //--------------------------------------------------------------------------
+    // setRedId method
+    // Sets int(ID) of a tile
+    //
+    // @param red_id the int(red ID) of a tile
+    //
+    void setRedId(int red_id);
+
+    //--------------------------------------------------------------------------
+    // setWhiteId method
+    // Sets int(ID) of a tile
+    //
+    // @param white_id the int(white ID) of a tile
+    //
+    void setWhiteId(int white_id);
+
+    //--------------------------------------------------------------------------
     // Getter Methods
     //
 
@@ -173,13 +199,33 @@ class Tile
     Color getColorButtom();
 
     //--------------------------------------------------------------------------
-    // Get Output Methods
+    // getRedId method
+    // Gets the red id of a tile
     //
-    std::string getColorOut();
-    std::string getTypeOut();
-    std::string getPlayerColorOut();
-    int getPlayerColor();
+    // @return int red_id_
+    //
+    int getRedId();
+
+    //--------------------------------------------------------------------------
+    // getWhiteId method
+    // Gets the white id of a tile
+    //
+    // @return int white_id_
+    //
+    int getWhiteId();
+
+    //--------------------------------------------------------------------------
+    // getId method
+    // gets a color id of a tile
+    //
+    // @param std::string color "white" or "red"
+    //
+    // @return int id of the color(depend on input)
+    //
     int getId(std::string color);
+
+
+    int getPlayerColor();
 
     //--------------------------------------------------------------------------
     // Operator Methods
@@ -226,9 +272,13 @@ class Tile
     //
     Type charToType(char c);
 
-    int white_id_;
-    int red_id_;
-    static int id_counter_;
 
+
+    //--------------------------------------------------------------------------
+    // Get Output Methods
+    //
+    std::string getColorOut();
+    std::string getTypeOut();
+    std::string getPlayerColorOut();
 };
 #endif // TILE_H

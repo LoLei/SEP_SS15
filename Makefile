@@ -1,4 +1,4 @@
-SUBMISSION = test
+SUBMISSION = basic
 EXECUTABLE = $(SUBMISSION)
 SOURCES    = $(wildcard *.cpp)
 OBJECTS    = $(patsubst %,%,${SOURCES:.cpp=.o})
@@ -6,11 +6,10 @@ CXX        = g++
 CXXFLAGS   = -Wall -g -c -std=c++11 -o
 LDFLAGS    = -static-libstdc++
 LDLIBS     =
-#------------------------------------------------------------------------------- 
+#-------------------------------------------------------------------------------
 
 #make executable
 all: $(EXECUTABLE)
-	rm -f ./*.o
 	rm -f ./*.o.d
 
 %.o: %.cpp
@@ -35,6 +34,11 @@ clean:
 run:
 	clear
 	./$(EXECUTABLE)
+
+#make run
+rung:
+	clear
+	./$(EXECUTABLE) -g ausgabe
 
 #make cleanw for windows
 cleanw:

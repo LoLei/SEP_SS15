@@ -25,7 +25,6 @@ Game::Game()
   max_y_ = 0;
   min_x_ = 0;
   min_y_ = 0;
-  Tile::id_counter_ = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -126,118 +125,128 @@ int Game::userInputToCommand(std::vector<string> &vector_input)
 }
 
 //------------------------------------------------------------------------------
-void Game::printTiles(std::map<Position*, Tile*> field)
+void Game::printTiles(std::map<Position*, Tile*> field, int i)
 {
-  /*
-  cout << endl << "Alte nicht sortierte field:" << endl;
-  for (auto& x: field)
+  int spalten1;
+  switch(i)
   {
-    cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
-         << x.second->getTypeOut() << endl;
-  }
-  cout << "___" << endl;
-
-  std::map<Position*, Tile*, customKeyComparator> map_sorted;
-  for (signed int y = min_y_; y <= max_y_; y++)
-  {
-    for (signed int x = min_x_; x <= max_x_; x++)
-    {
-      Position pos1(x, y);
-      for (auto& x : field)
-      {
-        if (*x.first == pos1)
-        {
-          map_sorted.emplace(x.first, x.second);
-        }
-      }
-    }
-  }
-  // For win conditions maybe
-  cout << endl << "Neue sortierte field:" << endl;
-  for (auto& x : map_sorted)
-  {
-    cout << x.first->toString() << ": " << x.second->getColorOut() << " "
-      << x.second->getTypeOut() << endl;
-  }
-*/
-  //----------------------------------------------------------------------------
-  /*
-  cout << "    |";
-  for (signed int i = min_x_; i <= max_x_; i++)
-    cout << std::setfill (' ') << std::setw (3) << i << std::setw (4) << "||";
-  cout << endl;
-  int spalten1 = max_x_ - min_x_ + 1;
-  cout << "    |";
-  while(spalten1--)
-  {
-    cout << std::setfill ('=') << std::setw (7) << "||";
-  }
-  cout << endl;
-  for(signed int y = min_y_; y <= max_y_; y++)
-  {
-    cout << std::setfill (' ') << std::setw (2) << y << ": |";
-    int spalten = max_x_ - min_x_ + 1;
-    for(signed int x = min_x_; x <= max_x_; x++)
-    {
-      Position pos1(x,y);
+    case 1:
+    /*
+      cout << endl << "Alte nicht sortierte field:" << endl;
       for (auto& x: field)
       {
-        if(*x.first == pos1)
-        {
-          cout << " " << x.second->getColorOut() << " "
-          << x.second->getTypeOut() << " ||";
-          break;
-        }
+        cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
+             << x.second->getTypeOut() << endl;
       }
-    }
-    cout << endl;
-    cout << "    |";
-    while(spalten--)
-    {
-      cout << std::setfill ('=') << std::setw (7) << "||";
-    }
-    cout << endl;
-  }*/
+      cout << "___" << endl;
 
-    //--------------------------------------------------------------------------
-    cout << "(white|red)" << endl;
-  cout << "    |";
-  for (signed int i = min_x_; i <= max_x_; i++)
-    cout << std::setfill (' ') << std::setw (5) << i << std::setw (7) << "||";
-  cout << endl;
-  int spalten1 = max_x_ - min_x_ + 1;
-  cout << "    |";
-  while(spalten1--)
-  {
-    cout << std::setfill ('=') << std::setw (12) << "||";
-  }
-  cout << endl;
-  for(signed int y = min_y_; y <= max_y_; y++)
-  {
-    cout << std::setfill (' ') << std::setw (2) << y << ": |";
-    int spalten = max_x_ - min_x_ + 1;
-    for(signed int x = min_x_; x <= max_x_; x++)
-    {
-      Position pos1(x,y);
-      for (auto& x: field)
+      std::map<Position*, Tile*, customKeyComparator> field1;
+      for (signed int y = min_y_; y <= max_y_; y++)
       {
-        if(*x.first == pos1)
+        for (signed int x = min_x_; x <= max_x_; x++)
         {
-          cout << " " << x.second->getColorOut() << " "
-            << x.second->getTypeOut();
-          cout << "(" << x.second->white_id_ << "|" << x.second->red_id_
-            << ")" << " ||";
-          break;
+          Position pos1(x, y);
+          for (auto& x : field1)
+          {
+            if (*x.first == pos1)
+            {
+              field1.emplace(x.first, x.second);
+            }
+          }
         }
       }
-    }
-    cout << endl;
-    cout << "    |";
-    while(spalten--)
-    {
-      cout << std::setfill ('=') << std::setw (12) << "||";
-    }
-    cout << endl;
+      // For win conditions maybe
+      cout << endl << "Neue sortierte field:" << endl;
+      for (auto& x : field1)
+      {
+        cout << x.first->toString() << ": " << x.second->getColorOut() << " "
+          << x.second->getTypeOut() << endl;
+      }
+      */
+      break;
+//----------------------------------------------------------------------------
+    case 2:
+      cout << "    |";
+      for (signed int i = min_x_; i <= max_x_; i++)
+        cout << std::setfill (' ') << std::setw (3) << i << std::setw (4) << "||";
+      cout << endl;
+      spalten1 = max_x_ - min_x_ + 1;
+      cout << "    |";
+      while(spalten1--)
+      {
+        cout << std::setfill ('=') << std::setw (7) << "||";
+      }
+      cout << endl;
+      for(signed int y = min_y_; y <= max_y_; y++)
+      {
+        cout << std::setfill (' ') << std::setw (2) << y << ": |";
+        int spalten = max_x_ - min_x_ + 1;
+        for(signed int x = min_x_; x <= max_x_; x++)
+        {
+          Position pos1(x,y);
+          for (auto& x: field)
+          {
+            if(*x.first == pos1)
+            {
+              cout << " " << x.second->getColorOut() << " "
+              << x.second->getTypeOut() << " ||";
+              break;
+            }
+          }
+        }
+        cout << endl;
+        cout << "    |";
+        while(spalten--)
+        {
+          cout << std::setfill ('=') << std::setw (7) << "||";
+        }
+        cout << endl;
+      }
+      break;
+//--------------------------------------------------------------------------
+    case 3:
+      cout << "(white|red)" << endl;
+      cout << "    |";
+      for (signed int i = min_x_; i <= max_x_; i++)
+        cout << std::setfill (' ') << std::setw (5) << i << std::setw (7) << "||";
+      cout << endl;
+      spalten1 = max_x_ - min_x_ + 1;
+      cout << "    |";
+      while(spalten1--)
+      {
+        cout << std::setfill ('=') << std::setw (12) << "||";
+      }
+      cout << endl;
+      for(signed int y = min_y_; y <= max_y_; y++)
+      {
+        cout << std::setfill (' ') << std::setw (2) << y << ": |";
+        int spalten = max_x_ - min_x_ + 1;
+        for(signed int x = min_x_; x <= max_x_; x++)
+        {
+          Position pos1(x,y);
+          for (auto& x: field)
+          {
+            if(*x.first == pos1)
+            {
+              cout << " " << x.second->getColorOut() << " "
+                << x.second->getTypeOut();
+              cout << "(" << x.second->getWhiteId() << "|" << x.second->getRedId()
+                << ")" << " ||";
+              break;
+            }
+          }
+        }
+        cout << endl;
+        cout << "    |";
+        while(spalten--)
+        {
+          cout << std::setfill ('=') << std::setw (12) << "||";
+        }
+        cout << endl;
+      }
+      break;
+    default:
+      break;
   }
 }
 
@@ -254,111 +263,101 @@ void Game::freeTiles(std::map<Position*, Tile*> field)
 //------------------------------------------------------------------------------
 void Game::run(std::string file_name, int graphic_mode)
 {
-    setRunning(true);
+  setRunning(true);
 
-    int return_value = 0;
+  int return_value = 0;
 
-    Write createNewFile;
-    Quit turnOff;
-    AddTile addNewTile;
+  Write createNewFile;
+  Quit turnOff;
+  AddTile addNewTile;
 
-    do
+  do
+  {
+    std::cout << "sep> ";
+    // get user input into a vactor
+    std::vector<string> user_input;
+    // If user enters blank line, prompt again
+    if(userInputToCommand(user_input))
     {
-      try
+      continue;
+    }
+
+    // choose case of command
+    if(user_input[0] == "quit")
+    {
+      turnOff.execute(*this, user_input);
+      //setRunning(false);
+    }
+
+    // ------------------------------------------write
+    else if(user_input[0] == "write")
+    {
+      // case: filename without whitespace!
+      if(user_input.size() != 2)
       {
-        std::cout << "sep> ";
-        // get user input into a vactor
-        std::vector<string> user_input;
-        // If user enters blank line, prompt again
-        if (userInputToCommand(user_input))
-        {
-          continue;
-        }
+        cout << "Error: Wrong parameter count!" << endl;
+        continue;
+      }
+      createNewFile.execute(*this, user_input);
+    }
 
-        // choose case of command
-        if (user_input[0] == "quit")
-        {
-          turnOff.execute(*this, user_input);
-          //setRunning(false);
-        }
-
-        // ------------------------------------------write
-        else if (user_input[0] == "write")
-        {
-          // case: filename without whitespace!
-          if (user_input.size() != 2)
-          {
-            throw WrongParameterException();
-          }
-          if (tile_counter_ == 0)
-          {
-            throw EmptyBoardException();
-          }
-          else
-          {
-            createNewFile.execute(*this, user_input);
-          }
-        }
-
-        // --------------------------------------------------------addtile
-        else if (user_input[0] == "addtile")
+    // --------------------------------------------------------addtile
+    else if(user_input[0] == "addtile")
+    {
+      return_value = addNewTile.execute(*this, user_input);
+      if(!(return_value == 8 || return_value == 9))
+      {
+        while(addNewTile.completeMap(field, user_input))
         {
           return_value = addNewTile.execute(*this, user_input);
-          if (!(return_value == 8 || return_value == 9))
-          {
-            while (addNewTile.completeMap(field, user_input))
-            {
-              return_value = addNewTile.execute(*this, user_input);
-            }
-          }
-          if (!((tile_counter_ == 0) && (return_value == 1)))
-          {
-            togglePlayer();
-            if (graphic_mode == 1)
-            {
-              user_input[1] = file_name;
-              createNewFile.execute(*this, user_input);
-            }
-          }
-          // if auto complete
-          if (return_value == 3)
-          {
-            setRunning(false);
-          }
-          // if someone won
-          if (return_value == 8 || return_value == 9)
-          {
-            setRunning(false);
-          }
-
-          // if nobody won and tiles are not available
-          if (return_value == 4)
-          {
-            setRunning(false);
-          }
         }
-        // --------------------------------------------------------
-        else
+      }
+      if (!((tile_counter_ == 0) && (return_value == 1)))
+      {
+        togglePlayer();
+        if (graphic_mode == 1)
         {
-          throw UnknownCommandException();
+          user_input[1] = file_name;
+          createNewFile.execute(*this, user_input);
         }
       }
-      catch (EmptyBoardException& e1)
+      // if auto complete
+      if(return_value == 3)
       {
-        std::cout << e1.what() << std::endl;
+        setRunning(false);
       }
-      catch (WrongParameterException& e1)
+      // if someone won
+      if(return_value == 8 || return_value == 9)
       {
-        std::cout << e1.what() << std::endl;
-        //continue;
+        setRunning(false);
       }
-      catch (UnknownCommandException& e1)
-      {
-        std::cout << e1.what() << std::endl;
-        //continue;
-      }
-    } while (running_);
 
-    printTiles(field);
-    freeTiles(field);
+      // if nobody won and tiles are not available
+      if(return_value == 4)
+      {
+        setRunning(false);
+      }
+    }
+    else if(user_input[0] == "test")
+    {
+      printTiles(field,3);
+    }
+    else if(user_input[0] == "test1")
+    {
+      printTiles(field,1);
+    }
+    else if(user_input[0] == "test2")
+    {
+      printTiles(field,2);
+    }
+    // --------------------------------------------------------
+    else
+    {
+      cout << "Error: Unknown command!" << endl;
+      continue;
+    }
+  } while( running_ );
+
+  //printTiles(field);
+  freeTiles(field);
 }

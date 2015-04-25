@@ -3,7 +3,7 @@
 //
 // Group: Group 11574, study assistant Philip Loibl
 //
-// Authors: 
+// Authors:
 // Markus Pichler 1331070
 //------------------------------------------------------------------------------
 //
@@ -175,7 +175,7 @@ class Game
     //
     // @return Color activeplayer_
     //
-    void printTiles(std::map<Position*, Tile*> karte);
+    void printTiles(std::map<Position*, Tile*> karte, int i);
 
     //--------------------------------------------------------------------------
     // freeTiles method

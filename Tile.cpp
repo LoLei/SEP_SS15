@@ -10,7 +10,6 @@
 
 #include "Tile.h"
 
-int Tile::id_counter_ = 0;
 //------------------------------------------------------------------------------
 Tile::Tile(Type side, Color topcolor)
 {
@@ -121,6 +120,18 @@ void Tile::setPlayer(Color of_activeplayer)
 }
 
 //------------------------------------------------------------------------------
+void Tile::setRedId(int red_id)
+{
+  red_id_ = red_id;
+}
+
+//------------------------------------------------------------------------------
+void Tile::setWhiteId(int white_id)
+{
+  white_id_ = white_id;
+}
+
+//------------------------------------------------------------------------------
 Color Tile::getColor()
 {
   return topcolor_;
@@ -149,6 +160,7 @@ void Tile::setType(char c)
   }
 }
 
+//------------------------------------------------------------------------------
 int Tile::getId(std::string color)
 {
   if(color == "red")
@@ -161,6 +173,19 @@ int Tile::getId(std::string color)
   }
   return 0;
 }
+
+//------------------------------------------------------------------------------
+int Tile::getRedId()
+{
+  return red_id_;
+}
+
+//------------------------------------------------------------------------------
+int Tile::getWhiteId()
+{
+  return white_id_;
+}
+
 //---------------------for Test cases----------
 std::string Tile::getColorOut()
 {

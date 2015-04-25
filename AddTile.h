@@ -24,13 +24,9 @@
 #include "NotEnoughTilesException.h"
 #include "WrongParameterException.h"
 
-#include "Position.h"
-#include "Tile.h"
 #include "Command.h"
 #include "Game.h"
 
-class Game;
-class Command;
 class Tile;
 class Position;
 
@@ -50,6 +46,8 @@ class AddTile:public Command
     // Private assignment operator
     //
     AddTile& operator=(const AddTile& original);
+
+    static int id_counter_;
 
   public:
     //--------------------------------------------------------------------------
@@ -87,7 +85,7 @@ class AddTile:public Command
       Position &position);
 
     //--------------------------------------------------------------------------
-    // abfrage method
+    // colorAndIdCheck method
     // Checks if move is correct
     //
     // @param abfrage if true starts query
@@ -95,10 +93,11 @@ class AddTile:public Command
     // @param lonely_tile if tile is placed not adjacent to two other tiles
     // @param tile the current tile
     //
-    // @return bool true if no error
+    // @return bool true if everything worked
     //
-    bool abfrage(bool abfrage, bool &twisted, bool &lonely_tile, Tile &t1,
-                 Color c1, Tile& t2);
+    bool colorAndIdCheck(bool color_bool, bool &twisted, bool &lonely_tile,
+                         Tile &current_tile, Color c1, Tile& t2,
+                         std::vector<int> &red, std::vector<int> &white);
 
     //--------------------------------------------------------------------------
     // adaptTile method
@@ -108,9 +107,9 @@ class AddTile:public Command
     // @param tile the current tile
     // @param position the current position
     //
-    // @return bool true if no error
+    // @return int 0 if everything worked 8 or 9 is somebody won
     //
-    bool adaptTile(std::map<Position*, Tile*> karte, Tile &t1, Position p1);
+    int adaptTile(std::map<Position*, Tile*> karte, Tile &current_tile, Position p1);
 
     //--------------------------------------------------------------------------
     // completeMap method
@@ -138,8 +137,10 @@ class AddTile:public Command
     //
     // @param board the current board
     //
-    int checkWin(Game& board, Tile t1);
-    int winLength(Game& board, Tile t1, std::string color);
+    // @return int 1 if somebody won else 0
+    //
+    int checkWinOverLength(Game& board, Tile current_tile);
+    int winLength(Game& board, Tile current_tile, std::string color);
 };
 
 #endif //ADDTILE_H_INCLUDED
