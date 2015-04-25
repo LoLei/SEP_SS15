@@ -33,6 +33,8 @@ Repository for SEP SS15 Basisbeispiel
 ### Low priority
 - [x] ~~Make commands into vector (see Fragestunde.md)~~
 - [ ] Make write only append to file, not write a new one each time
+- [ ] Karte class translate to English
+- [ ] Fix file headers mat. nr.
 
 ### Vor Abgabe
 - [x] ~~Make code coding standard conform~~
