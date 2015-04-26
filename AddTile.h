@@ -15,6 +15,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <climits>
 #include "OutOfMemoryException.h"
 #include "InvalidCoordinatesException.h"
 #include "NotEmptyFieldException.h"

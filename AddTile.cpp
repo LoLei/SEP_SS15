@@ -476,11 +476,11 @@ int AddTile::checkWinOverLength(Game& board, Tile current_tile)
 //------------------------------------------------------------------------------
 int AddTile::winLength(Game& board, Tile current_tile, string color)
 {
-  // if white line goes over 8 lines or columns
-  signed int min_x = 0;
-  signed int min_y = 0;
-  signed int max_x = 0;
-  signed int max_y = 0;
+  // if a line goes over 8 lines or columns
+  signed int min_x = INT_MAX;
+  signed int min_y = INT_MAX;
+  signed int max_x = INT_MIN;
+  signed int max_y = INT_MIN;
   for(auto& var: board.field)
   {
     if(var.second->getId(color) == current_tile.getId(color))
@@ -502,11 +502,11 @@ int AddTile::winLength(Game& board, Tile current_tile, string color)
         min_y = var.first->getY();
       }
     }
-    if(max_x - min_x >= 7 || max_y - min_y >= 7)
+  }
+  if(max_x - min_x >= 7 || max_y - min_y >= 7)
     {
       std::cout << "Player " << color << " wins!" << std::endl;
       return 1;
     }
-  }
   return 0;
 }
