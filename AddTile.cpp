@@ -40,7 +40,15 @@ bool AddTile::valideInput(std::vector<string> user_input, Tile &current_tile,
     {
       try
       {
+        if(user_input[2].size() != 1)
+        {
+          throw InvalidParameterException();
+        }
         current_tile.setType(user_input[2][0]);
+        if(current_tile.getType() == Tile::EMPTY_T)
+        {
+          throw InvalidParameterException();
+        }
       }
       catch (...)
       {
