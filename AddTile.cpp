@@ -106,7 +106,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
       }
     }
 
-    int code;
+    int code = 0;
     if(board.getNumberOfTiles())
     {
       code = adaptTile(board.field, current_tile, current_position);
