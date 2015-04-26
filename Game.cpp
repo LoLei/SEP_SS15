@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// AddTile.cpp
+// Game.cpp
 //
 // Group: Group 9, study assistant Philip Loibl
 //

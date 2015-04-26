@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// AddTile.cpp
+// NotEnoughTilesException.cpp
 //
 // Group: Group 9, study assistant Philip Loibl
 //

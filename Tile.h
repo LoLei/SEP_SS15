@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// AddTile.cpp
+// Tile.h
 //
 // Group: Group 9, study assistant Philip Loibl
 //
