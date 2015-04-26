@@ -1,11 +1,12 @@
 //------------------------------------------------------------------------------
-// Position.cpp
+// AddTile.cpp
 //
-// Group: Group 11574, study assistant Philip Loibl
+// Group: Group 9, study assistant Philip Loibl
 //
-// Authors: 
-// Lorenz Leitner 1430211
-// Markus Pichler 1331070
+// Authors:
+// Lorenz Leitner (1430211)
+// Verena Niederwanger (1430778)
+// Markus Pichler (1331070)
 //------------------------------------------------------------------------------
 //
 

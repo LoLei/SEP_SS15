@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 // Command.h
 // From Palme website
-// Group: Group 11574, study assistant Philip Loibl
+// Group: Group 9, study assistant Philip Loibl
 //
 // Authors: 
 // Tutors
