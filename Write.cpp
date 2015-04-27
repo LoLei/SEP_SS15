@@ -67,7 +67,7 @@ int Write::execute(Game& board, std::vector<std::string>& user_input)
       file_header.maxim_x_ = board.max_x_;
       file_header.maxim_y_ = board.max_y_;
       // Signature and active player;
-      file_header.signature_ = static_cast<char*>("TRAX");
+      file_header.signature_ = /*static_cast<char*>*/("TRAX");
       file_header.active_player_ = board.getActivePlayer();
 
       // Open file for writing

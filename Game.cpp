@@ -307,7 +307,7 @@ void Game::run(std::string file_name, int graphic_mode)
     else if(user_input[0] == "addtile")
     {
       return_value = addNewTile.execute(*this, user_input);
-      if(!(return_value == 8 || return_value == 9))
+      if(!(return_value == 5))
       {
         while(addNewTile.completeMap(field, user_input))
         {
@@ -329,7 +329,7 @@ void Game::run(std::string file_name, int graphic_mode)
         setRunning(false);
       }
       // if someone won
-      if(return_value == 8 || return_value == 9)
+      if(return_value == 5)
       {
         setRunning(false);
       }

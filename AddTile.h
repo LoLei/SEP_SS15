@@ -87,7 +87,7 @@ class AddTile:public Command
     bool valideInput(std::vector<std::string> user_input, Tile &tile,
       Position &position);
 
-    //--------------------------------------------------------------------------
+    //-------------------------------------------------------------------------- ------TODO
     // colorAndIdCheck method
     // Checks if move is correct
     //
@@ -98,11 +98,10 @@ class AddTile:public Command
     //
     // @return bool true if everything worked
     //
-    bool colorAndIdCheck(bool color_bool, bool &twisted, bool &lonely_tile,
-                         Tile &current_tile, Color c1, Tile& t2,
-                         std::vector<int> &red, std::vector<int> &white);
+    bool colorCheck(bool color_bool, bool &twisted, bool &lonely_tile,
+                         Tile &current_tile);
 
-    //--------------------------------------------------------------------------
+    //-------------------------------------------------------------------------- -------TODO
     // adaptTile method
     // Turns tile so colors connect
     //
@@ -142,8 +141,49 @@ class AddTile:public Command
     //
     // @return int 1 if somebody won else 0
     //
-    int checkWinOverLength(Game& board, Tile current_tile);
-    int winLength(Game& board, Tile current_tile, std::string color);
+    int winByLength(Game& board, Tile current_tile);
+    int checkLineLength(Game& board, Tile current_tile, std::string color);
+
+
+    //-------------------------------------------------------------------------- ------TODO
+    // colorAndIdCheck method
+    // Checks if move is correct
+    //
+    // @param abfrage if true starts query
+    // @param twisted if tile is twisted
+    // @param lonely_tile if tile is placed not adjacent to two other tiles
+    // @param tile the current tile
+    //
+    // @return bool true if everything worked
+    //
+    void idCheck(Tile &current_tile, Color color_to_match,Tile& tile_beside,
+                 std::vector<int> &red_id_to_merge,
+                 std::vector<int> &white_id_to_merge);
+
+    //-------------------------------------------------------------------------- ------TODO
+    // adaptTile method
+    // Turns tile so colors connect
+    //
+    // @param field the game board of fields
+    // @param tile the current tile
+    // @param position the current position
+    //
+    // @return int 0 if everything worked 8 or 9 is somebody won
+    //
+    int winByLoop(std::map<Position*, Tile*> field,
+            Tile &current_tile, Position current_position);
+
+    //-------------------------------------------------------------------------- ------TODO
+    // adaptTile method
+    // Turns tile so colors connect
+    //
+    // @param field the game board of fields
+    // @param tile the current tile
+    // @param position the current position
+    //
+    // @return int 0 if everything worked 8 or 9 is somebody won
+    //
+    int whoWon(int win_code);
 };
 
 #endif //ADDTILE_H_INCLUDED

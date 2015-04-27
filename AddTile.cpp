@@ -116,16 +116,21 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
       }
     }
 
-    int code = 0;
-    if(board.getNumberOfTiles())
+    // change topcolor, check if contact to other tile,
+    // and check if alle connected colors match
+    if(board.getNumberOfTiles() > 0 &&
+       adaptTile(board.field, current_tile, current_position))
     {
-      code = adaptTile(board.field, current_tile, current_position);
-    }
-    if(code == 1)
-    {
+      // fail
       return 2;
     }
 
+    int win_code;
+    // win by loop
+    win_code = winByLoop(board.field, current_tile, current_position);
+
+
+    // replace empty tile with tile
     bool replace = true;
     for (auto& var : board.field)
     {
@@ -133,41 +138,37 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
       {
         delete var.second;
         board.field[var.first] = new Tile(current_tile);
+        board.riseNumberOfTiles();
         replace = false;
       }
     }
 
-    // tile einfügen
+    // set tile
     if (replace)
     {
       board.field.emplace(new Position(current_position), new Tile(current_tile));
-    }
-    board.riseNumberOfTiles();
+      board.riseNumberOfTiles();
 
-    // spielfeld vergrößern
-    board.setMaximas(current_position);
+      // set size of field
+      board.setMaximas(current_position);
 
-    // zwischenfelder mit leeren einträgen füllen
-    if (board.getNumberOfTiles() > 2)
-    {
-      fillEmptyTiles(board);
-    }
-
-    // return 0 if nobody won 9 red 8 white
-    if(int newcode = checkWinOverLength(board, current_tile))
-    {
-      return newcode;
+      // insert empty tiles in field between maximas
+      if (board.getNumberOfTiles() > 2)
+      {
+        fillEmptyTiles(board);
+      }
     }
 
-    if(code == 8)
+    // nobody won by loop
+    if(!win_code)
     {
-      std::cout << "Player white wins!" << std::endl;
-      return code;
+      // win by length
+      win_code = winByLength(board, current_tile);
     }
-    if(code == 9)
+
+    if(win_code)
     {
-      std::cout << "Player red wins!" << std::endl;
-      return code;
+      return whoWon(win_code);
     }
 
     // if nobody won and tiles are not available
@@ -177,8 +178,6 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
       return 4;
     }
 
-    // falls alles geklappt hatt
-    return 0;
   }
   catch (OutOfMemoryException& e1)
   {
@@ -203,10 +202,10 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
 }
 
 //------------------------------------------------------------------------------
-bool AddTile::colorAndIdCheck(bool color_bool, bool &twisted, bool &lonely_tile,
-                      Tile &current_tile, Color c1,Tile& t2,
+bool AddTile::colorCheck(bool color_bool, bool &twisted, bool &lonely_tile,
+                      Tile &current_tile)/*, Color c1,Tile& t2,
                       std::vector<int> &red_id_to_merge,
-                      std::vector<int> &white_id_to_merge)
+                      std::vector<int> &white_id_to_merge)*/
 {
   try
   {
@@ -218,6 +217,7 @@ bool AddTile::colorAndIdCheck(bool color_bool, bool &twisted, bool &lonely_tile,
         throw ConnectedColorsMismatchException();
       }
       current_tile.setColor(current_tile.notTopColor());
+/*
       if(c1 == COLOR_WHITE)
       {
         current_tile.setRedId(t2.getRedId());
@@ -228,10 +228,12 @@ bool AddTile::colorAndIdCheck(bool color_bool, bool &twisted, bool &lonely_tile,
         current_tile.setWhiteId(t2.getWhiteId());
         white_id_to_merge.push_back(current_tile.getWhiteId());
       }
+*/
       twisted = true;
     }
     else
     {
+/*
       if(c1 == COLOR_RED)
       {
         current_tile.setRedId(t2.getRedId());
@@ -242,6 +244,7 @@ bool AddTile::colorAndIdCheck(bool color_bool, bool &twisted, bool &lonely_tile,
         current_tile.setWhiteId(t2.getWhiteId());
         white_id_to_merge.push_back(current_tile.getWhiteId());
       }
+*/
       twisted = true;
     }
     return true;
@@ -269,10 +272,10 @@ int AddTile::adaptTile(std::map<Position*, Tile*> field,
     Position right(current_position.getX() + 1, current_position.getY());
     Position top(current_position.getX(), current_position.getY() - 1);
     Position bottom(current_position.getX(), current_position.getY() + 1);
-
+/*
     std::vector<int> red_id_to_merge;
     std::vector<int> white_id_to_merge;
-
+*/
     for (auto& var : field)
     {
       if (*var.second == empty_tile)
@@ -280,30 +283,30 @@ int AddTile::adaptTile(std::map<Position*, Tile*> field,
         continue;
       }
       if(*(var.first) == left &&
-         !colorAndIdCheck(var.second->getColorRight() != current_tile.getColorLeft(),
-                  twisted, lonely_tile, current_tile, current_tile.getColorLeft(),*var.second,
-                  red_id_to_merge, white_id_to_merge))
+         !colorCheck(var.second->getColorRight() != current_tile.getColorLeft(),
+                  twisted, lonely_tile, current_tile))/*, current_tile.getColorLeft(),*var.second,
+                  red_id_to_merge, white_id_to_merge))*/
       {
         return 1;
       }
       else if(*(var.first) == right &&
-         !colorAndIdCheck(var.second->getColorLeft() != current_tile.getColorRight(),
-                  twisted, lonely_tile, current_tile,current_tile.getColorRight(),*var.second,
-                  red_id_to_merge, white_id_to_merge))
+         !colorCheck(var.second->getColorLeft() != current_tile.getColorRight(),
+                  twisted, lonely_tile, current_tile))/*,current_tile.getColorRight(),*var.second,
+                  red_id_to_merge, white_id_to_merge))*/
       {
         return 1;
       }
       else if(*(var.first) == top &&
-         !colorAndIdCheck(var.second->getColorButtom() != current_tile.getColorTop(),
-                  twisted, lonely_tile, current_tile,current_tile.getColorTop(),*var.second,
-                  red_id_to_merge, white_id_to_merge))
+         !colorCheck(var.second->getColorButtom() != current_tile.getColorTop(),
+                  twisted, lonely_tile, current_tile))/*,current_tile.getColorTop(),*var.second,
+                  red_id_to_merge, white_id_to_merge))*/
       {
         return 1;
       }
       else if(*(var.first) == bottom &&
-         !colorAndIdCheck(var.second->getColorTop() != current_tile.getColorButtom(),
-                  twisted, lonely_tile, current_tile,current_tile.getColorButtom(),*var.second,
-                  red_id_to_merge, white_id_to_merge))
+         !colorCheck(var.second->getColorTop() != current_tile.getColorButtom(),
+                  twisted, lonely_tile, current_tile))/*,current_tile.getColorButtom(),*var.second,
+                  red_id_to_merge, white_id_to_merge))*/
       {
         return 1;
       }
@@ -312,7 +315,7 @@ int AddTile::adaptTile(std::map<Position*, Tile*> field,
         continue;
       }
     }
-
+/*
     if(red_id_to_merge.size() >= 2)
     {
       for(auto& var: field)
@@ -351,7 +354,7 @@ int AddTile::adaptTile(std::map<Position*, Tile*> field,
         //win
       }
     }
-
+*/
     if (lonely_tile)
     {
       throw NotConnectedFieldException();
@@ -470,13 +473,13 @@ void AddTile::fillEmptyTiles(Game& board)
 }
 
 //------------------------------------------------------------------------------
-int AddTile::checkWinOverLength(Game& board, Tile current_tile)
+int AddTile::winByLength(Game& board, Tile current_tile)
 {
-  if(winLength(board,current_tile,"white"))
+  if(checkLineLength(board,current_tile,"white"))
   {
     return 8;
   }
-  if(winLength(board,current_tile,"red"))
+  if(checkLineLength(board,current_tile,"red"))
   {
     return 9;
   }
@@ -484,7 +487,7 @@ int AddTile::checkWinOverLength(Game& board, Tile current_tile)
 }
 
 //------------------------------------------------------------------------------
-int AddTile::winLength(Game& board, Tile current_tile, string color)
+int AddTile::checkLineLength(Game& board, Tile current_tile, string color)
 {
   // if a line goes over 8 lines or columns
   signed int min_x = INT_MAX;
@@ -514,9 +517,130 @@ int AddTile::winLength(Game& board, Tile current_tile, string color)
     }
   }
   if(max_x - min_x >= 7 || max_y - min_y >= 7)
-    {
-      std::cout << "Player " << color << " wins!" << std::endl;
-      return 1;
-    }
+  {
+    return 1;
+  }
   return 0;
 }
+
+//------------------------------------------------------------------------------
+void AddTile::idCheck(Tile &current_tile, Color color_to_match,Tile& tile_beside,
+                      std::vector<int> &red_id_to_merge,
+                      std::vector<int> &white_id_to_merge)
+{
+  if(color_to_match == COLOR_RED)
+  {
+    current_tile.setRedId(tile_beside.getRedId());
+    red_id_to_merge.push_back(current_tile.getRedId());
+  }
+  if(color_to_match == COLOR_WHITE)
+  {
+    current_tile.setWhiteId(tile_beside.getWhiteId());
+    white_id_to_merge.push_back(current_tile.getWhiteId());
+  }
+}
+
+//------------------------------------------------------------------------------
+int AddTile::winByLoop(std::map<Position*, Tile*> field,
+                     Tile &current_tile, Position current_position)
+{
+  Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
+
+  Position left(current_position.getX() - 1, current_position.getY());
+  Position right(current_position.getX() + 1, current_position.getY());
+  Position top(current_position.getX(), current_position.getY() - 1);
+  Position bottom(current_position.getX(), current_position.getY() + 1);
+
+  std::vector<int> red_id_to_merge;
+  std::vector<int> white_id_to_merge;
+
+  for (auto& var : field)
+  {
+    if (*var.second == empty_tile)
+    {
+      continue;
+    }
+    if(*(var.first) == left)
+    {
+       idCheck(current_tile, current_tile.getColorLeft(),*var.second,
+                red_id_to_merge, white_id_to_merge);
+    }
+
+    else if(*(var.first) == right)
+    {
+       idCheck(current_tile,current_tile.getColorRight(),*var.second,
+                red_id_to_merge, white_id_to_merge);
+    }
+    else if(*(var.first) == top)
+    {
+       idCheck(current_tile,current_tile.getColorTop(),*var.second,
+                red_id_to_merge, white_id_to_merge);
+    }
+    else if(*(var.first) == bottom)
+    {
+       idCheck(current_tile,current_tile.getColorButtom(),*var.second,
+                red_id_to_merge, white_id_to_merge);
+    }
+    else
+    {
+      continue;
+    }
+  }
+
+  if(red_id_to_merge.size() >= 2)
+  {
+    for(auto& var: field)
+    {
+      if(var.second->getRedId() == red_id_to_merge[1])
+      {
+        var.second->setRedId(red_id_to_merge[0]);
+      }
+    }
+    if(current_tile.getRedId() == red_id_to_merge[1])
+    {
+      current_tile.setRedId(red_id_to_merge[0]);
+    }
+    if(red_id_to_merge[1] == red_id_to_merge[0])
+    {
+      return 9;
+      //win
+    }
+  }
+  if(white_id_to_merge.size() >= 2)
+  {
+    for(auto& var: field)
+    {
+      if(var.second->getWhiteId() == white_id_to_merge[1])
+      {
+        var.second->setWhiteId(white_id_to_merge[0]);
+      }
+    }
+    if(current_tile.getWhiteId() == white_id_to_merge[1])
+    {
+      current_tile.setWhiteId(white_id_to_merge[0]);
+    }
+    if(white_id_to_merge[0] == white_id_to_merge[1])
+    {
+      return 8;
+      //win
+    }
+  }
+  return 0;
+}
+
+//------------------------------------------------------------------------------
+int AddTile::whoWon(int win_code)
+{
+  if(win_code == 8)
+  {
+    std::cout << "Player white wins!" << std::endl;
+    return 5;
+  }
+  if(win_code == 9)
+  {
+    std::cout << "Player red wins!" << std::endl;
+    return 5;
+  }
+  return 0;
+}
+
