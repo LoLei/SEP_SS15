@@ -106,24 +106,24 @@ class AddTile:public Command
     // adaptTile method
     // Turns tile so colors connect
     //
-    // @param karte the game board of fields
+    // @param field the game board of fields
     // @param tile the current tile
     // @param position the current position
     //
     // @return int 0 if everything worked 8 or 9 is somebody won
     //
-    int adaptTile(std::map<Position*, Tile*> karte, Tile &current_tile, Position p1);
+    int adaptTile(std::map<Position*, Tile*> field, Tile &current_tile, Position p1);
 
     //--------------------------------------------------------------------------
     // completeMap method
     // Fills map with forced tiles
     //
-    // @param karte the game board of fields
+    // @param field the game board of fields
     // @param forAddtile the new string to use as a command
     //
     // @return bool false if no tile needs to be force placed
     //
-    bool completeMap(std::map<Position*, Tile*> &karte,
+    bool completeMap(std::map<Position*, Tile*> &field,
                      std::vector<std::string> &forAddtile);
 
     //--------------------------------------------------------------------------

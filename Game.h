@@ -177,14 +177,14 @@ class Game
     //
     // @return Color activeplayer_
     //
-    void printTiles(std::map<Position*, Tile*> karte, int i);
+    void printTiles(std::map<Position*, Tile*> field, int i);
 
     //--------------------------------------------------------------------------
     // freeTiles method
     // deletes tiles
     //
-    // @param karte map of tiles
+    // @param field map of tiles
     //
-    void freeTiles(std::map<Position*, Tile*> karte);
+    void freeTiles(std::map<Position*, Tile*> field);
 };
 #endif // GAME_H

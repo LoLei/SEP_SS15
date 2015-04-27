@@ -254,7 +254,7 @@ bool AddTile::colorAndIdCheck(bool color_bool, bool &twisted, bool &lonely_tile,
 }
 
 //------------------------------------------------------------------------------
-int AddTile::adaptTile(std::map<Position*, Tile*> karte,
+int AddTile::adaptTile(std::map<Position*, Tile*> field,
                         Tile &current_tile, Position current_position)
 {
   try
@@ -268,12 +268,12 @@ int AddTile::adaptTile(std::map<Position*, Tile*> karte,
     Position left(current_position.getX() - 1, current_position.getY());
     Position right(current_position.getX() + 1, current_position.getY());
     Position top(current_position.getX(), current_position.getY() - 1);
-    Position buttom(current_position.getX(), current_position.getY() + 1);
+    Position bottom(current_position.getX(), current_position.getY() + 1);
 
     std::vector<int> red_id_to_merge;
     std::vector<int> white_id_to_merge;
 
-    for (auto& var : karte)
+    for (auto& var : field)
     {
       if (*var.second == empty_tile)
       {
@@ -300,7 +300,7 @@ int AddTile::adaptTile(std::map<Position*, Tile*> karte,
       {
         return 1;
       }
-      else if(*(var.first) == buttom &&
+      else if(*(var.first) == bottom &&
          !colorAndIdCheck(var.second->getColorTop() != current_tile.getColorButtom(),
                   twisted, lonely_tile, current_tile,current_tile.getColorButtom(),*var.second,
                   red_id_to_merge, white_id_to_merge))
@@ -315,7 +315,7 @@ int AddTile::adaptTile(std::map<Position*, Tile*> karte,
 
     if(red_id_to_merge.size() >= 2)
     {
-      for(auto& var: karte)
+      for(auto& var: field)
       {
         if(var.second->getRedId() == red_id_to_merge[1])
         {
@@ -334,7 +334,7 @@ int AddTile::adaptTile(std::map<Position*, Tile*> karte,
     }
     if(white_id_to_merge.size() >= 2)
     {
-      for(auto& var: karte)
+      for(auto& var: field)
       {
         if(var.second->getWhiteId() == white_id_to_merge[1])
         {
@@ -367,11 +367,11 @@ int AddTile::adaptTile(std::map<Position*, Tile*> karte,
 }
 
 //------------------------------------------------------------------------------
-bool AddTile::completeMap(std::map<Position*, Tile*> &karte,
+bool AddTile::completeMap(std::map<Position*, Tile*> &field,
   std::vector<string> &forAddtile)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
-  for(auto& var1: karte)
+  for(auto& var1: field)
   {
     if(*var1.second != empty_tile)
     {
@@ -387,8 +387,8 @@ bool AddTile::completeMap(std::map<Position*, Tile*> &karte,
     Position left(current_position.getX() - 1,current_position.getY());
     Position right(current_position.getX()+1,current_position.getY());
     Position top(current_position.getX(),current_position.getY()-1);
-    Position buttom(current_position.getX(),current_position.getY()+1);
-    for(auto& var2: karte)
+    Position bottom(current_position.getX(),current_position.getY()+1);
+    for(auto& var2: field)
     {
       if(*var2.second == empty_tile)
       {
@@ -409,7 +409,7 @@ bool AddTile::completeMap(std::map<Position*, Tile*> &karte,
         found_tile++;
         Ob = var2.second->getColorButtom();
       }
-      else if(*(var2.first) == buttom)
+      else if(*(var2.first) == bottom)
       {
         found_tile++;
         Un = var2.second->getColorTop();
