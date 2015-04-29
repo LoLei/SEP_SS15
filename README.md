@@ -26,7 +26,7 @@ Repository for SEP SS15 Basisbeispiel
 - [ ] Figure out best way how to include exception classes in other files (baseexception class ?)
 - [ ] Win condition loop
 - [ ] Draw/Tie
-- [ ] Do not include header files in header files
+- [ ] Do not include header files in header files (forward including ?)
 - [ ] Merge loop win condition with try catch master (master 3-21)
 - [ ] Check OutOfMemeroy exception on functionality
 
