@@ -22,19 +22,20 @@ Repository for SEP SS15 Basisbeispiel
 - [x] ~~Add exception class for other exceptions too (must be public)~~
 - [x] ~~Implement try and catch in regular files using exception files~~
 - [x] ~~Win condition columns and rows~~
-- [ ] Fix issues
+- [x] ~~Win condition loop~~
+- [x] ~~Fix issues~~
+- [x] ~~Draw/Tie~~
 - [ ] Figure out best way how to include exception classes in other files (baseexception class ?)
-- [ ] Win condition loop
-- [ ] Draw/Tie
+- [ ] Fix special test cases
 - [ ] Do not include header files in header files (forward including ?)
-- [ ] Merge loop win condition with try catch master (master 3-21)
 - [ ] Check OutOfMemeroy exception on functionality
 
 ### Low priority
 - [x] ~~Make commands into vector (see Fragestunde.md)~~
+- [x] ~~Karte class translate to English~~
+- [x] ~~Fix file headers mat. nr.~~
 - [ ] Make write only append to file, not write a new one each time
-- [ ] Karte class translate to English
-- [ ] Fix file headers mat. nr.
+- [ ] Add comments
 
 ### Vor Abgabe
 - [x] ~~Make code coding standard conform~~
