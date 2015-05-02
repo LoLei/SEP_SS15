@@ -115,6 +115,15 @@ int Game::userInputToCommand(std::vector<string> &vector_input)
   // If user enters blank line, prompt again
   if(vector_input.size() == 0)
   {
+    std::cin.clear();
+    return 1;
+  }
+
+  if (vector_input[0][0] == EOF)
+  {
+    std::cin.clear();
+    std::cin.ignore(INT_MAX);
+    std::cout << std::endl;
     return 1;
   }
 
