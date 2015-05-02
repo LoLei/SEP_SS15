@@ -63,7 +63,11 @@
 *.layout
 *.psess
 *.vsp
+
+# Photoshop files
 *.psd
+
+
 /file_test
 /file_test_loop
 /file_test_max3
