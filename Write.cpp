@@ -27,6 +27,11 @@ int Write::execute(Game& board, std::vector<std::string>& user_input)
 {
   try
   {
+    // case: filename without whitespace!
+    if(user_input.size() != 2)
+    {
+      throw WrongParameterException();
+    }
     std::string file_name = user_input[1];
     try
     {

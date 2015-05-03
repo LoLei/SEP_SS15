@@ -20,10 +20,14 @@ Tile::Tile(Type side, Color topcolor)
   of_activeplayer_ = EMPTY_C;
   white_id_ = 0;
   red_id_ = 0;
+  fail_id = 0;
 }
 
 Tile::Tile(Color Li, Color Re, Color Ob, Color Un)
 {
+  fail_id = 0;
+  white_id_ = 0;
+  red_id_ = 0;
   if((Ob == Un && Ob != EMPTY_C) || (Li == Re && Li != EMPTY_C))
   {
     side_ = TYPE_CROSS;
@@ -102,6 +106,7 @@ Tile::Tile(const Tile & src)
   of_activeplayer_ = src.of_activeplayer_;
   white_id_ = src.white_id_;
   red_id_ = src.red_id_;
+  fail_id = src.fail_id;
 }
 
 //------------------------------------------------------------------------------

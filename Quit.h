@@ -15,10 +15,9 @@
 
 #include <string>
 #include <vector>
-#include "Position.h"
+
 #include "Command.h"
 #include "Game.h"
-
 
 class Quit:public Command
 {
@@ -36,7 +35,7 @@ class Quit:public Command
     //--------------------------------------------------------------------------
     // execute method
     // Executes command
-    // 
+    //
     // @param board the game board
     // @param user_input the input the user enters
     //

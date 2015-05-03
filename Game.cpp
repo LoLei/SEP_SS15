@@ -119,7 +119,7 @@ int Game::userInputToCommand(std::vector<string> &vector_input)
     return 1;
   }
 
-  if (vector_input[0][0] == EOF)
+  if(vector_input[0][0] == EOF)
   {
     std::cin.clear();
     std::cin.ignore(INT_MAX);
@@ -159,7 +159,7 @@ void Game::printTiles(std::map<Position*, Tile*> field, int i)
           Position pos1(x, y);
           for (auto& x : field1)
           {
-            if (*x.first == pos1)
+            if(*x.first == pos1)
             {
               field1.emplace(x.first, x.second);
             }
@@ -284,7 +284,21 @@ void Game::run(std::string file_name, int graphic_mode)
 
   do
   {
-    std::cout << "sep> ";
+    //std::cout << "sep> ";
+
+
+                                              // test zwecke ----------------------TODO
+    if(getActivePlayer() == COLOR_WHITE)
+    {
+      std::cout << "wh > ";
+    }
+    if(getActivePlayer() == COLOR_RED)
+    {
+      std::cout << "re > ";
+    }
+
+
+
     // get user input into a vactor
     std::vector<string> user_input;
     // If user enters blank line, prompt again
@@ -297,18 +311,11 @@ void Game::run(std::string file_name, int graphic_mode)
     if(user_input[0] == "quit")
     {
       turnOff.execute(*this, user_input);
-      //setRunning(false);
     }
 
     // ------------------------------------------write
     else if(user_input[0] == "write")
     {
-      // case: filename without whitespace!
-      if(user_input.size() != 2)
-      {
-        cout << "Error: Wrong parameter count!" << endl;
-        continue;
-      }
       createNewFile.execute(*this, user_input);
     }
 
@@ -316,50 +323,39 @@ void Game::run(std::string file_name, int graphic_mode)
     else if(user_input[0] == "addtile")
     {
       return_value = addNewTile.execute(*this, user_input);
-      if(!(return_value == 5))
-      {
-        while(addNewTile.completeMap(field, user_input))
-        {
-          return_value = addNewTile.execute(*this, user_input);
-        }
-      }
-      if (!((tile_counter_ == 0) && (return_value == 1)))
+      // 1 for fail, 2 for game end, 0 go on
+
+      if(return_value != 1)
       {
         togglePlayer();
-        if (graphic_mode == 1)
-        {
-          user_input[1] = file_name;
-          createNewFile.execute(*this, user_input);
-        }
       }
-      // if auto complete
-      if(return_value == 3)
+      // no tile set or a fail happend
+      if(graphic_mode && tile_counter_ && (return_value != 1))
       {
-        setRunning(false);
-      }
-      // if someone won
-      if(return_value == 5)
-      {
-        setRunning(false);
-      }
-
-      // if nobody won and tiles are not available
-      if(return_value == 4)
-      {
-        setRunning(false);
+        user_input.pop_back();
+        user_input[1] = file_name;
+        createNewFile.execute(*this, user_input);
       }
     }
-    else if(user_input[0] == "test")
+
+    // --------------------------------------------------------test zwecke
+    else if(user_input[0] == "print")
     {
       printTiles(field,3);
     }
-    else if(user_input[0] == "test1")
+    else if(user_input[0] == "print1")
     {
       printTiles(field,1);
     }
-    else if(user_input[0] == "test2")
+    else if(user_input[0] == "print2")
     {
       printTiles(field,2);
+    }
+    // --------------------------------------------------------test zwecke
+
+    else if(user_input[0] == "play")
+    {
+      cout << "auto set tile" << endl;
     }
     // --------------------------------------------------------
     else
@@ -367,7 +363,7 @@ void Game::run(std::string file_name, int graphic_mode)
       cout << "Error: Unknown command!" << endl;
       continue;
     }
-  } while( running_ );
+  } while(running_);
 
   //printTiles(field);
   freeTiles(field);
