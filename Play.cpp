@@ -77,6 +77,7 @@ int Play::randomIDMove(Game& board, std::vector<string>& user_input)
   int myID;
   for(auto& var: board.field)
   {
+/*
     if(*var.first == first)
     {
       myID = var.second->getId(board.getActivePlayer());
@@ -86,6 +87,7 @@ int Play::randomIDMove(Game& board, std::vector<string>& user_input)
   {
     if(var.second->getId(board.getActivePlayer()) == myID)
     {
+*/
       int not_top = 0;
       int not_right = 0;
       int not_bottom = 0;
@@ -154,7 +156,7 @@ int Play::randomIDMove(Game& board, std::vector<string>& user_input)
           std::string pos = "(" + std::to_string(current_position.getX()) + ","
                           + std::to_string(current_position.getY() - 1) +")";
           user_input.push_back(pos);
-          user_input.push_back(randomType("+"));
+          user_input.push_back(randomType(var.second->getTypeOut()));
           return 1;
         }
         if(not_left)
@@ -162,7 +164,7 @@ int Play::randomIDMove(Game& board, std::vector<string>& user_input)
           std::string pos = "(" + std::to_string(current_position.getX() - 1) + ","
                           + std::to_string(current_position.getY()) +")";
           user_input.push_back(pos);
-          user_input.push_back(randomType("+"));
+          user_input.push_back(randomType(var.second->getTypeOut()));
           return 1;
         }
         if(not_right)
@@ -170,7 +172,7 @@ int Play::randomIDMove(Game& board, std::vector<string>& user_input)
           std::string pos = "(" + std::to_string(current_position.getX() + 1)
                           + "," + std::to_string(current_position.getY()) +")";
           user_input.push_back(pos);
-          user_input.push_back(randomType("+"));
+          user_input.push_back(randomType(var.second->getTypeOut()));
           return 1;
         }
         if(not_bottom)
@@ -178,11 +180,11 @@ int Play::randomIDMove(Game& board, std::vector<string>& user_input)
           std::string pos = "(" + std::to_string(current_position.getX())
                           + "," + std::to_string(current_position.getY() + 1) +")";
           user_input.push_back(pos);
-          user_input.push_back(randomType("+"));
+          user_input.push_back(randomType(var.second->getTypeOut()));
           return 1;
         }
       }
-    }
+    //}
   }
   return 0;
 }
@@ -387,7 +389,7 @@ std::string Play::randomType(std::string not_type)
     case 0:
       if(not_type == "+")
       {
-        return "/";
+        return "+";
       }
       return "+";
     case 1:
@@ -399,7 +401,7 @@ std::string Play::randomType(std::string not_type)
     case 2:
       if(not_type == "\\")
       {
-        return "+";
+        return "/";
       }
       return "\\";
     default:

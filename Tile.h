@@ -140,20 +140,12 @@ class Tile
     void setPlayer(Color of_activeplayer);
 
     //--------------------------------------------------------------------------
-    // setRedId method
+    // setId method
     // Sets int(ID) of a tile
     //
-    // @param red_id the int(red ID) of a tile
+    // @param id the int( ID) of a tile
     //
-    void setRedId(int red_id);
-
-    //--------------------------------------------------------------------------
-    // setWhiteId method
-    // Sets int(ID) of a tile
-    //
-    // @param white_id the int(white ID) of a tile
-    //
-    void setWhiteId(int white_id);
+    void setId(Color color, int id);
 
     //--------------------------------------------------------------------------
     // Getter Methods
@@ -256,5 +248,6 @@ class Tile
     std::string getColorOut();
     std::string getTypeOut();
     std::string getPlayerColorOut();
+    int oppositeBorder(int border);
 };
 #endif // TILE_H

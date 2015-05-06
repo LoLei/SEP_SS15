@@ -23,73 +23,73 @@ Tile::Tile(Type side, Color topcolor)
   fail_id = 0;
 }
 
-Tile::Tile(Color Li, Color Re, Color Ob, Color Un)
+Tile::Tile(Color top, Color right, Color bottom, Color left)
 {
   fail_id = 0;
   white_id_ = 0;
   red_id_ = 0;
-  if((Ob == Un && Ob != EMPTY_C) || (Li == Re && Li != EMPTY_C))
+  if((top == bottom && top != EMPTY_C) || (left == right && left != EMPTY_C))
   {
     side_ = TYPE_CROSS;
-    if(Ob == EMPTY_C)
+    if(top == EMPTY_C)
     {
-      Ob = Un;
+      top = bottom;
     }
-    else if(Un == EMPTY_C)
+    else if(bottom == EMPTY_C)
     {
-      Un = Ob;
+      bottom = top;
     }
-    else if(Li == EMPTY_C)
+    else if(left == EMPTY_C)
     {
-      Li = Re;
+      left = right;
     }
-    else if(Re == EMPTY_C)
+    else if(right == EMPTY_C)
     {
-      Re = Li;
+      right = left;
     }
-    topcolor_ = Ob;
+    topcolor_ = top;
   }
-  else if((Ob == Li && Ob != EMPTY_C) || (Re == Un && Re != EMPTY_C))
+  else if((top == left && top != EMPTY_C) || (right == bottom && right != EMPTY_C))
   {
     side_ = TYPE_CURVE_1;
-    if(Ob == EMPTY_C)
+    if(top == EMPTY_C)
     {
-      Ob = Li;
+      top = left;
     }
-    else if(Un == EMPTY_C)
+    else if(bottom == EMPTY_C)
     {
-      Un = Re;
+      bottom = right;
     }
-    else if(Li == EMPTY_C)
+    else if(left == EMPTY_C)
     {
-      Li = Ob;
+      left = top;
     }
-    else if(Re == EMPTY_C)
+    else if(right == EMPTY_C)
     {
-      Re = Un;
+      right = bottom;
     }
-    topcolor_ = Ob;
+    topcolor_ = top;
   }
-  else if((Ob == Re && Ob != EMPTY_C) || (Li == Un && Li != EMPTY_C))
+  else if((top == right && top != EMPTY_C) || (left == bottom && left != EMPTY_C))
   {
     side_ = TYPE_CURVE_2;
-    if(Ob == EMPTY_C)
+    if(top == EMPTY_C)
     {
-      Ob = Re;
+      top = right;
     }
-    else if(Un == EMPTY_C)
+    else if(bottom == EMPTY_C)
     {
-      Un = Li;
+      bottom = left;
     }
-    else if(Li == EMPTY_C)
+    else if(left == EMPTY_C)
     {
-      Li = Un;
+      left = bottom;
     }
-    else if(Re == EMPTY_C)
+    else if(right == EMPTY_C)
     {
-      Re = Ob;
+      right = top;
     }
-    else topcolor_ = Ob;
+    else topcolor_ = top;
   }
   else
   {
@@ -127,15 +127,16 @@ void Tile::setPlayer(Color of_activeplayer)
 }
 
 //------------------------------------------------------------------------------
-void Tile::setRedId(int red_id)
+void Tile::setId(Color color, int id)
 {
-  red_id_ = red_id;
-}
-
-//------------------------------------------------------------------------------
-void Tile::setWhiteId(int white_id)
-{
-  white_id_ = white_id;
+  if(color == COLOR_RED)
+  {
+    red_id_ = id;
+  }
+  if(color == COLOR_WHITE)
+  {
+    white_id_ = id;
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -344,4 +345,21 @@ Tile::Type Tile::charToType(char c)
     default:
       return EMPTY_T;
   }
+}
+
+//--------------------------------------------------------------------------------TODO
+int Tile::oppositeBorder(int border)
+{
+  switch(border)
+  {
+    case TOP:
+      return BOTTOM;
+    case RIGHT:
+      return LEFT;
+    case BOTTOM:
+      return TOP;
+    case LEFT:
+      return RIGHT;
+  }
+  return 4;
 }

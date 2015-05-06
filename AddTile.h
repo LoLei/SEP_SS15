@@ -122,8 +122,7 @@ class AddTile:public Command
     //
     // @return bool false if no tile needs to be force placed
     //
-    bool completeMap(std::map<Position*, Tile*> &field,
-                     std::vector<std::string> &forAddtile);
+    int completeMap(Game& board, std::vector<std::string> &forAddtile);
 
     //--------------------------------------------------------------------------
     // fillEmptyTiles method
@@ -131,7 +130,7 @@ class AddTile:public Command
     //
     // @param board the current board
     //
-    void fillEmptyTiles(Game& board);
+    void fillEmptyTiles(Game& board, Position current_position);
 
     //--------------------------------------------------------------------------
     // checkWin method
@@ -142,23 +141,6 @@ class AddTile:public Command
     // @return int 1 if somebody won else 0
     //
     int winByLength(Game& board, Tile current_tile);
-    int checkLineLength(Game& board, Tile current_tile, Color id_color);
-
-
-    //-------------------------------------------------------------------------- ------TODO
-    // colorAndIdCheck method
-    // Checks if move is correct
-    //
-    // @param abfrage if true starts query
-    // @param twisted if tile is twisted
-    // @param lonely_tile if tile is placed not adjacent to two other tiles
-    // @param tile the current tile
-    //
-    // @return bool true if everything worked
-    //
-    void idCheck(Tile &current_tile, Color color_to_match,Tile& tile_beside,
-                 std::vector<int> &red_id_to_merge,
-                 std::vector<int> &white_id_to_merge);
 
     //-------------------------------------------------------------------------- ------TODO
     // adaptTile method
@@ -184,9 +166,6 @@ class AddTile:public Command
     // @return int 0 if everything worked 8 or 9 is somebody won
     //
     int whoWon(int win_code);
-
-
-    int oppositeBorder(int border);
 };
 
 #endif //ADDTILE_H_INCLUDED

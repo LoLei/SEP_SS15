@@ -308,6 +308,11 @@ void Game::run(std::string file_name, int graphic_mode)
       return_value = addNewTile.execute(*this, user_input);
       // 1 for fail, 2 for game end, 0 go on
 
+      if(return_value != 1)
+      {
+        togglePlayer();
+      }
+
       // no tile set or a fail happend
       if(graphic_mode && tile_counter_ && (return_value != 1))
       {
@@ -343,6 +348,10 @@ void Game::run(std::string file_name, int graphic_mode)
       if(exe)
         addNewTile.execute(*this, user_input);
 
+      if(return_value != 1)
+      {
+        togglePlayer();
+      }
 
       if(graphic_mode && tile_counter_ && (return_value != 1))
       {

@@ -211,3 +211,29 @@ addtile (-1,1) /
 addtile (-1,3) \
 
 -------------------
+
+addtile (0,0) +
+addtile (1,0) +
+addtile (2,0) +
+addtile (3,0) +
+addtile (4,0) +
+addtile (5,0) +
+addtile (6,0) +
+addtile (6,1) +
+addtile (7,1) +
+addtile (7,2) +
+addtile (7,3) +
+addtile (7,4) +
+addtile (7,5) +
+addtile (7,6) +
+addtile (7,7) +
+
+addtile (0,0) /
+addtile (1,0) \
+addtile (2,0) /
+addtile (3,0) \
+addtile (4,0) /
+addtile (5,0) \
+addtile (6,0) /
+addtile (7,0) \
+
