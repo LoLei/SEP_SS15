@@ -145,6 +145,53 @@ Color Tile::getColor()
 }
 
 //------------------------------------------------------------------------------
+Color Tile::getColor(int border)
+{
+  switch(border)
+  {
+    case TOP:
+      return getColor();
+    case RIGHT:
+      switch (side_)
+      {
+        case TYPE_CROSS:  // +
+          return notTopColor();
+        case TYPE_CURVE_1:  // "/"
+          return notTopColor();
+        case TYPE_CURVE_2:  // "\"
+          return topcolor_;
+        default:
+          return EMPTY_C;
+      }
+    case BOTTOM:
+      switch (side_)
+      {
+        case TYPE_CROSS:  // +
+          return topcolor_;
+        case TYPE_CURVE_1:  // "/"
+          return notTopColor();
+        case TYPE_CURVE_2:  // "\"
+          return notTopColor();
+        default:
+          return EMPTY_C;
+      }
+    case LEFT:
+      switch (side_)
+      {
+        case TYPE_CROSS:  // +
+          return notTopColor();
+        case TYPE_CURVE_1:  // "/"
+          return topcolor_;
+        case TYPE_CURVE_2:  // "\"
+          return notTopColor();
+        default:
+          return EMPTY_C;
+      }
+  }
+  return EMPTY_C;
+}
+
+//------------------------------------------------------------------------------
 Tile::Type Tile::getType()
 {
   return side_;
@@ -168,29 +215,17 @@ void Tile::setType(char c)
 }
 
 //------------------------------------------------------------------------------
-int Tile::getId(std::string color)
+int Tile::getId(Color color)
 {
-  if(color == "red")
+  if(color == COLOR_RED)
   {
     return red_id_;
   }
-  if(color == "white")
+  if(color == COLOR_WHITE)
   {
     return white_id_;
   }
   return 0;
-}
-
-//------------------------------------------------------------------------------
-int Tile::getRedId()
-{
-  return red_id_;
-}
-
-//------------------------------------------------------------------------------
-int Tile::getWhiteId()
-{
-  return white_id_;
 }
 
 //---------------------for Test cases----------
@@ -292,69 +327,6 @@ Color Tile::notTopColor()
   else
   {
     return EMPTY_C;
-  }
-}
-
-//------------------------------------------------------------------------------
-Color Tile::getColorLeft()
-{
-  switch (side_)
-  {
-    case TYPE_CROSS:  // +
-      return notTopColor();
-      break;
-    case TYPE_CURVE_1:  // "/"
-      return topcolor_;
-      break;
-    case TYPE_CURVE_2:  // "\"
-      return notTopColor();
-      break;
-    default:
-      return EMPTY_C;
-  }
-}
-
-//------------------------------------------------------------------------------
-Color Tile::getColorRight()
-{
-  switch (side_)
-  {
-    case TYPE_CROSS:  // +
-      return notTopColor();
-      break;
-    case TYPE_CURVE_1:  // "/"
-      return notTopColor();
-      break;
-    case TYPE_CURVE_2:  // "\"
-      return topcolor_;
-      break;
-    default:
-      return EMPTY_C;
-  }
-}
-
-//------------------------------------------------------------------------------
-Color Tile::getColorTop()
-{
-  return getColor();
-}
-
-//------------------------------------------------------------------------------
-Color Tile::getColorButtom()
-{
-  switch (side_)
-  {
-    case TYPE_CROSS:  // +
-      return topcolor_;
-      break;
-    case TYPE_CURVE_1:  // "/"
-      return notTopColor();
-      break;
-    case TYPE_CURVE_2:  // "\"
-      return notTopColor();
-      break;
-    default:
-      return EMPTY_C;
   }
 }
 

@@ -142,7 +142,7 @@ class AddTile:public Command
     // @return int 1 if somebody won else 0
     //
     int winByLength(Game& board, Tile current_tile);
-    int checkLineLength(Game& board, Tile current_tile, std::string color);
+    int checkLineLength(Game& board, Tile current_tile, Color id_color);
 
 
     //-------------------------------------------------------------------------- ------TODO
@@ -184,6 +184,9 @@ class AddTile:public Command
     // @return int 0 if everything worked 8 or 9 is somebody won
     //
     int whoWon(int win_code);
+
+
+    int oppositeBorder(int border);
 };
 
 #endif //ADDTILE_H_INCLUDED

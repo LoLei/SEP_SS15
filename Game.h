@@ -19,10 +19,12 @@
 #include "Write.h"
 #include "Command.h"
 #include "Quit.h"
+#include "Play.h"
 #include "UnknownCommandException.h"
 #include "UsageException.h"
 #include "EmptyBoardException.h"
 #include "WrongParameterException.h"
+#include "Karte.h"
 #include <iostream>
 #include <string>
 #include <cctype>

@@ -11,7 +11,6 @@
 //
 
 #include "Game.h"
-#include "Karte.h"
 
 using std::cout;
 using std::endl;
@@ -139,33 +138,16 @@ int Game::userInputToCommand(std::vector<string> &vector_input)
 void Game::printTiles(std::map<Position*, Tile*> field, int i)
 {
   int spalten1;
+  std::map<Position*, Tile*, customKeyComparator> field1;
+
   switch(i)
   {
     case 1:
-    /*
-      cout << endl << "Alte nicht sortierte field:" << endl;
-      for (auto& x: field)
+      for (auto& x : field)
       {
-        cout << x.first->toString() << ": " << x.second->getColorOut() <<" "
-             << x.second->getTypeOut() << endl;
+          field1.emplace(x.first, x.second);
       }
-      cout << "___" << endl;
 
-      std::map<Position*, Tile*, customKeyComparator> field1;
-      for (signed int y = min_y_; y <= max_y_; y++)
-      {
-        for (signed int x = min_x_; x <= max_x_; x++)
-        {
-          Position pos1(x, y);
-          for (auto& x : field1)
-          {
-            if(*x.first == pos1)
-            {
-              field1.emplace(x.first, x.second);
-            }
-          }
-        }
-      }
       // For win conditions maybe
       cout << endl << "Neue sortierte field:" << endl;
       for (auto& x : field1)
@@ -173,7 +155,7 @@ void Game::printTiles(std::map<Position*, Tile*> field, int i)
         cout << x.first->toString() << ": " << x.second->getColorOut() << " "
           << x.second->getTypeOut() << endl;
       }
-      */
+
       break;
 //----------------------------------------------------------------------------
     case 2:
@@ -241,7 +223,7 @@ void Game::printTiles(std::map<Position*, Tile*> field, int i)
             {
               cout << " " << x.second->getColorOut() << " "
                 << x.second->getTypeOut();
-              cout << "(" << x.second->getWhiteId() << "|" << x.second->getRedId()
+              cout << "(" << x.second->getId(COLOR_WHITE) << "|" << x.second->getId(COLOR_RED)
                 << ")" << " ||";
               break;
             }
@@ -281,6 +263,7 @@ void Game::run(std::string file_name, int graphic_mode)
   Write createNewFile;
   Quit turnOff;
   AddTile addNewTile;
+  Play automatic;
 
   do
   {
@@ -290,11 +273,11 @@ void Game::run(std::string file_name, int graphic_mode)
                                               // test zwecke ----------------------TODO
     if(getActivePlayer() == COLOR_WHITE)
     {
-      std::cout << "wh > ";
+      std::cout << "w:" << getNumberOfTiles() << " > ";
     }
     if(getActivePlayer() == COLOR_RED)
     {
-      std::cout << "re > ";
+      std::cout << "r:" << getNumberOfTiles() << " > ";
     }
 
 
@@ -325,10 +308,6 @@ void Game::run(std::string file_name, int graphic_mode)
       return_value = addNewTile.execute(*this, user_input);
       // 1 for fail, 2 for game end, 0 go on
 
-      if(return_value != 1)
-      {
-        togglePlayer();
-      }
       // no tile set or a fail happend
       if(graphic_mode && tile_counter_ && (return_value != 1))
       {
@@ -339,10 +318,6 @@ void Game::run(std::string file_name, int graphic_mode)
     }
 
     // --------------------------------------------------------test zwecke
-    else if(user_input[0] == "print")
-    {
-      printTiles(field,3);
-    }
     else if(user_input[0] == "print1")
     {
       printTiles(field,1);
@@ -351,11 +326,30 @@ void Game::run(std::string file_name, int graphic_mode)
     {
       printTiles(field,2);
     }
+    else if(user_input[0] == "print3")
+    {
+      printTiles(field,3);
+    }
     // --------------------------------------------------------test zwecke
 
     else if(user_input[0] == "play")
     {
-      cout << "auto set tile" << endl;
+      int exe = automatic.execute(*this, user_input);
+      for(int i = 1; i < static_cast<int>(user_input.size()); i++)
+      {
+        std::cout << user_input[i] << " ";
+      }
+      std::cout << std::endl;
+      if(exe)
+        addNewTile.execute(*this, user_input);
+
+
+      if(graphic_mode && tile_counter_ && (return_value != 1))
+      {
+        user_input.pop_back();
+        user_input[1] = file_name;
+        createNewFile.execute(*this, user_input);
+      }
     }
     // --------------------------------------------------------
     else

@@ -17,6 +17,11 @@
 #include <string>
 #include <iostream>
 
+#define TOP 0
+#define RIGHT 1
+#define BOTTOM 2
+#define LEFT 3
+
 //------------------------------------------------------------------------------
 // Tile Class
 // Class for tiles
@@ -170,58 +175,15 @@ class Tile
     //
     Color getColor();
 
-    //--------------------------------------------------------------------------
-    // getColorLeft method
-    // Gets the left color of a tile
-    //
-    // @return Color topcolor_ if type is '/'
-    // @return Color notTopColor() if type is '+' or '\'
-    //
-    Color getColorLeft();
-
-    //--------------------------------------------------------------------------
-    // getColorRight method
-    // Gets the right color of a tile
-    //
-    // @return Color topcolor_ if type is '\'
-    // @return Color notTopColor() if type is '+' or '/'
-    //
-    Color getColorRight();
-
-    //--------------------------------------------------------------------------
-    // getColorTop method
+    //------------------------------------------------------------------------------TODO
+    // getColor method
     // Gets the top color of a tile
     //
-    // @return Color getColor()
+    // @return Color topcolor_
     //
-    Color getColorTop();
+    Color getColor(int side);
 
-    //--------------------------------------------------------------------------
-    // getColorBottom method
-    // Gets the bottom color of a tile
-    //
-    // @return Color topcolor_ if type is '+'
-    // @return Color notTopColor() if type is '/' or '\'
-    //
-    Color getColorButtom();
-
-    //--------------------------------------------------------------------------
-    // getRedId method
-    // Gets the red id of a tile
-    //
-    // @return int red_id_
-    //
-    int getRedId();
-
-    //--------------------------------------------------------------------------
-    // getWhiteId method
-    // Gets the white id of a tile
-    //
-    // @return int white_id_
-    //
-    int getWhiteId();
-
-    //--------------------------------------------------------------------------
+    //------------------------------------------------------------------------------TODO
     // getId method
     // gets a color id of a tile
     //
@@ -229,9 +191,16 @@ class Tile
     //
     // @return int id of the color(depend on input)
     //
-    int getId(std::string color);
+    int getId(Color color);
 
-
+    //-------------------------------------------------------------------------------TODO
+    // getId method
+    // gets a color id of a tile
+    //
+    // @param std::string color "white" or "red"
+    //
+    // @return int id of the color(depend on input)
+    //
     int getPlayerColor();
 
     //--------------------------------------------------------------------------
