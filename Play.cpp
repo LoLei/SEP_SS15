@@ -74,7 +74,7 @@ int Play::lookForOpenEnds(Game& board, std::vector<string>& user_input)
 int Play::randomIDMove(Game& board, std::vector<string>& user_input)
 {
   Position first(0,0);
-  int myID;
+//  int myID;
   for(auto& var: board.field)
   {
 /*

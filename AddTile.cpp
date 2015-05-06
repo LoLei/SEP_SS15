@@ -89,6 +89,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
     // tile and position which is going to be set
     Position current_position;
     Tile current_tile(Tile::EMPTY_T, COLOR_RED);
+    current_tile.setMove(board.moveID);
     // every tile gets a signature of the player
     current_tile.setPlayer(board.getActivePlayer());
     // look up if the user input is correct
@@ -97,9 +98,6 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
       // abort addtile command
       return 1;
     }
-    // every tile gets a white and red identifications number
-    current_tile.setId(COLOR_WHITE, id_counter_++);
-    current_tile.setId(COLOR_RED, id_counter_++);
 
     // fist tile has to be set in the point of orgin and topcolor red
     Position center(0, 0);
@@ -213,6 +211,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
     }
 
     // if nobody won and tiles aren't anymore available -------------------------TODO difference invalide move and draw
+    // if there is notile with the same moveid its not auto complete
     if (board.getNumberOfTiles() == 64)
     {
       // game over, tie
@@ -246,7 +245,15 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
   // autocomplete map, if there are obvious moves
   if(completeMap(board, user_input))
   {
-    // invalide move tile ID
+    // if there is a none valide auto complete move
+    for (auto& x: board.field)
+    {
+      if(x.second->getMove() == board.moveID)
+      {
+        delete x.first;
+        delete x.second;
+      }
+    }
   }
 
   // if everything went well and game is not over
@@ -425,6 +432,7 @@ void AddTile::fillEmptyTiles(Game& board, Position current_position)
   try
   {
     Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
+    empty_tile.setMove(board.moveID);
     int current_x = current_position.getX();
     int current_y = current_position.getY();
     // if new tile was set on a edge
@@ -568,6 +576,9 @@ int AddTile::winByLength(Game& board, Tile current_tile)
 int AddTile::winByLoop(std::map<Position*, Tile*> field,
                      Tile &current_tile, Position current_position)
 {
+  // every tile gets a white and red identifications number
+  current_tile.setId(COLOR_WHITE, id_counter_++);
+  current_tile.setId(COLOR_RED, id_counter_++);
 
   // teoretical positions around the current tile
   Position surrounding_position[4] = {Position(current_position.getX(),

@@ -72,7 +72,7 @@ class Tile
     //-------------------------------------------------------------------------------- TODO
     // int red Id to identify tile
     //
-    int fail_id;
+    int move_;
 
     //--------------------------------------------------------------------------
     // Private assignment operator
@@ -249,5 +249,8 @@ class Tile
     std::string getTypeOut();
     std::string getPlayerColorOut();
     int oppositeBorder(int border);
+    int getMove();
+    void setMove(int move);
+
 };
 #endif // TILE_H

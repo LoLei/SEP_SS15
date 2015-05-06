@@ -26,6 +26,7 @@ Game::Game()
   max_y_ = 0;
   min_x_ = 0;
   min_y_ = 0;
+  moveID = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -238,6 +239,48 @@ void Game::printTiles(std::map<Position*, Tile*> field, int i)
         cout << endl;
       }
       break;
+//--------------------------------------------------------------------------
+    case 4:
+      cout << "color|type|move|white|red|" << endl;
+      cout << "    |";
+      for (signed int i = min_x_; i <= max_x_; i++)
+        cout << std::setfill (' ') << std::setw (6) << i << std::setw (7) << "||";
+      cout << endl;
+      spalten1 = max_x_ - min_x_ + 1;
+      cout << "    |";
+      while(spalten1--)
+      {
+        cout << std::setfill ('=') << std::setw (13) << "||";
+      }
+      cout << endl;
+      for(signed int y = min_y_; y <= max_y_; y++)
+      {
+        cout << std::setfill (' ') << std::setw (2) << y << ": |";
+        int spalten = max_x_ - min_x_ + 1;
+        for(signed int x = min_x_; x <= max_x_; x++)
+        {
+          Position pos1(x,y);
+          for (auto& x: field)
+          {
+            if(*x.first == pos1)
+            {
+              cout << " " << x.second->getColorOut() << "|" << x.second->getTypeOut()
+                  << "|" << x.second->getMove();
+              cout << "|" << x.second->getId(COLOR_WHITE) << "|" << x.second->getId(COLOR_RED)
+                 << " ||";
+              break;
+            }
+          }
+        }
+        cout << endl;
+        cout << "    |";
+        while(spalten--)
+        {
+          cout << std::setfill ('=') << std::setw (13) << "||";
+        }
+        cout << endl;
+      }
+      break;
     default:
       break;
   }
@@ -305,6 +348,7 @@ void Game::run(std::string file_name, int graphic_mode)
     // --------------------------------------------------------addtile
     else if(user_input[0] == "addtile")
     {
+      moveID = getNumberOfTiles();
       return_value = addNewTile.execute(*this, user_input);
       // 1 for fail, 2 for game end, 0 go on
 
@@ -323,22 +367,15 @@ void Game::run(std::string file_name, int graphic_mode)
     }
 
     // --------------------------------------------------------test zwecke
-    else if(user_input[0] == "print1")
+    else if(user_input[0] == "print")
     {
-      printTiles(field,1);
-    }
-    else if(user_input[0] == "print2")
-    {
-      printTiles(field,2);
-    }
-    else if(user_input[0] == "print3")
-    {
-      printTiles(field,3);
+      printTiles(field,std::stoi(user_input[1]));
     }
     // --------------------------------------------------------test zwecke
 
     else if(user_input[0] == "play")
     {
+      moveID = getNumberOfTiles();
       int exe = automatic.execute(*this, user_input);
       for(int i = 1; i < static_cast<int>(user_input.size()); i++)
       {

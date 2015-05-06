@@ -85,6 +85,8 @@ class Game
     signed int min_x_;
     signed int min_y_;
 
+    int moveID;
+
     //--------------------------------------------------------------------------
     // setMaximas method
     // sets the maximum coordinates

@@ -20,12 +20,12 @@ Tile::Tile(Type side, Color topcolor)
   of_activeplayer_ = EMPTY_C;
   white_id_ = 0;
   red_id_ = 0;
-  fail_id = 0;
+  move_ = 0;
 }
 
 Tile::Tile(Color top, Color right, Color bottom, Color left)
 {
-  fail_id = 0;
+  move_ = 0;
   white_id_ = 0;
   red_id_ = 0;
   if((top == bottom && top != EMPTY_C) || (left == right && left != EMPTY_C))
@@ -106,7 +106,7 @@ Tile::Tile(const Tile & src)
   of_activeplayer_ = src.of_activeplayer_;
   white_id_ = src.white_id_;
   red_id_ = src.red_id_;
-  fail_id = src.fail_id;
+  move_ = src.move_;
 }
 
 //------------------------------------------------------------------------------
@@ -362,4 +362,16 @@ int Tile::oppositeBorder(int border)
       return RIGHT;
   }
   return 4;
+}
+
+//--------------------------------------------------------------------------------TODO
+int Tile::getMove()
+{
+  return move_;
+}
+
+//--------------------------------------------------------------------------------TODO
+void Tile::setMove(int move)
+{
+  move_ = move;
 }
