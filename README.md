@@ -50,3 +50,24 @@ Repository for SEP SS15 Basisbeispiel
 - [ ] Compile with pluto and makefile
 - [ ] Check valgrind
 - [ ] Remove redundant/commented code
+
+### Feedback Gespräch
+- [ ] exceptions
+- [ ] memleak bei new fehler von tile
+- [ ] 1 trax exception
+- [ ] constructor mit "TRAX"
+- [ ] write: class zu struct
+
+- [ ] vector<Command*> command_;
+- [ ] commands_.pushback(new Write());
+- [ ] Command *current_command = searchCommand[userinput[0]
+- [ ] current_command->.excecute(...)]
+
+- [ ] using
+- [ ] Karte
+- [ ] deutsch
+
+- [ ] ĥeader keine .h nur class
+
+- [ ] initialisierungsliste!
+
