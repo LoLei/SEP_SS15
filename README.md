@@ -58,14 +58,14 @@ Repository for SEP SS15 Basisbeispiel
 - [ ] constructor mit "TRAX"
 - [ ] write: class zu struct
 
-- [x] vector<Command*> command_;
-- [x] commands_.pushback(new Write());
-- [x] Command *current_command = searchCommand[userinput[0]
-- [x] current_command->.excecute(...)]
+- [x] ~~vector<Command*> command_;~~
+- [x] ~~commands_.pushback(new Write());~~
+- [x] ~~Command *current_command = searchCommand[userinput[0]~~
+- [x] ~~current_command->.excecute(...)]~~
 
 - [ ] using
-- [ ] Karte
-- [ ] deutsch
+- [x] ~~Karte~~
+- [x] ~~deutsch~~
 
 - [ ] ĥeader keine .h nur class
 
