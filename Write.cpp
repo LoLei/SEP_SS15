@@ -10,10 +10,21 @@
 //------------------------------------------------------------------------------
 //
 
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include "Position.h"
+#include "Game.h"
+#include "Tile.h"
+#include "Command.h"
+#include "WriteException.h"
+#include "WrongParameterException.h"
+
 #include "Write.h"
 
 //------------------------------------------------------------------------------
-Write::Write() : Command("Write")
+Write::Write() : Command("write")
 {
 }
 

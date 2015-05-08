@@ -10,6 +10,23 @@
 //------------------------------------------------------------------------------
 //
 
+#include "OutOfMemoryException.h"
+#include "InvalidCoordinatesException.h"
+#include "NotEmptyFieldException.h"
+#include "NotConnectedFieldException.h"
+#include "InvalidParameterException.h"
+#include "ConnectedColorsMismatchException.h"
+#include "NotEnoughTilesException.h"
+#include "WrongParameterException.h"
+
+
+
+#include "Game.h"
+#include "Tile.h"
+#include "Position.h"
+#include "AddTile.h"
+#include "Write.h"
+
 #include "Play.h"
 #include <cstdlib>
 
@@ -19,7 +36,7 @@ using std::string;
 //------------------------------------------------------------------------------
 // Constructor
 //
-Play::Play() : Command("Play")
+Play::Play() : Command("play")
 {
 }
 
@@ -31,11 +48,14 @@ Play::~Play()
 //------------------------------------------------------------------------------
 int Play::execute(Game& board, std::vector<string>& user_input)
 {
+  AddTile newtile;
   // first tile
   if(board.getNumberOfTiles() == 0)
   {
     user_input.push_back("(0,0)");
     user_input.push_back(randomType());
+    std::cout << user_input[1] << " " << user_input[2] << std::endl;
+    newtile.execute(board,user_input);
     return 1;
   }
 
@@ -45,6 +65,8 @@ int Play::execute(Game& board, std::vector<string>& user_input)
 
   if(int i = randomIDMove(board, user_input))
   {
+    std::cout << user_input[1] << " " << user_input[2] << std::endl;
+    newtile.execute(board,user_input);
     return i;
   }
 
@@ -52,6 +74,8 @@ int Play::execute(Game& board, std::vector<string>& user_input)
   // if no winning move is possible
   if(int i = randomMove(board, user_input))
   {
+    std::cout << user_input[1] << " " << user_input[2] << std::endl;
+    newtile.execute(board,user_input);
     return i;
   }
   return 0;
@@ -156,7 +180,7 @@ int Play::randomIDMove(Game& board, std::vector<string>& user_input)
           std::string pos = "(" + std::to_string(current_position.getX()) + ","
                           + std::to_string(current_position.getY() - 1) +")";
           user_input.push_back(pos);
-          user_input.push_back(randomType(var.second->getTypeOut()));
+          user_input.push_back(randomType(var.second->getTypeString()));
           return 1;
         }
         if(not_left)
@@ -164,7 +188,7 @@ int Play::randomIDMove(Game& board, std::vector<string>& user_input)
           std::string pos = "(" + std::to_string(current_position.getX() - 1) + ","
                           + std::to_string(current_position.getY()) +")";
           user_input.push_back(pos);
-          user_input.push_back(randomType(var.second->getTypeOut()));
+          user_input.push_back(randomType(var.second->getTypeString()));
           return 1;
         }
         if(not_right)
@@ -172,7 +196,7 @@ int Play::randomIDMove(Game& board, std::vector<string>& user_input)
           std::string pos = "(" + std::to_string(current_position.getX() + 1)
                           + "," + std::to_string(current_position.getY()) +")";
           user_input.push_back(pos);
-          user_input.push_back(randomType(var.second->getTypeOut()));
+          user_input.push_back(randomType(var.second->getTypeString()));
           return 1;
         }
         if(not_bottom)
@@ -180,7 +204,7 @@ int Play::randomIDMove(Game& board, std::vector<string>& user_input)
           std::string pos = "(" + std::to_string(current_position.getX())
                           + "," + std::to_string(current_position.getY() + 1) +")";
           user_input.push_back(pos);
-          user_input.push_back(randomType(var.second->getTypeOut()));
+          user_input.push_back(randomType(var.second->getTypeString()));
           return 1;
         }
       }

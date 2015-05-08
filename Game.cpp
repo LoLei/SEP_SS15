@@ -10,23 +10,31 @@
 //------------------------------------------------------------------------------
 //
 
+#include <iomanip>
+#include <sstream>
+#include <cctype>
+
+//#include "Tile.h"
+#include "AddTile.h"
+//#include "Position.h"
+#include "Write.h"
+#include "Command.h"
+#include "Quit.h"
+#include "Play.h"
+#include "UnknownCommandException.h"
+#include "UsageException.h"
+#include "EmptyBoardException.h"
+#include "WrongParameterException.h"
+#include "Karte.h"
+
 #include "Game.h"
 
-using std::cout;
-using std::endl;
 using std::string;
 
 //------------------------------------------------------------------------------
-Game::Game()
+Game::Game() : activeplayer_(COLOR_WHITE), starttile_(NULL), tile_counter_(0),
+               max_x_(0), max_y_(0), min_x_(0), min_y_(0), moveID(0)
 {
-  activeplayer_ = COLOR_WHITE;
-  starttile_ = NULL;
-  tile_counter_ = 0;
-  max_x_ = 0;
-  max_y_ = 0;
-  min_x_ = 0;
-  min_y_ = 0;
-  moveID = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -96,6 +104,18 @@ int Game::getNumberOfTiles()
 }
 
 //------------------------------------------------------------------------------
+string Game::getOutputFilename()
+{
+  return output_filename_;
+}
+
+//------------------------------------------------------------------------------
+void Game::setOutputFilename(string filename)
+{
+  output_filename_ = filename;
+}
+
+//------------------------------------------------------------------------------
 void Game::riseNumberOfTiles()
 {
   tile_counter_++;
@@ -103,10 +123,10 @@ void Game::riseNumberOfTiles()
 //------------------------------------------------------------------------------
 int Game::userInputToCommand(std::vector<string> &vector_input)
 {
-  std::string string_input;
+  string string_input;
   std::getline(std::cin, string_input);
   std::istringstream is(string_input);
-  std::string word;
+  string word;
 
   while(is >> word)
   {
@@ -136,157 +156,6 @@ int Game::userInputToCommand(std::vector<string> &vector_input)
 }
 
 //------------------------------------------------------------------------------
-void Game::printTiles(std::map<Position*, Tile*> field, int i)
-{
-  int spalten1;
-  std::map<Position*, Tile*, customKeyComparator> field1;
-
-  switch(i)
-  {
-    case 1:
-      for (auto& x : field)
-      {
-          field1.emplace(x.first, x.second);
-      }
-
-      // For win conditions maybe
-      cout << endl << "Neue sortierte field:" << endl;
-      for (auto& x : field1)
-      {
-        cout << x.first->toString() << ": " << x.second->getColorOut() << " "
-          << x.second->getTypeOut() << endl;
-      }
-
-      break;
-//----------------------------------------------------------------------------
-    case 2:
-      cout << "    |";
-      for (signed int i = min_x_; i <= max_x_; i++)
-        cout << std::setfill (' ') << std::setw (3) << i << std::setw (4) << "||";
-      cout << endl;
-      spalten1 = max_x_ - min_x_ + 1;
-      cout << "    |";
-      while(spalten1--)
-      {
-        cout << std::setfill ('=') << std::setw (7) << "||";
-      }
-      cout << endl;
-      for(signed int y = min_y_; y <= max_y_; y++)
-      {
-        cout << std::setfill (' ') << std::setw (2) << y << ": |";
-        int spalten = max_x_ - min_x_ + 1;
-        for(signed int x = min_x_; x <= max_x_; x++)
-        {
-          Position pos1(x,y);
-          for (auto& x: field)
-          {
-            if(*x.first == pos1)
-            {
-              cout << " " << x.second->getColorOut() << " "
-              << x.second->getTypeOut() << " ||";
-              break;
-            }
-          }
-        }
-        cout << endl;
-        cout << "    |";
-        while(spalten--)
-        {
-          cout << std::setfill ('=') << std::setw (7) << "||";
-        }
-        cout << endl;
-      }
-      break;
-//--------------------------------------------------------------------------
-    case 3:
-      cout << "(white|red)" << endl;
-      cout << "    |";
-      for (signed int i = min_x_; i <= max_x_; i++)
-        cout << std::setfill (' ') << std::setw (5) << i << std::setw (7) << "||";
-      cout << endl;
-      spalten1 = max_x_ - min_x_ + 1;
-      cout << "    |";
-      while(spalten1--)
-      {
-        cout << std::setfill ('=') << std::setw (12) << "||";
-      }
-      cout << endl;
-      for(signed int y = min_y_; y <= max_y_; y++)
-      {
-        cout << std::setfill (' ') << std::setw (2) << y << ": |";
-        int spalten = max_x_ - min_x_ + 1;
-        for(signed int x = min_x_; x <= max_x_; x++)
-        {
-          Position pos1(x,y);
-          for (auto& x: field)
-          {
-            if(*x.first == pos1)
-            {
-              cout << " " << x.second->getColorOut() << " "
-                << x.second->getTypeOut();
-              cout << "(" << x.second->getId(COLOR_WHITE) << "|" << x.second->getId(COLOR_RED)
-                << ")" << " ||";
-              break;
-            }
-          }
-        }
-        cout << endl;
-        cout << "    |";
-        while(spalten--)
-        {
-          cout << std::setfill ('=') << std::setw (12) << "||";
-        }
-        cout << endl;
-      }
-      break;
-//--------------------------------------------------------------------------
-    case 4:
-      cout << "color|type|move|white|red|" << endl;
-      cout << "    |";
-      for (signed int i = min_x_; i <= max_x_; i++)
-        cout << std::setfill (' ') << std::setw (6) << i << std::setw (7) << "||";
-      cout << endl;
-      spalten1 = max_x_ - min_x_ + 1;
-      cout << "    |";
-      while(spalten1--)
-      {
-        cout << std::setfill ('=') << std::setw (13) << "||";
-      }
-      cout << endl;
-      for(signed int y = min_y_; y <= max_y_; y++)
-      {
-        cout << std::setfill (' ') << std::setw (2) << y << ": |";
-        int spalten = max_x_ - min_x_ + 1;
-        for(signed int x = min_x_; x <= max_x_; x++)
-        {
-          Position pos1(x,y);
-          for (auto& x: field)
-          {
-            if(*x.first == pos1)
-            {
-              cout << " " << x.second->getColorOut() << "|" << x.second->getTypeOut()
-                  << "|" << x.second->getMove();
-              cout << "|" << x.second->getId(COLOR_WHITE) << "|" << x.second->getId(COLOR_RED)
-                 << " ||";
-              break;
-            }
-          }
-        }
-        cout << endl;
-        cout << "    |";
-        while(spalten--)
-        {
-          cout << std::setfill ('=') << std::setw (13) << "||";
-        }
-        cout << endl;
-      }
-      break;
-    default:
-      break;
-  }
-}
-
-//------------------------------------------------------------------------------
 void Game::freeTiles(std::map<Position*, Tile*> field)
 {
   for (auto& x: field)
@@ -297,23 +166,21 @@ void Game::freeTiles(std::map<Position*, Tile*> field)
 }
 
 //------------------------------------------------------------------------------
-void Game::run(std::string file_name, int graphic_mode)
+void Game::run()
 {
   setRunning(true);
 
-  int return_value = 0;
-
-  Write createNewFile;
-  Quit turnOff;
-  AddTile addNewTile;
-  Play automatic;
+  std::vector<Command*> command_;
+  command_.push_back(new Write());
+  command_.push_back(new Quit());
+  command_.push_back(new AddTile());
+//  command_.push_back(new Play());
 
   do
   {
-    //std::cout << "sep> ";
+//    std::cout << "sep> ";
 
 
-                                              // test zwecke ----------------------TODO
     if(getActivePlayer() == COLOR_WHITE)
     {
       std::cout << "w:" << getNumberOfTiles() << " > ";
@@ -324,8 +191,7 @@ void Game::run(std::string file_name, int graphic_mode)
     }
 
 
-
-    // get user input into a vactor
+    // get user input into a vector
     std::vector<string> user_input;
     // If user enters blank line, prompt again
     if(userInputToCommand(user_input))
@@ -333,78 +199,75 @@ void Game::run(std::string file_name, int graphic_mode)
       continue;
     }
 
-    // choose case of command
-    if(user_input[0] == "quit")
-    {
-      turnOff.execute(*this, user_input);
-    }
+    else if(user_input[0] == "print")// --------------------------------------------------------test zwecke
+      printTiles();
 
-    // ------------------------------------------write
-    else if(user_input[0] == "write")
-    {
-      createNewFile.execute(*this, user_input);
-    }
+    moveID = getNumberOfTiles();
+    int ansonsten = 1;
 
-    // --------------------------------------------------------addtile
-    else if(user_input[0] == "addtile")
+    for (auto& current_command : command_)
     {
-      moveID = getNumberOfTiles();
-      return_value = addNewTile.execute(*this, user_input);
-      // 1 for fail, 2 for game end, 0 go on
-
-      if(return_value != 1)
+      if(current_command->getName() == user_input[0])
       {
-        togglePlayer();
-      }
+        current_command->execute(*this, user_input);
 
-      // no tile set or a fail happend
-      if(graphic_mode && tile_counter_ && (return_value != 1))
-      {
-        user_input.pop_back();
-        user_input[1] = file_name;
-        createNewFile.execute(*this, user_input);
+        ansonsten = 0;
+        break;
       }
     }
-
-    // --------------------------------------------------------test zwecke
-    else if(user_input[0] == "print")
+    if(ansonsten)
     {
-      printTiles(field,std::stoi(user_input[1]));
-    }
-    // --------------------------------------------------------test zwecke
-
-    else if(user_input[0] == "play")
-    {
-      moveID = getNumberOfTiles();
-      int exe = automatic.execute(*this, user_input);
-      for(int i = 1; i < static_cast<int>(user_input.size()); i++)
-      {
-        std::cout << user_input[i] << " ";
-      }
-      std::cout << std::endl;
-      if(exe)
-        addNewTile.execute(*this, user_input);
-
-      if(return_value != 1)
-      {
-        togglePlayer();
-      }
-
-      if(graphic_mode && tile_counter_ && (return_value != 1))
-      {
-        user_input.pop_back();
-        user_input[1] = file_name;
-        createNewFile.execute(*this, user_input);
-      }
-    }
-    // --------------------------------------------------------
-    else
-    {
-      cout << "Error: Unknown command!" << endl;
+      std::cout << "Error: Unknown command!" << std::endl;
       continue;
     }
   } while(running_);
 
-  //printTiles(field);
+  printTiles();
+
   freeTiles(field);
+}
+
+//--------------------------------------------------------------------------------tests
+void Game::printTiles()
+{
+  int spalten1;
+  std::cout << "color|type|move|white|red|" << std::endl;
+  std::cout << "    |";
+  for (signed int i = min_x_; i <= max_x_; i++)
+    std::cout << std::setfill (' ') << std::setw (6) << i << std::setw (7) << "||";
+  std::cout << std::endl;
+  spalten1 = max_x_ - min_x_ + 1;
+  std::cout << "    |";
+  while(spalten1--)
+  {
+    std::cout << std::setfill ('=') << std::setw (13) << "||";
+  }
+  std::cout << std::endl;
+  for(signed int y = min_y_; y <= max_y_; y++)
+  {
+    std::cout << std::setfill (' ') << std::setw (2) << y << ": |";
+    int spalten = max_x_ - min_x_ + 1;
+    for(signed int x = min_x_; x <= max_x_; x++)
+    {
+      Position pos1(x,y);
+      for (auto& x: field)
+      {
+        if(*x.first == pos1)
+        {
+          std::cout << " " << x.second->getColorOut() << "|" << x.second->getTypeString()
+              << "|" << x.second->getMove();
+          std::cout << "|" << x.second->getId(COLOR_WHITE) << "|" << x.second->getId(COLOR_RED)
+             << " ||";
+          break;
+        }
+      }
+    }
+    std::cout << std::endl;
+    std::cout << "    |";
+    while(spalten--)
+    {
+      std::cout << std::setfill ('=') << std::setw (13) << "||";
+    }
+    std::cout << std::endl;
+  }
 }

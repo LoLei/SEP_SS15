@@ -13,24 +13,15 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "Tile.h"
-#include "AddTile.h"
-#include "Position.h"
-#include "Write.h"
-#include "Command.h"
-#include "Quit.h"
-#include "Play.h"
-#include "UnknownCommandException.h"
-#include "UsageException.h"
-#include "EmptyBoardException.h"
-#include "WrongParameterException.h"
-#include "Karte.h"
+#include "Color.h"
+
 #include <iostream>
 #include <string>
-#include <cctype>
 #include <map>
-#include <iomanip>
-#include <sstream>
+#include <vector>
+
+class Tile;
+class Position;
 
 //------------------------------------------------------------------------------
 // Game Class
@@ -78,6 +69,8 @@ class Game
     //
     Game& operator=(const Game& original);
 
+    std::string output_filename_;
+
   public:
 
     signed int max_x_;
@@ -85,7 +78,6 @@ class Game
     signed int min_x_;
     signed int min_y_;
 
-    int moveID;
 
     //--------------------------------------------------------------------------
     // setMaximas method
@@ -116,7 +108,7 @@ class Game
     // @param file_name file name to write file
     // @param graphic_mode used to test if grapic mode is enabled
     //
-    void run(std::string file_name, int graphic_mode);
+    void run();
 
     //--------------------------------------------------------------------------
     // toggle Player method
@@ -171,24 +163,20 @@ class Game
     int getNumberOfTiles();
 
     //--------------------------------------------------------------------------
-    // Destructor
-    //
-    //~Game();
-
-    //--------------------------------------------------------------------------
-    // printTiles method
-    // redundant
-    //
-    // @return Color activeplayer_
-    //
-    void printTiles(std::map<Position*, Tile*> field, int i);
-
-    //--------------------------------------------------------------------------
     // freeTiles method
     // deletes tiles
     //
     // @param field map of tiles
     //
     void freeTiles(std::map<Position*, Tile*> field);
+
+
+
+    void printTiles();
+
+
+    int moveID;
+    std::string getOutputFilename();
+    void setOutputFilename(std::string);
 };
 #endif // GAME_H

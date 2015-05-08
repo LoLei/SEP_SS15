@@ -18,18 +18,11 @@
 #include <map>
 #include <vector>
 #include <climits>
-#include "OutOfMemoryException.h"
-#include "InvalidCoordinatesException.h"
-#include "NotEmptyFieldException.h"
-#include "NotConnectedFieldException.h"
-#include "InvalidParameterException.h"
-#include "ConnectedColorsMismatchException.h"
-#include "NotEnoughTilesException.h"
-#include "WrongParameterException.h"
+
 
 #include "Command.h"
-#include "Game.h"
 
+class Game;
 class Tile;
 class Position;
 
@@ -111,7 +104,7 @@ class AddTile:public Command
     //
     // @return int 0 if everything worked 8 or 9 is somebody won
     //
-    int adaptTile(std::map<Position*, Tile*> field, Tile &current_tile, Position p1);
+    int adaptTile(std::map<Position*, Tile*> field, Tile &current_tile, Position current_position);
 
     //--------------------------------------------------------------------------
     // completeMap method
@@ -122,7 +115,7 @@ class AddTile:public Command
     //
     // @return bool false if no tile needs to be force placed
     //
-    int completeMap(Game& board, std::vector<std::string> &forAddtile);
+    int completeMap(Game& board, Position &current_position, Tile &current_tile);
 
     //--------------------------------------------------------------------------
     // fillEmptyTiles method
@@ -166,6 +159,9 @@ class AddTile:public Command
     // @return int 0 if everything worked 8 or 9 is somebody won
     //
     int whoWon(int win_code);
+    void win(Game& board,std::vector<int> win_code);
+
+    void gravicMode(Game& board);
 };
 
 #endif //ADDTILE_H_INCLUDED

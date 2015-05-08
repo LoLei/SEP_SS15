@@ -10,7 +10,23 @@
 //------------------------------------------------------------------------------
 //
 
+#include "OutOfMemoryException.h"
+#include "InvalidCoordinatesException.h"
+#include "NotEmptyFieldException.h"
+#include "NotConnectedFieldException.h"
+#include "InvalidParameterException.h"
+#include "ConnectedColorsMismatchException.h"
+#include "NotEnoughTilesException.h"
+#include "WrongParameterException.h"
+
+
+
+#include "Game.h"
+#include "Tile.h"
+#include "Position.h"
 #include "AddTile.h"
+#include "Write.h"
+
 
 using std::string;
 
@@ -19,7 +35,7 @@ int AddTile::id_counter_ = 1;
 //------------------------------------------------------------------------------
 // Constructor
 //
-AddTile::AddTile() : Command("Addtile")
+AddTile::AddTile() : Command("addtile")
 {
 }
 
@@ -35,12 +51,12 @@ bool AddTile::valideInput(std::vector<string> user_input, Tile &current_tile,
   try
   {
     // input has to be 3 arguments
-    if (user_input.size() != 3)
+    if(user_input.size() != 3)
     {
       throw WrongParameterException();
     }
     // controll position input
-    if (current_position.parse(user_input[1]))
+    if(current_position.parse(user_input[1]))
     {
       try
       {
@@ -93,7 +109,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
     // every tile gets a signature of the player
     current_tile.setPlayer(board.getActivePlayer());
     // look up if the user input is correct
-    if (!(valideInput(user_input, current_tile, current_position)))
+    if(!(valideInput(user_input, current_tile, current_position)))
     {
       // abort addtile command
       return 1;
@@ -101,7 +117,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
 
     // fist tile has to be set in the point of orgin and topcolor red
     Position center(0, 0);
-    if ((board.getNumberOfTiles() == 0)
+    if((board.getNumberOfTiles() == 0)
       && (current_tile.getColor() != COLOR_RED || current_position != center))
     {
       // abort addtile command
@@ -111,7 +127,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
     // if the position is already taken
     for (auto& it : board.field)
     {
-      if (*it.first == current_position && *it.second != empty_tile)
+      if(*it.first == current_position && *it.second != empty_tile)
       {
         // abort addtile command
         throw NotEmptyFieldException();
@@ -130,8 +146,12 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
     // code to identify who/if someone won by loop
     // 1 white, 2 red, 0 none
     // addtidionally add and merge ids
-    int win_code_by_loop = 0;
-    win_code_by_loop = winByLoop(board.field, current_tile, current_position);
+    std::vector<int> win_code;
+    win_code.push_back(winByLoop(board.field, current_tile, current_position));
+    if(win_code[win_code.size()-1] == 0)
+    {
+      win_code.pop_back();
+    }
 
     // set new tile
     // replace empty tile with  new tile
@@ -139,7 +159,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
     bool replace = true;
     for (auto& it : board.field)
     {
-      if (*it.first == current_position && *it.second == empty_tile)
+      if(*it.first == current_position && *it.second == empty_tile)
       {
         // for clean replacement
         delete it.second;
@@ -165,50 +185,98 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
       }
     }
 
+
     // code to identify who/if someone won by length
     // 1 white, 2 red, 0 none
-    int win_code_by_length = 0;
     if(board.getNumberOfTiles() >= 8)
     {
-      win_code_by_length = winByLength(board, current_tile);
-    }
-
-    int win_code = 0;
-    // if both won in one move the active player wins
-    if(win_code_by_length && win_code_by_loop &&
-       (win_code_by_length != win_code_by_loop))
-    {
-      if(board.getActivePlayer() == COLOR_WHITE)
+      win_code.push_back(winByLength(board, current_tile));
+      if(win_code[win_code.size()-1] == 0)
       {
-        // white won
-        win_code = 1;
-      }
-      else
-      {
-        // red won
-        win_code = 2;
-      }
-    }
-    else
-    {
-      if(win_code_by_length)
-      {
-        win_code = win_code_by_length;
-      }
-      else
-      {
-        win_code = win_code_by_loop;
+        win_code.pop_back();
       }
     }
 
-    // game over, output who won
-    if(win_code)
+    // autocomplete map, if there are obvious moves --------------------------------TODO
+    int error = 0;
+
+    while(error == 0 && board.getNumberOfTiles() > 2)
+    //if(board.getNumberOfTiles() > 2)
     {
-      board.setRunning(false);
-      whoWon(win_code);
-      board.togglePlayer();
-      return 2;
+      Position current_position1;
+      Tile current_tile1(empty_tile);
+      current_tile1.setMove(current_tile.getMove());
+
+      error = completeMap(board, current_position1, current_tile1);
+      if(!error)
+      {
+/*
+        std::cout << current_position1.getX() << current_position1.getY()
+                  << current_tile1.getId(COLOR_WHITE) << current_tile1.getId(COLOR_RED)
+                  << current_tile1.getColorOut() << current_tile1.getTypeString()
+                  << current_tile1.getPlayerColorOut() << current_tile1.getMove() << std::endl;
+*/
+        win_code.push_back(winByLoop(board.field, current_tile1, current_position1));
+        if(win_code[win_code.size()-1] == 0)
+        {
+          win_code.pop_back();
+        }
+
+
+        bool replace = true;
+        for (auto& it : board.field)
+        {
+          if(*it.first == current_position1 && *it.second == empty_tile)
+          {
+            // for clean replacement
+            delete it.second;
+            board.field[it.first] = new Tile(current_tile1);
+            board.riseNumberOfTiles();
+            replace = false;
+          }
+        }
+
+        // set new tile
+        if (replace)
+        {
+          board.field.emplace(new Position(current_position1), new Tile(current_tile1));
+          board.riseNumberOfTiles();
+
+          // set size of field
+          board.setMaximas(current_position1);
+
+          // insert empty tiles in field between maximas
+          if (board.getNumberOfTiles() > 2)
+          {
+            fillEmptyTiles(board, current_position1);
+          }
+        }
+        win_code.push_back(winByLength(board, current_tile1));
+        if(win_code[win_code.size()-1] == 0)
+        {
+          win_code.pop_back();
+        }
+
+
+      }
     }
+/*
+    if(error == 2)
+    {
+      // if there is a none valide auto complete move
+      for (auto& x: board.field)
+      {
+        if(x.second->getMove() == board.moveID)
+        {
+          delete x.first;
+          delete x.second;
+        }
+      }
+      return 1;
+    }
+*/
+
+    win(board,win_code);
 
     // if nobody won and tiles aren't anymore available -------------------------TODO difference invalide move and draw
     // if there is notile with the same moveid its not auto complete
@@ -217,6 +285,16 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
       // game over, tie
       std::cout << "No more tiles left. Game ends in a draw!" << std::endl;
       throw NotEnoughTilesException();
+    }
+
+
+    //TODO not do it if complete map
+    board.togglePlayer();
+
+    // if everything went well and game is not over
+    if (board.getNumberOfTiles() >= 1)
+    {
+      gravicMode(board);
     }
 
   }
@@ -229,7 +307,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
     std::cout << e1.what() << std::endl;
     board.setRunning(false);
     board.togglePlayer();
-    return 2;
+    return 0;
   }
   catch (InvalidCoordinatesException& e1)
   {
@@ -241,23 +319,21 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
     std::cout << e1.what() << std::endl;
     return 1;
   }
-
-  // autocomplete map, if there are obvious moves
-  if(completeMap(board, user_input))
-  {
-    // if there is a none valide auto complete move
-    for (auto& x: board.field)
-    {
-      if(x.second->getMove() == board.moveID)
-      {
-        delete x.first;
-        delete x.second;
-      }
-    }
-  }
-
-  // if everything went well and game is not over
   return 0;
+}
+
+//------------------------------------------------------------------------------
+void AddTile::gravicMode(Game& board)
+{
+  // no tile set or a fail happend
+  if(!board.getOutputFilename().empty())
+  {
+    Write new_file;
+    std::vector<string> input;
+    input.push_back("write");
+    input.push_back(board.getOutputFilename());
+    new_file.execute(board, input);
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -357,7 +433,7 @@ int AddTile::adaptTile(std::map<Position*, Tile*> field,
 }
 
 //------------------------------------------------------------------------------
-int AddTile::completeMap(Game& board, std::vector<string>& user_input)
+int AddTile::completeMap(Game& board, Position &current_position, Tile &current_tile)
 {
   // for purposes of comparison
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
@@ -383,7 +459,7 @@ int AddTile::completeMap(Game& board, std::vector<string>& user_input)
 
     for(auto& nearby_tile: board.field)
     {
-      if(*nearby_tile.second == empty_tile)
+      if (*nearby_tile.second == empty_tile)
       {
         continue;
       }
@@ -414,16 +490,19 @@ int AddTile::completeMap(Game& board, std::vector<string>& user_input)
       {
         if(found_tile > 2)
         {
+          return 2;
           // some error message
         }
         continue;
       }
-      user_input[1] = it.first->toString();
-      user_input[2] = expanded_tile.getTypeOut();
-      execute(board, user_input);
+      current_position = *it.first;
+
+      current_tile.setType(expanded_tile.getTypeChar());
+      current_tile.setColor(expanded_tile.getColor());
+      return 0;
     }
   }
-  return 0;
+  return 1;
 }
 
 //------------------------------------------------------------------------------
@@ -456,7 +535,7 @@ void AddTile::fillEmptyTiles(Game& board, Position current_position)
               break;
             }
           }
-          if (set_empty_tile)
+          if(set_empty_tile)
           {
             board.field.emplace(new Position(empty_position), new Tile(empty_tile));
           }
@@ -544,7 +623,7 @@ int AddTile::winByLength(Game& board, Tile current_tile)
       {
         who_won += 1;
       }
-      if (colors[i] == COLOR_RED)
+      if(colors[i] == COLOR_RED)
       {
         who_won += 2;
       }
@@ -663,3 +742,58 @@ int AddTile::whoWon(int win_code)
   return 0;
 }
 
+//------------------------------------------------------------------------------
+void AddTile::win(Game& board,std::vector<int> win_code)
+{
+  // if both won in one move the active player wins
+  if(win_code.size() > 1)
+  {
+    int same = 1;
+    for(int i = 0; i < (int)win_code.size(); i++)
+    {
+      same *= win_code[i];
+    }
+    if(same == 1)
+    {
+      // game over, output white won
+      board.setRunning(false);
+      //std::cout << "1" << std::endl;
+      whoWon(win_code[0]);
+      board.togglePlayer();
+      return;
+    }
+    else
+    {
+      if(board.getActivePlayer() == COLOR_WHITE)
+      {
+        // white won
+        // game over, output who won
+        board.setRunning(false);
+        //std::cout << "2" << std::endl;
+        whoWon(1);
+        board.togglePlayer();
+        return;
+      }
+      else
+      {
+        // red won
+        // game over, output who won
+        board.setRunning(false);
+        //std::cout << "3" << std::endl;
+        whoWon(2);
+        board.togglePlayer();
+        return;
+      }
+    }
+  }
+  else if(win_code.size() == 1 && win_code[0] != 0)
+  {
+    // game over, output who won
+    board.setRunning(false);
+    //std::cout << "4" << std::endl;
+    //std::cout << win_code[0] << std::endl;
+    whoWon(win_code[0]);
+    board.togglePlayer();
+    return;
+  }
+}

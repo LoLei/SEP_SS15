@@ -15,12 +15,11 @@
 
 #include <string>
 #include <iostream>
-#include <map>
 #include <vector>
 
 #include "Command.h"
-#include "Game.h"
 
+class Game;
 class Tile;
 class Position;
 

@@ -14,6 +14,8 @@
 #include <string>
 #include "Game.h"
 
+#include "UsageException.h"
+
 //------------------------------------------------------------------------------
 // main function
 // entry point for execution
@@ -29,28 +31,31 @@ int main(int argc, char **argv)
 {
   try
   {
-    std::string file_name = "outputfile";
-    int graphic_mode = 0;
+    Game trax;
     std::string flag;
+    std::string filename;
     if(argc == 3 && argv[1][0] == '-' && (flag = argv[1]).size() == 2)
     {
-      switch(argv[1][1])
+      switch(flag[1])
       {
         case 'g':
-          graphic_mode = 1;
-          file_name = argv[2];
+          filename = argv[2];
+          trax.setOutputFilename(filename);
           break;
         default:
           throw UsageException();
       }
+    }
+    else if(argc == 1)
+    {
+      trax.setOutputFilename("");
     }
     else if(argc != 1 && argc != 3)
     {
       throw UsageException();
     }
 
-    Game trax;
-    trax.run(file_name, graphic_mode);
+    trax.run();
   }
   catch (UsageException& e1)
   {

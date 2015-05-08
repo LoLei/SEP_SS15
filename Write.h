@@ -14,14 +14,11 @@
 #define WRITE_H_INCLUDED
 
 #include <string>
-#include <fstream>
 #include <iostream>
-#include <map>
-#include "Position.h"
-#include "Game.h"
-#include "Tile.h"
+
 #include "Command.h"
-#include "WriteException.h"
+
+class Game;
 
 //------------------------------------------------------------------------------
 // Write Class
@@ -54,7 +51,7 @@ class Write :public Command
     //--------------------------------------------------------------------------
     // execute method
     // Executes command write, creates file
-    // 
+    //
     // @param board the game board
     // @param user_input the input the user enters, will be file name
     //
