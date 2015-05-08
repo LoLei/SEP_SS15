@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// Karte.h
+// Map.h
 //
 // Group: Group 9, study assistant Philip Loibl
 //
@@ -10,8 +10,8 @@
 //------------------------------------------------------------------------------
 //
 
-#ifndef KARTE_H_INCLUDED
-#define KARTE_H_INCLUDED
+#ifndef MAP_H_INCLUDED
+#define MAP_H_INCLUDED
 
 #include <string>
 #include <iostream>
@@ -40,33 +40,33 @@ struct customKeyComparator : std::binary_function<Position*, Position*, bool>
 };
 
 //------------------------------------------------------------------------------
-// Karte Class
+// Map Class
 // Class for sorting a map using the custom key comparator
 //
-class Karte
+class Map
 {
   private:
     //--------------------------------------------------------------------------
     // Private copy constructor
     //
-    Karte(const Karte& original);
+    Map(const Map& original);
 
     //--------------------------------------------------------------------------
     // Private assignment operator
     //
-    Karte& operator=(const Karte& original);
+    Map& operator=(const Map& original);
 
   public:
     //--------------------------------------------------------------------------
     // Constructor
     //
-    Karte();
+    Map();
 
     //--------------------------------------------------------------------------
     // Destructor
     //
-    virtual ~Karte();
+    virtual ~Map();
 };
 
-#endif //KARTE_H_INCLUDED
+#endif //MAP_H_INCLUDED
 

@@ -162,7 +162,7 @@ class AddTile:public Command
     void win(Game& board,std::vector<int> win_code);
     void addTheTile(Game& board, Position current_position, Tile current_tile);
 
-    void gravicMode(Game& board);
+    void graphicMode(Game& board);
 };
 
 #endif //ADDTILE_H_INCLUDED

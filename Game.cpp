@@ -14,9 +14,9 @@
 #include <sstream>
 #include <cctype>
 
-//#include "Tile.h"
+#include "Tile.h"
 #include "AddTile.h"
-//#include "Position.h"
+#include "Position.h"
 #include "Write.h"
 #include "Command.h"
 #include "Quit.h"
@@ -25,8 +25,6 @@
 #include "UsageException.h"
 #include "EmptyBoardException.h"
 #include "WrongParameterException.h"
-#include "Karte.h"
-
 #include "Game.h"
 
 using std::string;

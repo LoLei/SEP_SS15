@@ -228,7 +228,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
     // if everything went well and game is not over
     if (board.getNumberOfTiles() >= 1)
     {
-      gravicMode(board);
+      graphicMode(board);
     }
 
   }
@@ -257,7 +257,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
 }
 
 //------------------------------------------------------------------------------
-void AddTile::gravicMode(Game& board)
+void AddTile::graphicMode(Game& board)
 {
   // no tile set or a fail happend
   if(!board.getOutputFilename().empty())
