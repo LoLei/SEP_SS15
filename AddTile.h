@@ -160,6 +160,7 @@ class AddTile:public Command
     //
     int whoWon(int win_code);
     void win(Game& board,std::vector<int> win_code);
+    void addTheTile(Game& board, Position current_position, Tile current_tile);
 
     void gravicMode(Game& board);
 };

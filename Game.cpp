@@ -225,6 +225,11 @@ void Game::run()
   printTiles();
 
   freeTiles(field);
+
+  for(auto& it : command_)
+  {
+    delete it;
+  }
 }
 
 //--------------------------------------------------------------------------------tests
@@ -254,7 +259,7 @@ void Game::printTiles()
       {
         if(*x.first == pos1)
         {
-          std::cout << " " << x.second->getColorOut() << "|" << x.second->getTypeOut()
+          std::cout << " " << x.second->getColorOut() << "|" << x.second->getTypeString()
               << "|" << x.second->getMove();
           std::cout << "|" << x.second->getId(COLOR_WHITE) << "|" << x.second->getId(COLOR_RED)
              << " ||";

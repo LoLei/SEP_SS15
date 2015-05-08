@@ -74,11 +74,6 @@ class Tile
     //
     int move_;
 
-    //--------------------------------------------------------------------------
-    // Private assignment operator
-
-    Tile& operator=(const Tile& original);
-
   public:
     //--------------------------------------------------------------------------
     // Constructor method
@@ -157,6 +152,7 @@ class Tile
     //
     // @return Type side_
     //
+    char getTypeChar();
     Type getType();
 
     //--------------------------------------------------------------------------
@@ -200,6 +196,10 @@ class Tile
     //
 
     //--------------------------------------------------------------------------
+    // assignment operator
+    virtual Tile& operator=(const Tile& original);
+
+    //--------------------------------------------------------------------------
     // operator== method
     // Used to compare two tiles on equality
     //
@@ -229,7 +229,7 @@ class Tile
     //
     Color notTopColor();
 
-    //--------------------------------------------------------------------------
+    //----------------------------------------------------------------------------
     // charToType method
     // returns the type for the char
     //
@@ -238,7 +238,7 @@ class Tile
     // @return Type TYPE_CURVE_2 if '\'
     // @return Type EMPTY_T for default
     //
-    Type charToType(char c);
+    //Type charToType(char c);
 
 
 
@@ -246,8 +246,7 @@ class Tile
     // Get Output Methods
     //
     std::string getColorOut();
-    std::string getTypeOut();
-    char getTypeChar();
+    std::string getTypeString();
     std::string getPlayerColorOut();
     int oppositeBorder(int border);
     int getMove();

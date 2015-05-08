@@ -39,12 +39,12 @@ class Position
   public:
     //--------------------------------------------------------------------------
     // Default constructor method
-    // 
+    //
     Position();
 
     //--------------------------------------------------------------------------
     // Constructor method
-    // 
+    //
     // @param x the x coordinate
     // @param y the y coordinate
     //
@@ -119,7 +119,7 @@ class Position
     //
     // @return std::string the position in a string
     //
-    std::string toString();
+    const std::string toString();
 
     //--------------------------------------------------------------------------
     // operator Methods

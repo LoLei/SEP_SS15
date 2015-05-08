@@ -13,83 +13,76 @@
 #include "Tile.h"
 
 //------------------------------------------------------------------------------
-Tile::Tile(Type side, Color topcolor)
+Tile::Tile(Type side, Color topcolor) : side_(side), topcolor_(topcolor),
+  of_activeplayer_(EMPTY_C), white_id_(0), red_id_(0), move_(0)
 {
-  side_ = side;
-  topcolor_ = topcolor;
-  of_activeplayer_ = EMPTY_C;
-  white_id_ = 0;
-  red_id_ = 0;
-  move_ = 0;
 }
 
-Tile::Tile(Color top, Color right, Color bottom, Color left)
+Tile::Tile(Color top, Color right, Color bottom, Color left) : side_(EMPTY_T),
+  topcolor_(top), of_activeplayer_(EMPTY_C), white_id_(0), red_id_(0), move_(0)
 {
-  move_ = 0;
-  white_id_ = 0;
-  red_id_ = 0;
   if((top == bottom && top != EMPTY_C) || (left == right && left != EMPTY_C))
   {
     side_ = TYPE_CROSS;
-    if(top == EMPTY_C)
+    if(topcolor_ != EMPTY_C)
     {
-      top = bottom;
+      return;
     }
-    else if(bottom == EMPTY_C)
+    if((left != EMPTY_C || right != EMPTY_C))
     {
-      bottom = top;
+      if(left == COLOR_WHITE || right == COLOR_WHITE)
+      {
+        topcolor_ = COLOR_RED;
+        return;
+      }
+      else if(left == COLOR_RED || right == COLOR_RED)
+      {
+        topcolor_ = COLOR_WHITE;
+        return;
+      }
     }
-    else if(left == EMPTY_C)
-    {
-      left = right;
-    }
-    else if(right == EMPTY_C)
-    {
-      right = left;
-    }
-    topcolor_ = top;
   }
   else if((top == left && top != EMPTY_C) || (right == bottom && right != EMPTY_C))
   {
     side_ = TYPE_CURVE_1;
-    if(top == EMPTY_C)
+    if(topcolor_ != EMPTY_C)
     {
-      top = left;
+      return;
     }
-    else if(bottom == EMPTY_C)
+    if((right != EMPTY_C || bottom != EMPTY_C))
     {
-      bottom = right;
+      if(right == COLOR_WHITE || bottom == COLOR_WHITE)
+      {
+        topcolor_ = COLOR_RED;
+        return;
+      }
+      else if(right == COLOR_RED || bottom == COLOR_RED)
+      {
+        topcolor_ = COLOR_WHITE;
+        return;
+      }
     }
-    else if(left == EMPTY_C)
-    {
-      left = top;
-    }
-    else if(right == EMPTY_C)
-    {
-      right = bottom;
-    }
-    topcolor_ = top;
   }
   else if((top == right && top != EMPTY_C) || (left == bottom && left != EMPTY_C))
   {
     side_ = TYPE_CURVE_2;
-    if(top == EMPTY_C)
+    if(topcolor_ != EMPTY_C)
     {
-      top = right;
+      return;
     }
-    else if(bottom == EMPTY_C)
+    if((left != EMPTY_C || bottom != EMPTY_C))
     {
-      bottom = left;
+      if(left == COLOR_WHITE || bottom == COLOR_WHITE)
+      {
+        topcolor_ = COLOR_RED;
+        return;
+      }
+      else if(left == COLOR_RED || bottom == COLOR_RED)
+      {
+        topcolor_ = COLOR_WHITE;
+        return;
+      }
     }
-    else if(left == EMPTY_C)
-    {
-      left = bottom;
-    }
-    else if(right == EMPTY_C)
-    {
-      right = top;
-    }
-    else topcolor_ = top;
   }
   else
   {
@@ -193,6 +186,27 @@ Color Tile::getColor(int border)
 }
 
 //------------------------------------------------------------------------------
+char Tile::getTypeChar()
+{
+  switch (side_)
+  {
+    case TYPE_CROSS:
+      return '+';
+      break;
+    case TYPE_CURVE_1:
+      return '/';
+      break;
+    case TYPE_CURVE_2:
+      return '\\';
+      break;
+    case EMPTY_T:
+      return '0';
+      break;
+  }
+    return '0';
+}
+
+//------------------------------------------------------------------------------
 Tile::Type Tile::getType()
 {
   return side_;
@@ -281,7 +295,7 @@ int Tile::getPlayerColor()
   return -1;
 }
 
-std::string Tile::getTypeOut()
+std::string Tile::getTypeString()
 {
   switch (side_)
   {
@@ -298,27 +312,20 @@ std::string Tile::getTypeOut()
       return "0";
       break;
   }
-    return "fail";
+    return "0";
 }
+//-----------------------------------
 
-char Tile::getTypeChar()
+//------------------------------------------------------------------------------
+Tile& Tile::operator=(const Tile& original)
 {
-  switch (side_)
-  {
-  case TYPE_CROSS:
-    return '+';
-    break;
-  case TYPE_CURVE_1:
-    return '/';
-    break;
-  case TYPE_CURVE_2:
-    return '\\';
-    break;
-  case EMPTY_T:
-    return '0';
-    break;
-  }
-  return 'f';
+  side_ = original.side_;
+  topcolor_ = original.topcolor_;
+  of_activeplayer_ = original.of_activeplayer_;
+  white_id_ = original.white_id_;
+  red_id_ = original.red_id_;
+  move_ = original.move_;
+  return *this;
 }
 
 //------------------------------------------------------------------------------
@@ -350,7 +357,9 @@ Color Tile::notTopColor()
   }
 }
 
+
 //------------------------------------------------------------------------------
+/*
 Tile::Type Tile::charToType(char c)
 {
   switch (c)
@@ -365,7 +374,7 @@ Tile::Type Tile::charToType(char c)
       return EMPTY_T;
   }
 }
-
+*/
 //--------------------------------------------------------------------------------TODO
 int Tile::oppositeBorder(int border)
 {

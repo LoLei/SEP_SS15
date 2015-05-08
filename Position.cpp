@@ -17,22 +17,16 @@ using std::cout;
 using std::endl;
 
 //------------------------------------------------------------------------------
-Position::Position(signed int x, signed int y)
+Position::Position(signed int x, signed int y) : x_(x), y_(y)
 {
-  x_ = x;
-  y_ = y;
 }
 
-Position::Position()
+Position::Position() : x_(0), y_(0)
 {
-  x_ = 0;
-  y_ = 0;
 }
 
-Position::Position(const Position &src)
+Position::Position(const Position &src) : x_(src.x_), y_(src.y_)
 {
-  x_ = src.x_;
-  y_ = src.y_;
 }
 
 //------------------------------------------------------------------------------
@@ -90,7 +84,7 @@ bool Position::parse(const string input)
 }
 
 //------------------------------------------------------------------------------
-string Position::toString()
+const string Position::toString()
 {
   string output = "(" + std::to_string(x_) + "," + std::to_string(y_) + ")";
   return output;
