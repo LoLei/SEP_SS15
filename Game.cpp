@@ -254,7 +254,7 @@ void Game::printTiles()
       {
         if(*x.first == pos1)
         {
-          std::cout << " " << x.second->getColorOut() << "|" << x.second->getTypeString()
+          std::cout << " " << x.second->getColorOut() << "|" << x.second->getTypeOut()
               << "|" << x.second->getMove();
           std::cout << "|" << x.second->getId(COLOR_WHITE) << "|" << x.second->getId(COLOR_RED)
              << " ||";

@@ -300,7 +300,26 @@ std::string Tile::getTypeOut()
   }
     return "fail";
 }
-//-----------------------------------
+
+char Tile::getTypeChar()
+{
+  switch (side_)
+  {
+  case TYPE_CROSS:
+    return '+';
+    break;
+  case TYPE_CURVE_1:
+    return '/';
+    break;
+  case TYPE_CURVE_2:
+    return '\\';
+    break;
+  case EMPTY_T:
+    return '0';
+    break;
+  }
+  return 'f';
+}
 
 //------------------------------------------------------------------------------
 bool Tile::operator==(const Tile &src) const

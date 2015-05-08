@@ -247,6 +247,7 @@ class Tile
     //
     std::string getColorOut();
     std::string getTypeOut();
+    char getTypeChar();
     std::string getPlayerColorOut();
     int oppositeBorder(int border);
     int getMove();
