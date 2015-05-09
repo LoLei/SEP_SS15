@@ -17,11 +17,6 @@
 #include <string>
 #include <iostream>
 
-#define TOP 0
-#define RIGHT 1
-#define BOTTOM 2
-#define LEFT 3
-
 //------------------------------------------------------------------------------
 // Tile Class
 // Class for tiles
@@ -75,6 +70,12 @@ class Tile
     int move_;
 
   public:
+
+    static const int TOP = 0;
+    static const int RIGHT = 1;
+    static const int BOTTOM = 2;
+    static const int LEFT = 3;
+
     //--------------------------------------------------------------------------
     // Constructor method
     //
@@ -99,7 +100,7 @@ class Tile
     // @param Ob the top color
     // @param Un the bottom color
     //
-    Tile(Color Li, Color Re, Color Ob, Color Un);
+    Tile(Color top, Color right, Color bottom, Color left);
 
     //--------------------------------------------------------------------------
     // Destructor
@@ -122,9 +123,9 @@ class Tile
     // setType method
     // Sets the type of a tile
     //
-    // @param c the type, either '+', '/' or '\'
+    // @param char_side the type, either '+', '/' or '\'
     //
-    void setType(char c);
+    void setType(char char_side);
 
     //--------------------------------------------------------------------------
     // setPlayer method
@@ -245,8 +246,6 @@ class Tile
     //--------------------------------------------------------------------------
     // Get Output Methods
     //
-    std::string getColorOut();
-    std::string getTypeString();
     std::string getPlayerColorOut();
     int oppositeBorder(int border);
     int getMove();

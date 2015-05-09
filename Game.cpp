@@ -14,17 +14,17 @@
 #include <sstream>
 #include <cctype>
 
+#include "Position.h"
 #include "Tile.h"
 #include "AddTile.h"
-#include "Position.h"
 #include "Write.h"
 #include "Command.h"
 #include "Quit.h"
-#include "Play.h"
 #include "UnknownCommandException.h"
 #include "UsageException.h"
 #include "EmptyBoardException.h"
 #include "WrongParameterException.h"
+
 #include "Game.h"
 
 using std::string;
@@ -118,6 +118,7 @@ void Game::riseNumberOfTiles()
 {
   tile_counter_++;
 }
+
 //------------------------------------------------------------------------------
 int Game::userInputToCommand(std::vector<string> &vector_input)
 {
@@ -169,26 +170,26 @@ void Game::run()
   setRunning(true);
 
   std::vector<Command*> command_;
-  command_.push_back(new Write());
-  command_.push_back(new Quit());
-  command_.push_back(new AddTile());
-//  command_.push_back(new Play());
+  try
+  {
+    command_.push_back(new Write());
+    command_.push_back(new Quit());
+    command_.push_back(new AddTile());
+  }
+  catch(...)
+  {
+    for(auto& it : command_)
+    {
+      delete it;
+    }
+    std::cout << "out of memory" << std::endl; //-----------TODO
+    setRunning(false);
+    return;
+  }
 
   do
   {
-//    std::cout << "sep> ";
-
-
-    if(getActivePlayer() == COLOR_WHITE)
-    {
-      std::cout << "w:" << getNumberOfTiles() << " > ";
-    }
-    if(getActivePlayer() == COLOR_RED)
-    {
-      std::cout << "r:" << getNumberOfTiles() << " > ";
-    }
-
-
+    std::cout << "sep> ";
     // get user input into a vector
     std::vector<string> user_input;
     // If user enters blank line, prompt again
@@ -197,11 +198,11 @@ void Game::run()
       continue;
     }
 
-    else if(user_input[0] == "print")// --------------------------------------------------------test zwecke
+    if(user_input[0] == "print")// --------------------------------------------------------test zwecke
       printTiles();
 
-    moveID = getNumberOfTiles();
-    int ansonsten = 1;
+    moveID++;
+    int no_command_found = 1;
 
     for (auto& current_command : command_)
     {
@@ -209,18 +210,16 @@ void Game::run()
       {
         current_command->execute(*this, user_input);
 
-        ansonsten = 0;
+        no_command_found = 0;
         break;
       }
     }
-    if(ansonsten)
+    if(no_command_found)
     {
       std::cout << "Error: Unknown command!" << std::endl;
       continue;
     }
   } while(running_);
-
-  printTiles();
 
   freeTiles(field);
 
@@ -234,21 +233,23 @@ void Game::run()
 void Game::printTiles()
 {
   int spalten1;
+  std::cout << std::endl;
+  std::cout << std::setfill ('-') << std::setw (26) << "|" << std::endl;
   std::cout << "color|type|move|white|red|" << std::endl;
-  std::cout << "    |";
+  std::cout << "   |";
   for (signed int i = min_x_; i <= max_x_; i++)
-    std::cout << std::setfill (' ') << std::setw (6) << i << std::setw (7) << "||";
+    std::cout << std::setfill (' ') << std::setw (7) << i << std::setw (6) << "|";
   std::cout << std::endl;
   spalten1 = max_x_ - min_x_ + 1;
-  std::cout << "    |";
+  std::cout << "   |";
   while(spalten1--)
   {
-    std::cout << std::setfill ('=') << std::setw (13) << "||";
+    std::cout << std::setfill ('-') << std::setw (13) << "|";
   }
   std::cout << std::endl;
   for(signed int y = min_y_; y <= max_y_; y++)
   {
-    std::cout << std::setfill (' ') << std::setw (2) << y << ": |";
+    std::cout << std::setfill (' ') << std::setw (2) << y << " |";
     int spalten = max_x_ - min_x_ + 1;
     for(signed int x = min_x_; x <= max_x_; x++)
     {
@@ -257,19 +258,19 @@ void Game::printTiles()
       {
         if(*x.first == pos1)
         {
-          std::cout << " " << x.second->getColorOut() << "|" << x.second->getTypeString()
-              << "|" << x.second->getMove();
-          std::cout << "|" << x.second->getId(COLOR_WHITE) << "|" << x.second->getId(COLOR_RED)
-             << " ||";
+          std::cout << " " << x.second->getColor() << ";" << x.second->getType()
+              << ";" << x.second->getMove();
+          std::cout << ";" << x.second->getId(COLOR_WHITE) << ";" << std::setw (2) << x.second->getId(COLOR_RED)
+             << " |";
           break;
         }
       }
     }
     std::cout << std::endl;
-    std::cout << "    |";
+    std::cout << "   |";
     while(spalten--)
     {
-      std::cout << std::setfill ('=') << std::setw (13) << "||";
+      std::cout << std::setfill ('-') << std::setw (13) << "|";
     }
     std::cout << std::endl;
   }

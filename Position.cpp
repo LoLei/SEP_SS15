@@ -128,3 +128,24 @@ bool Position::operator<(const Position &position) const
     return false;
   }
 }
+
+//------------------------------------------------------------------------------
+Position Position::getNearbyPosition(int side)
+{
+  switch(side)
+  {
+    // top
+    case 0:
+      return Position(x_,y_ - 1);
+    // right
+    case 1:
+      return Position(x_ + 1,y_);
+    // bottom
+    case 2:
+      return Position(x_,y_ + 1);
+    // left
+    case 3:
+      return Position(x_ - 1,y_);
+  }
+  return Position(0,0);
+}

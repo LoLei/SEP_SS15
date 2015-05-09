@@ -100,8 +100,6 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
 {
   try
   {
-    // for purposes of comparison
-    Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
     // tile and position which is going to be set
     Position current_position;
     Tile current_tile(Tile::EMPTY_T, COLOR_RED);
@@ -127,7 +125,8 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
     // if the position is already taken
     for (auto& it : board.field)
     {
-      if(*it.first == current_position && *it.second != empty_tile)
+      if(*it.first == current_position && (it.second->getColor() != EMPTY_C &&
+         it.second->getType() != Tile::EMPTY_T))
       {
         // abort addtile command
         throw NotEmptyFieldException();
@@ -273,14 +272,13 @@ void AddTile::graphicMode(Game& board)
 //------------------------------------------------------------------------------
 void AddTile::addTheTile(Game& board, Position current_position, Tile current_tile)
 {
-  // for purposes of comparison
-  Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
   // replace empty tile with  new tile
   // only necessary if the position exists and filld with an empty tile
   bool replace = true;
   for (auto& it : board.field)
   {
-    if(*it.first == current_position && *it.second == empty_tile)
+    if(*it.first == current_position && (it.second->getColor()
+       == EMPTY_C && it.second->getType() == Tile::EMPTY_T))
     {
       // for clean replacement
       delete it.second;
@@ -293,7 +291,16 @@ void AddTile::addTheTile(Game& board, Position current_position, Tile current_ti
   // set new tile
   if (replace)
   {
-    board.field.emplace(new Position(current_position), new Tile(current_tile));
+    try
+    {
+      board.field.emplace(new Position(current_position), new Tile(current_tile));
+    }
+    catch(...)
+    {
+      std::cout << "out of memory" << std::endl; //----------TODO
+      board.setRunning(false);
+      return;
+    }
     board.riseNumberOfTiles();
 
     // set size of field
@@ -349,35 +356,24 @@ int AddTile::adaptTile(std::map<Position*, Tile*> field,
 {
   try
   {
-    // for purposes of comparison
-    Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
     // true if tile was twiste resp. topcolor war changed
     bool twisted = false;
     // true if there is no contact to another tile
     bool lonely_tile = true;
-    // teoretical positions around the current tile
-    Position surrounding_position[4] = {Position(current_position.getX(),
-                                                 current_position.getY() - 1),
-                                        Position(current_position.getX() + 1,
-                                                 current_position.getY()),
-                                        Position(current_position.getX(),
-                                                 current_position.getY() + 1),
-                                        Position(current_position.getX() - 1,
-                                                 current_position.getY())};
 
     for (auto& it : field)
     {
       // looking for nearby tiles
-      if (*it.second == empty_tile)
+      if (it.second->getColor() == EMPTY_C && it.second->getType() == Tile::EMPTY_T)
       {
         continue;
       }
       // search in surrounding positionen , TOP = 0 LEFT = 3
-      for (int border = TOP; border <= LEFT; border++)
+      for (int border = 0; border <= 3; border++)
       {
         // is position in the surrounding & do the colors match &
         // is contact to the field -
-        if(*(it.first) == surrounding_position[border] &&
+        if(*(it.first) == current_position.getNearbyPosition(border) &&
            !colorCheck(it.second->getColor(it.second->oppositeBorder(border)) !=
                   current_tile.getColor(border),
                   twisted, lonely_tile, current_tile))
@@ -418,16 +414,6 @@ int AddTile::completeMap(Game& board, Position &current_position, Tile &current_
     // border colors of new tile
     Color surrounding_color[4] = {EMPTY_C, EMPTY_C, EMPTY_C, EMPTY_C};
 
-    // teoretical positions around the current tile
-    Position surrounding_position[4] = {Position(it.first->getX(),
-                                                 it.first->getY() - 1),
-                                        Position(it.first->getX() + 1,
-                                                 it.first->getY()),
-                                        Position(it.first->getX(),
-                                                 it.first->getY() + 1),
-                                        Position(it.first->getX() - 1,
-                                                 it.first->getY())};
-
     for(auto& nearby_tile: board.field)
     {
       if (*nearby_tile.second == empty_tile)
@@ -435,10 +421,10 @@ int AddTile::completeMap(Game& board, Position &current_position, Tile &current_
         continue;
       }
       // search in surrounding positionen , TOP = 0 LEFT = 3
-      for (int border = TOP; border <= LEFT; border++)
+      for (int border = 0; border <= 3; border++)
       {
         // is position in the surrounding
-        if(*(nearby_tile.first) == surrounding_position[border])
+        if(*(nearby_tile.first) == it.first->getNearbyPosition(border))
         {
           // cound surrounding tiles
           found_tile++;
@@ -557,10 +543,9 @@ void AddTile::fillEmptyTiles(Game& board, Position current_position)
 //------------------------------------------------------------------------------
 int AddTile::winByLength(Game& board, Tile current_tile)
 {
-  Color colors[2] = {COLOR_WHITE, COLOR_RED};
   int who_won = 0;
   // control of the length of the red id and the white id of the current tile
-  for (int i = 0; i < 2; i++)
+  for (auto colors : {COLOR_WHITE, COLOR_RED})
   {
     signed int min_x = INT_MAX;
     signed int min_y = INT_MAX;
@@ -569,7 +554,7 @@ int AddTile::winByLength(Game& board, Tile current_tile)
     // set minimas and maximas of each id
     for(auto& it: board.field)
     {
-      if(it.second->getId(colors[i]) == current_tile.getId(colors[i]))
+      if(it.second->getId(colors) == current_tile.getId(colors))
       {
         if(it.first->getX() > max_x)
         {
@@ -592,11 +577,11 @@ int AddTile::winByLength(Game& board, Tile current_tile)
     //check if the id goes over 8 rows or 8 lines
     if(max_x - min_x >= 7 || max_y - min_y >= 7)
     {
-      if(colors[i] == COLOR_WHITE)
+      if(colors == COLOR_WHITE)
       {
         who_won += 1;
       }
-      if(colors[i] == COLOR_RED)
+      if(colors == COLOR_RED)
       {
         who_won += 2;
       }
@@ -632,17 +617,6 @@ int AddTile::winByLoop(std::map<Position*, Tile*> field,
   current_tile.setId(COLOR_WHITE, id_counter_++);
   current_tile.setId(COLOR_RED, id_counter_++);
 
-  // teoretical positions around the current tile
-  Position surrounding_position[4] = {Position(current_position.getX(),
-                                               current_position.getY() - 1),
-                                      Position(current_position.getX() + 1,
-                                               current_position.getY()),
-                                      Position(current_position.getX(),
-                                               current_position.getY() + 1),
-                                      Position(current_position.getX() - 1,
-                                               current_position.getY())};
-
-  Color colors[2] = {COLOR_WHITE, COLOR_RED};
   // for each color a vector
   std::vector<int> id_to_merge[2] = {std::vector<int>(), std::vector<int>()};
 
@@ -654,45 +628,45 @@ int AddTile::winByLoop(std::map<Position*, Tile*> field,
       continue;
     }
     // setting id by comparing ids of surrounding tiles , TOP = 0 LEFT = 3
-    for (int border = TOP; border <= LEFT; border++)
+    for (int border = 0; border <= 3; border++)
     {
-      if(*(it.first) == surrounding_position[border])
+      if(*(it.first) == current_position.getNearbyPosition(border))
       {
         // for each color
-        for(int i = 0; i < 2; i++)
+        for(auto colors : {COLOR_WHITE, COLOR_RED})
         {
-          if(current_tile.getColor(border) == colors[i])
+          if(current_tile.getColor(border) == colors)
           {
-            current_tile.setId(colors[i], it.second->getId(colors[i]));
+            current_tile.setId(colors, it.second->getId(colors));
             // add ids of sorrounding tiles depending on the color
-            id_to_merge[i].push_back(current_tile.getId(colors[i]));
+            id_to_merge[colors - 1].push_back(current_tile.getId(colors));
           }
         }
       }
     }
   }
   // for each color
-  for(int i = 0; i < 2; i++)
+  for(auto colors : {COLOR_WHITE, COLOR_RED})
   {
-    if(id_to_merge[i].size() >= 2)
+    if(id_to_merge[colors - 1].size() >= 2)
     {
       // if 2 ids were connected by current tile
       for(auto& it: field)
       {
-        if(it.second->getId(colors[i]) == id_to_merge[i][1])
+        if(it.second->getId(colors) == id_to_merge[colors - 1][1])
         {
-          it.second->setId(colors[i], id_to_merge[i][0]);
+          it.second->setId(colors, id_to_merge[colors - 1][0]);
         }
       }
-      if(current_tile.getId(colors[i]) == id_to_merge[i][1])
+      if(current_tile.getId(colors) == id_to_merge[colors - 1][1])
       {
-        current_tile.setId(colors[i], id_to_merge[i][0]);
+        current_tile.setId(colors, id_to_merge[colors - 1][0]);
       }
       // if the same ids would be merged ->
-      if(id_to_merge[i][1] == id_to_merge[i][0])
+      if(id_to_merge[colors - 1][1] == id_to_merge[colors - 1][0])
       {
         // loop detected
-        return (i+1);
+        return colors;
       }
     }
   }

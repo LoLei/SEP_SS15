@@ -169,5 +169,6 @@ class Position
     //         other position or below other position)
     //
     virtual bool operator<(const Position&) const;
+    Position getNearbyPosition(int side);
 };
 #endif // POSITION_H

@@ -18,10 +18,12 @@ Tile::Tile(Type side, Color topcolor) : side_(side), topcolor_(topcolor),
 {
 }
 
+//------------------------------------------------------------------------------
 Tile::Tile(Color top, Color right, Color bottom, Color left) : side_(EMPTY_T),
   topcolor_(top), of_activeplayer_(EMPTY_C), white_id_(0), red_id_(0), move_(0)
 {
-  if((top == bottom && top != EMPTY_C) || (left == right && left != EMPTY_C))
+  if((top == bottom && top != EMPTY_C) ||
+     (left == right && left != EMPTY_C))
   {
     side_ = TYPE_CROSS;
     if(topcolor_ != EMPTY_C)
@@ -42,7 +44,9 @@ Tile::Tile(Color top, Color right, Color bottom, Color left) : side_(EMPTY_T),
       }
     }
   }
-  else if((top == left && top != EMPTY_C) || (right == bottom && right != EMPTY_C))
+
+  else if((top == left && top != EMPTY_C) ||
+          (right == bottom && right != EMPTY_C))
   {
     side_ = TYPE_CURVE_1;
     if(topcolor_ != EMPTY_C)
@@ -63,7 +67,9 @@ Tile::Tile(Color top, Color right, Color bottom, Color left) : side_(EMPTY_T),
       }
     }
   }
-  else if((top == right && top != EMPTY_C) || (left == bottom && left != EMPTY_C))
+
+  else if((top == right && top != EMPTY_C) ||
+          (left == bottom && left != EMPTY_C))
   {
     side_ = TYPE_CURVE_2;
     if(topcolor_ != EMPTY_C)
@@ -84,6 +90,7 @@ Tile::Tile(Color top, Color right, Color bottom, Color left) : side_(EMPTY_T),
       }
     }
   }
+
   else
   {
     side_ = EMPTY_T;
@@ -92,14 +99,10 @@ Tile::Tile(Color top, Color right, Color bottom, Color left) : side_(EMPTY_T),
 }
 
 //------------------------------------------------------------------------------
-Tile::Tile(const Tile & src)
+Tile::Tile(const Tile & src) : side_(src.side_), topcolor_(src.topcolor_),
+  of_activeplayer_(src.of_activeplayer_), white_id_(src.white_id_),
+  red_id_(src.red_id_), move_(src.move_)
 {
-  side_ = src.side_;
-  topcolor_ = src.topcolor_;
-  of_activeplayer_ = src.of_activeplayer_;
-  white_id_ = src.white_id_;
-  red_id_ = src.red_id_;
-  move_ = src.move_;
 }
 
 //------------------------------------------------------------------------------
@@ -244,23 +247,6 @@ int Tile::getId(Color color)
 }
 
 //---------------------for Test cases----------
-std::string Tile::getColorOut()
-{
-  switch (topcolor_)
-  {
-    case COLOR_WHITE:
-      return "W";
-      break;
-    case COLOR_RED:
-      return "R";
-      break;
-    case EMPTY_C:
-      return "0";
-      break;
-  }
-  return "fail";
-}
-
 std::string Tile::getPlayerColorOut()
 {
   switch (of_activeplayer_)
@@ -294,27 +280,6 @@ int Tile::getPlayerColor()
   }
   return -1;
 }
-
-std::string Tile::getTypeString()
-{
-  switch (side_)
-  {
-    case TYPE_CROSS:
-      return "+";
-      break;
-    case TYPE_CURVE_1:
-      return "/";
-      break;
-    case TYPE_CURVE_2:
-      return "\\";
-      break;
-    case EMPTY_T:
-      return "0";
-      break;
-  }
-    return "0";
-}
-//-----------------------------------
 
 //------------------------------------------------------------------------------
 Tile& Tile::operator=(const Tile& original)
