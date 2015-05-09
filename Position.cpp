@@ -13,8 +13,6 @@
 #include "Position.h"
 
 using std::string;
-using std::cout;
-using std::endl;
 
 //------------------------------------------------------------------------------
 Position::Position(signed int x, signed int y) : x_(x), y_(y)
