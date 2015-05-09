@@ -53,6 +53,7 @@ Repository for SEP SS15 Basisbeispiel
 
 ### Feedback Gespräch
 - [ ] exceptions
+- [ ] remove hard coded return values (replace with const/define)
 - [ ] memleak bei new fehler von tile
 - [ ] 1 trax exception
 - [ ] constructor mit "TRAX"
@@ -62,7 +63,7 @@ Repository for SEP SS15 Basisbeispiel
 - [x] ~~Command *current_command = searchCommand[userinput[0]~~
 - [x] ~~current_command->.excecute(...)]~~
 - [ ] Einheitlicher Codingstandard (`if(statement)` ohne space, `class Write : public Command` space zwischen `:`
-- [ ] using
+- [x] ~~using~~
 - [x] ~~Karte~~
 - [x] ~~deutsch~~
 - [ ] ĥeader keine .h nur class
