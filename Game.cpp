@@ -126,23 +126,23 @@ int Game::userInputToCommand(std::vector<string> &vector_input)
   std::istringstream is(string_input);
   string word;
 
+  if (is.bad())
+  {
+    setRunning(false);
+  }
+
   while(is >> word)
   {
     vector_input.push_back(word);
-  }
+  } 
+
   // If user enters blank line, prompt again
   if(vector_input.size() == 0)
   {
-    std::cin.clear();
+    std::cin.clear(); // Fixes EOF Loop
     return 1;
-  }
-
-  if(vector_input[0][0] == EOF)
-  {
-    std::cin.clear();
-    std::cin.ignore(INT_MAX);
-    std::cout << std::endl;
-    return 1;
+    // For extra safety, add counter which counts empty inputs
+    // and stops run?
   }
 
   // make lower case
