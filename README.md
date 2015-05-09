@@ -56,7 +56,7 @@ Repository for SEP SS15 Basisbeispiel
 - [ ] memleak bei new fehler von tile
 - [ ] 1 trax exception
 - [ ] constructor mit "TRAX"
-- [ ] write: class zu struct
+- [x] ~~write: class zu struct~~
 
 - [x] ~~vector<Command*> command_;~~
 - [x] ~~commands_.pushback(new Write());~~
@@ -70,4 +70,3 @@ Repository for SEP SS15 Basisbeispiel
 - [ ] ĥeader keine .h nur class
 
 - [ ] initialisierungsliste! (AddTile, Game)
-

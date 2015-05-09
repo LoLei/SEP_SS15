@@ -15,7 +15,6 @@
 
 #include <string>
 #include <iostream>
-
 #include "Command.h"
 
 class Game;
@@ -24,7 +23,7 @@ class Game;
 // Write Class
 // Class for writing binary files containing the game board
 //
-class Write :public Command
+class Write : public Command
 {
   private:
     //--------------------------------------------------------------------------
