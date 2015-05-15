@@ -132,6 +132,8 @@ int Game::userInputToCommand(std::vector<string> &vector_input)
     setRunning(false);
   }
 
+  // Split user input into parts
+  // E.g. addtile, (0,0) and +
   while(is >> word)
   {
     vector_input.push_back(word);
@@ -198,7 +200,8 @@ void Game::run()
       continue;
     }
 
-    if(user_input[0] == "print")// --------------------------------------------------------test zwecke
+    // -------------------------------------------------------- test zwecke
+    if(user_input[0] == "print")
       printTiles();
 
     moveID++;

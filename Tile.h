@@ -246,6 +246,7 @@ class Tile
     //--------------------------------------------------------------------------
     // Get Output Methods
     //
+    // TODO Add comment headers for each
     std::string getPlayerColorOut();
     int oppositeBorder(int border);
     int getMove();
