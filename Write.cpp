@@ -18,9 +18,9 @@
 #include "Game.h"
 #include "Tile.h"
 #include "Command.h"
-#include "WriteException.h"
-#include "WrongParameterException.h"
 #include "Write.h"
+//#include "WrongParameterException.h"
+//#include "WriteException.h"
 
 //------------------------------------------------------------------------------
 Write::Write() : Command("write")
@@ -35,16 +35,17 @@ Write::~Write()
 //------------------------------------------------------------------------------
 int Write::execute(Game& board, std::vector<std::string>& user_input)
 {
-  try
-  {
+  //try
+  //{
     // case: filename without whitespace!
     if(user_input.size() != 2)
     {
-      throw WrongParameterException();
+      std::cout << "Error: Wrong parameter count!" << std::endl;
+      return 1;
     }
     std::string file_name = user_input[1];
-    try
-    {
+    //try
+    //{
       //------------------------------------------------------------------------
       // FileHeader Struct
       // Simple struct for easier reading of file variables
@@ -90,7 +91,7 @@ int Write::execute(Game& board, std::vector<std::string>& user_input)
       // Check if file is open, prints error if not, stops writing
       if (!file.is_open())
       {
-        throw WriteException();
+        std::cout << "Cannot write file " << file_name << std::endl;
       }
 
       // Write header into file
@@ -129,21 +130,23 @@ int Write::execute(Game& board, std::vector<std::string>& user_input)
         }
       }
       file.close();
-    }
+    //}
     //--------------------------------------------------------------------------
-    catch (WriteException& e1)
-    {
-      std::cout << e1.what() << file_name << std::endl;
-    }
-    catch (...)
-    {
-      throw WrongParameterException();
-    }
-    return 0;
-  }
-  catch (WrongParameterException& e1)
-  {
-    std::cout << e1.what() << std::endl;
-    return 1;
-  }
+    //catch (WriteException& e1)
+    //{
+       //std::cout << e1.what() << file_name << std::endl;
+    //}
+      //catch (...)
+      //{
+        //throw WrongParameterException();
+      //}
+      //return 0;
+    //}
+    //catch (WrongParameterException& e1)
+    //{
+      //std::count << e1.what() << std::endl;
+      //return 1;
+    //}
+
+//}
 }

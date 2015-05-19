@@ -10,22 +10,21 @@
 //------------------------------------------------------------------------------
 //
 
-#include "OutOfMemoryException.h"
-#include "InvalidCoordinatesException.h"
-#include "NotEmptyFieldException.h"
-#include "NotConnectedFieldException.h"
-#include "InvalidParameterException.h"
-#include "ConnectedColorsMismatchException.h"
-#include "NotEnoughTilesException.h"
-#include "WrongParameterException.h"
-
-
-
 #include "Game.h"
 #include "Tile.h"
 #include "Position.h"
 #include "AddTile.h"
 #include "Write.h"
+
+//#include "WrongParameterException.h"
+//#include "InvalidParameterException.h"
+//#include "InvalidCoordinatesException.h"
+//#include "NotEmptyFieldException.h"
+//#include "NotEnoughTilesException.h"
+//#include "ConnectedColorsMismatchException.h"
+//#include "OutOfMemoryException.h"
+//#include "NotConnectedFieldException.h"
+
 
 
 using std::string;
@@ -48,12 +47,14 @@ AddTile::~AddTile()
 bool AddTile::valideInput(std::vector<string> user_input, Tile &current_tile,
   Position &current_position)
 {
-  try
-  {
+  //try
+  //{
     // input has to be 3 arguments
     if(user_input.size() != 3)
     {
-      throw WrongParameterException();
+      //throw WrongParameterException();
+      std::cout << "Error: Wrong parameter count!" << std::endl;
+      return false;
     }
     // controll position input
     if(current_position.parse(user_input[1]))
@@ -63,43 +64,51 @@ bool AddTile::valideInput(std::vector<string> user_input, Tile &current_tile,
         // type input is only 1 sign
         if(user_input[2].size() != 1)
         {
-          throw InvalidParameterException();
+          //throw InvalidParameterException();
+          std::cout << "Invalid Parameters!" << std::endl;
+          return false;
         }
         // if the sign is not valide, funktion return empty type(EMPTY_T)
         current_tile.setType(user_input[2][0]);
         if(current_tile.getType() == Tile::EMPTY_T)
         {
-          throw InvalidParameterException();
+          //throw InvalidParameterException();
+          std::cout << "Invalid Parameters!" << std::endl;
+          return false;
         }
       }
       catch (...)
       {
-        throw InvalidParameterException();
+        //throw InvalidParameterException();
+        std::cout << "Invalid Parameters!" << std::endl;
+        return false;
       }
     }
     else
     {
-      throw InvalidParameterException();
+      //throw InvalidParameterException();
+      std::cout << "Invalid Parameters!" << std::endl;
+      return false;
     }
     return true;
-  }
-  catch (InvalidParameterException& e1)
-  {
-    std::cout << e1.what() << std::endl;
-    return false;
-  }
-  catch (WrongParameterException& e1)
-  {
-    std::cout << e1.what() << std::endl;
-    return false;
-  }
+  //}
+  //catch (InvalidParameterException& e1)
+  //{
+    //std::cout << e1.what() << std::endl;
+    //return false;
+  //}
+  //catch (WrongParameterException& e1)
+  //{
+    //std::cout << e1.what() << std::endl;
+    //return false;
+  //}
 }
 
 //------------------------------------------------------------------------------
 int AddTile::execute(Game& board, std::vector<string>& user_input)
 {
-  try
-  {
+  //try
+  //{
     // tile and position which is going to be set
     Position current_position;
     Tile current_tile(Tile::EMPTY_T, COLOR_RED);
@@ -119,7 +128,9 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
       && (current_tile.getColor() != COLOR_RED || current_position != center))
     {
       // abort addtile command
-      throw InvalidCoordinatesException();
+      //throw InvalidCoordinatesException();
+      std::cout << "Invalid coordinates - first tile must be set on (0,0)" << std::endl;
+      return 1;
     }
 
     // if the position is already taken
@@ -129,7 +140,9 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
          it.second->getType() != Tile::EMPTY_T))
       {
         // abort addtile command
-        throw NotEmptyFieldException();
+        //throw NotEmptyFieldException();
+        std::cout << "Invalid coordinates - field not empty" << std::endl;
+        return 1;
       }
     }
 
@@ -217,7 +230,11 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
     {
       // game over, tie
       std::cout << "No more tiles left. Game ends in a draw!" << std::endl;
-      throw NotEnoughTilesException();
+      //throw NotEnoughTilesException();
+      std::cout << "Invalid move - not enough tiles left" << std::endl;
+      board.setRunning(false);
+      board.togglePlayer();
+      return 0;
     }
 
 
@@ -230,28 +247,28 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
       graphicMode(board);
     }
 
-  }
-  catch (OutOfMemoryException& e1)
-  {
-    std::cout << e1.what() << std::endl;
-  }
-  catch (NotEnoughTilesException& e1)
-  {
-    std::cout << e1.what() << std::endl;
-    board.setRunning(false);
-    board.togglePlayer();
-    return 0;
-  }
-  catch (InvalidCoordinatesException& e1)
-  {
-    std::cout << e1.what() << std::endl;
-    return 1;
-  }
-  catch (NotEmptyFieldException& e1)
-  {
-    std::cout << e1.what() << std::endl;
-    return 1;
-  }
+  //}
+  //catch (OutOfMemoryException& e1)
+  //{
+    //std::cout << e1.what() << std::endl;
+  //}
+  //catch (NotEnoughTilesException& e1)
+  //{
+    //std::cout << e1.what() << std::endl;
+    //board.setRunning(false);
+    //board.togglePlayer();
+    //return 0;
+  //}
+  //catch (InvalidCoordinatesException& e1)
+  //{
+    //std::cout << e1.what() << std::endl;
+    //return 1;
+  //}
+  //catch (NotEmptyFieldException& e1)
+  //{
+    //std::cout << e1.what() << std::endl;
+    //return 1;
+  //}
   return 0;
 }
 
@@ -295,9 +312,9 @@ void AddTile::addTheTile(Game& board, Position current_position, Tile current_ti
     {
       board.field.emplace(new Position(current_position), new Tile(current_tile));
     }
-    catch(...)
+    catch(std::bad_alloc& ba)
     {
-      std::cout << "out of memory" << std::endl; //----------TODO
+      std::cout << "Error: Out of Memory!" << std::endl; //----------TODO
       board.setRunning(false);
       return;
     }
@@ -318,8 +335,8 @@ void AddTile::addTheTile(Game& board, Position current_position, Tile current_ti
 bool AddTile::colorCheck(bool color_bool, bool &twisted, bool &lonely_tile,
                       Tile &current_tile)
 {
-  try
-  {
+  //try
+  //{
     // true if there is no contact to another tile
     lonely_tile = false;
     // check if the touching color of the nearby tile match with the current
@@ -329,7 +346,9 @@ bool AddTile::colorCheck(bool color_bool, bool &twisted, bool &lonely_tile,
       if (twisted)
       {
         // abort addtile command
-        throw ConnectedColorsMismatchException();
+        //throw ConnectedColorsMismatchException();
+        std::cout << "Invalid move - connected colors mismatch" << std::endl;
+        return false;
       }
       // twist the tile in order that the colors match resp. chage topcolor
       current_tile.setColor(current_tile.notTopColor());
@@ -342,20 +361,20 @@ bool AddTile::colorCheck(bool color_bool, bool &twisted, bool &lonely_tile,
       twisted = true;
     }
     return true;
-  }
-  catch (ConnectedColorsMismatchException& e1)
-  {
-    std::cout << e1.what() << std::endl;
-    return false;
-  }
+  //}
+  //catch (ConnectedColorsMismatchException& e1)
+  //{
+    //std::cout << e1.what() << std::endl;
+    //return false;
+  //}
 }
 
 //------------------------------------------------------------------------------
 int AddTile::adaptTile(std::map<Position*, Tile*> field,
                         Tile &current_tile, Position current_position)
 {
-  try
-  {
+  //try
+  //{
     // true if tile was twiste resp. topcolor war changed
     bool twisted = false;
     // true if there is no contact to another tile
@@ -387,15 +406,17 @@ int AddTile::adaptTile(std::map<Position*, Tile*> field,
     if (lonely_tile)
     {
       // abort addtile command
-      throw NotConnectedFieldException();
+      //throw NotConnectedFieldException();
+      std::cout << "Invalid coordinates - field not connected to tile" << std::endl;
+      return 1;
     }
     return 0;
-  }
-  catch (NotConnectedFieldException& e1)
-  {
-    std::cout << e1.what() << std::endl;
-    return 1;
-  }
+  //}
+  //catch (NotConnectedFieldException& e1)
+  //{
+    //std::cout << e1.what() << std::endl;
+    //return 1;
+  //}
   return 0;
 }
 
@@ -534,9 +555,9 @@ void AddTile::fillEmptyTiles(Game& board, Position current_position)
     }
 
   }
-  catch (OutOfMemoryException& e1)
+  catch (std::bad_alloc& ba)
   {
-    std::cout << e1.what() << std::endl;
+    std::cout << "Error: Out of Memory!" << std::endl;
   }
 }
 

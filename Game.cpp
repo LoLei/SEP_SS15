@@ -20,11 +20,6 @@
 #include "Write.h"
 #include "Command.h"
 #include "Quit.h"
-#include "UnknownCommandException.h"
-#include "UsageException.h"
-#include "EmptyBoardException.h"
-#include "WrongParameterException.h"
-
 #include "Game.h"
 
 using std::string;
