@@ -163,6 +163,16 @@ class AddTile:public Command
     void addTheTile(Game& board, Position current_position, Tile current_tile);
 
     void graphicMode(Game& board);
+    static const int ABORT_ADDTILE = 1;
+    static const int INVALID_COORDINATES_ERROR = 1;
+    static const int COMPLETE_ERROR = 1;
+    static const int SOME_ERROR = 2;
+    static const int ADDTILE_SUCCESS = 0;
+    static const int ADDTILE_FAIL = 1;
+    static const int WIN_WHITE = 1;
+    static const int WIN_RED = 2;
+    static const int WIN_NONE = 0;
+    static const int WIN = 5;
 };
 
 #endif //ADDTILE_H_INCLUDED

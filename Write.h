@@ -57,6 +57,10 @@ class Write : public Command
     // @return int 0 if everything worked
     //
     int execute(Game& board, std::vector<std::string>& user_input);
+
+    static const int WRITE_ERROR = 0;
+    static const int EMPTY_ERROR = 1;
+    static const int PARAMETER_COUNT_ERROR = 1;
 };
 
 #endif //WRITE_H_INCLUDED

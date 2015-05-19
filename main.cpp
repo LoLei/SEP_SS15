@@ -59,6 +59,11 @@ int main(int argc, char **argv)
       std::cout << "Usage: " << argv[0] << std::endl;
       return 2;
     }
+    else
+    {
+      std::cout << "Usage: " << argv[0] << std::endl;
+      return 2;
+    }
 
     trax.run();
   }
@@ -73,8 +78,15 @@ int main(int argc, char **argv)
     //return 1;
   //}
   catch(std::bad_alloc& ba)
-    {
-      std::cout << "Error: Out of Memory!" << std::endl;
-    }
+  {
+    std::cout << "Error: Out of Memory!" << std::endl;
+    return 1;
+  }
+  // Catch any other exceptions without ouput, so program does not crash
+  catch (...)
+  {
+    return 1;
+  }
+
   return 0;
 }

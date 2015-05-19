@@ -35,14 +35,21 @@ Write::~Write()
 //------------------------------------------------------------------------------
 int Write::execute(Game& board, std::vector<std::string>& user_input)
 {
+  //TODO backwards indent
   //try
   //{
+    if (board.getNumberOfTiles() == 0)
+    {
+      std::cout << "Board is empty!" << std::endl;
+      return EMPTY_ERROR;
+    }
     // case: filename without whitespace!
     if(user_input.size() != 2)
     {
       std::cout << "Error: Wrong parameter count!" << std::endl;
-      return 1;
+      return PARAMETER_COUNT_ERROR;
     }
+
     std::string file_name = user_input[1];
     //try
     //{
@@ -92,6 +99,7 @@ int Write::execute(Game& board, std::vector<std::string>& user_input)
       if (!file.is_open())
       {
         std::cout << "Cannot write file " << file_name << std::endl;
+        return WRITE_ERROR;
       }
 
       // Write header into file

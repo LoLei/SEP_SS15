@@ -119,7 +119,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
     if(!(valideInput(user_input, current_tile, current_position)))
     {
       // abort addtile command
-      return 1;
+      return ABORT_ADDTILE;
     }
 
     // fist tile has to be set in the point of orgin and topcolor red
@@ -130,7 +130,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
       // abort addtile command
       //throw InvalidCoordinatesException();
       std::cout << "Invalid coordinates - first tile must be set on (0,0)" << std::endl;
-      return 1;
+      return INVALID_COORDINATES_ERROR;
     }
 
     // if the position is already taken
@@ -142,7 +142,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
         // abort addtile command
         //throw NotEmptyFieldException();
         std::cout << "Invalid coordinates - field not empty" << std::endl;
-        return 1;
+        return INVALID_COORDINATES_ERROR;
       }
     }
 
@@ -152,7 +152,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
        adaptTile(board.field, current_tile, current_position))
     {
       // abort addtile command
-      return 1;
+      return ABORT_ADDTILE;
     }
 
     // code to identify who/if someone won by loop
@@ -218,7 +218,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
           delete x.second;
         }
       }
-      return 1;
+      return COMPLETE_ERROR;
     }
 
 
@@ -398,7 +398,7 @@ int AddTile::adaptTile(std::map<Position*, Tile*> field,
                   twisted, lonely_tile, current_tile))
         {
           // abort addtile command
-          return 1;
+          return ABORT_ADDTILE;
         }
       }
     }
@@ -408,7 +408,7 @@ int AddTile::adaptTile(std::map<Position*, Tile*> field,
       // abort addtile command
       //throw NotConnectedFieldException();
       std::cout << "Invalid coordinates - field not connected to tile" << std::endl;
-      return 1;
+      return INVALID_COORDINATES_ERROR;
     }
     return 0;
   //}
@@ -469,7 +469,8 @@ int AddTile::completeMap(Game& board, Position &current_position, Tile &current_
       {
         if(found_tile > 2)
         {
-          return 2;
+          // TODO
+          return SOME_ERROR;
           std::cout << "some error" << std::endl;
           // some error message
         }
@@ -479,17 +480,17 @@ int AddTile::completeMap(Game& board, Position &current_position, Tile &current_
 
       current_tile.setType(expanded_tile.getTypeChar());
       current_tile.setColor(expanded_tile.getColor());
-      return 0;
+      return ADDTILE_SUCCESS;
     }
   }
-  return 1;
+  return ADDTILE_FAIL;
 }
 
 //------------------------------------------------------------------------------
 void AddTile::fillEmptyTiles(Game& board, Position current_position)
 {
-  try
-  {
+  /*try
+  {*/
     Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
     empty_tile.setMove(board.moveID);
     int current_x = current_position.getX();
@@ -554,11 +555,12 @@ void AddTile::fillEmptyTiles(Game& board, Position current_position)
       }
     }
 
-  }
-  catch (std::bad_alloc& ba)
+  //}
+
+  /*catch (std::bad_alloc& ba)
   {
     std::cout << "Error: Out of Memory!" << std::endl;
-  }
+  }*/
 }
 
 //------------------------------------------------------------------------------
@@ -608,26 +610,27 @@ int AddTile::winByLength(Game& board, Tile current_tile)
       }
     }
   }
+  // 1 white, 2 red, 0 none
   switch(who_won)
   {
-    case 1:
-      return 1;
-    case 2:
-      return 2;
+    case WIN_WHITE:
+      return WIN_WHITE;
+    case WIN_RED:
+      return WIN_RED;
     case 3:
       // if both player would win in one move, the active player win
       if(board.getActivePlayer() == COLOR_WHITE)
       {
         // white player wins
-        return 1;
+        return WIN_WHITE;
       }
       else
       {
         // red player wins
-        return 2;
+        return WIN_RED;
       }
   }
-  return 0;
+  return WIN_NONE;
 }
 
 //------------------------------------------------------------------------------
@@ -691,21 +694,22 @@ int AddTile::winByLoop(std::map<Position*, Tile*> field,
       }
     }
   }
-  return 0;
+  return WIN_NONE;
 }
 
 //------------------------------------------------------------------------------
+// TODO Could be void function?
 int AddTile::whoWon(int win_code)
 {
   if(win_code == 1)
   {
     std::cout << "Player white wins!" << std::endl;
-    return 5;
+    return WIN;
   }
   if(win_code == 2)
   {
     std::cout << "Player red wins!" << std::endl;
-    return 5;
+    return WIN;
   }
   return 0;
 }
