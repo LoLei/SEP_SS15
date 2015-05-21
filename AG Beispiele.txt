@@ -1,0 +1,8 @@
+1) 	Neuer Befehl: Swap
+	Vertauscht alle Farben am Spielfeld
+	(Wahrscheinlich zu einfach)
+2)	Neuer Befehl: Turn
+	Dreht das Spielfeld um 90° oder 180°
+	(Zu schwierig)
+3)	Neuer Befehl: Mirror
+	Spiegelt das Spielfeld horizontal oder vertikal
