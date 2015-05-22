@@ -61,6 +61,7 @@ class Write : public Command
     static const int WRITE_ERROR = 0;
     static const int EMPTY_ERROR = 1;
     static const int PARAMETER_COUNT_ERROR = 1;
+    static const int WRITE_SUCCESS = 0;
 };
 
 #endif //WRITE_H_INCLUDED
