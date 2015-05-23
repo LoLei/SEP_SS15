@@ -1,4 +1,4 @@
-SUBMISSION = extended
+SUBMISSION = basic
 EXECUTABLE = $(SUBMISSION)
 SOURCES    = $(wildcard *.cpp)
 OBJECTS    = $(patsubst %,%,${SOURCES:.cpp=.o})
@@ -38,7 +38,7 @@ run:
 #make run
 rung:
 	clear
-	./$(EXECUTABLE) -g ausgabe
+	./$(EXECUTABLE) -g file
 
 #make cleanw for windows
 cleanw:
