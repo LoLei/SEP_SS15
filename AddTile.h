@@ -14,11 +14,8 @@
 #define ADDTILE_H_INCLUDED
 
 #include <string>
-#include <iostream>
 #include <map>
 #include <vector>
-#include <climits>
-
 
 #include "Command.h"
 

@@ -14,8 +14,7 @@
 #define TILE_H
 
 #include "Color.h"
-#include <string>
-#include <iostream>
+#include "Border.h"
 
 //------------------------------------------------------------------------------
 // Tile Class
@@ -50,11 +49,6 @@ class Tile
     Color topcolor_;
 
     //--------------------------------------------------------------------------
-    // Color of the active Curve
-    //
-    Color of_activeplayer_;
-
-    //--------------------------------------------------------------------------
     // int white Id to identify tile
     //
     int white_id_;
@@ -64,41 +58,35 @@ class Tile
     //
     int red_id_;
 
-    //-------------------------------------------------------------------------------- TODO
-    // int red Id to identify tile
+    //--------------------------------------------------------------------------
+    // int move to identify the move
     //
     int move_;
 
   public:
-
-    static const int TOP = 0;
-    static const int RIGHT = 1;
-    static const int BOTTOM = 2;
-    static const int LEFT = 3;
-
     //--------------------------------------------------------------------------
     // Constructor method
     //
     // @param side the type of tile
-    // @param color the top color
+    // @param topcolor the top color
     //
-    Tile(Type side, Color orientation);
+    Tile(Type side, Color topcolor);
 
     //--------------------------------------------------------------------------
     // Copy constructor
     // copies a tile to a new tile
     //
-    // @param the tile to be copied
+    // @param original the tile to be copied
     //
-    Tile(const Tile &);
+    Tile(const Tile &original);
 
     //--------------------------------------------------------------------------
     // Constructor method
     //
-    // @param Li the left color
-    // @param Re the right color
-    // @param Ob the top color
-    // @param Un the bottom color
+    // @param top the top color
+    // @param right the right color
+    // @param bottom the bottom color
+    // @param left the left color
     //
     Tile(Color top, Color right, Color bottom, Color left);
 
@@ -110,14 +98,8 @@ class Tile
     //--------------------------------------------------------------------------
     // Setter Methods
     //
-
-    //--------------------------------------------------------------------------
-    // setColor method
-    // Sets the color of a tile
-    //
-    // @param topcolor the color at the top of a tile
-    //
     void setColor(Color topcolor);
+    void setMove(int move);
 
     //--------------------------------------------------------------------------
     // setType method
@@ -126,14 +108,6 @@ class Tile
     // @param char_side the type, either '+', '/' or '\'
     //
     void setType(char char_side);
-
-    //--------------------------------------------------------------------------
-    // setPlayer method
-    // Sets color of a player
-    //
-    // @param of_activeplayer the color of a player
-    //
-    void setPlayer(Color of_activeplayer);
 
     //--------------------------------------------------------------------------
     // setId method
@@ -146,51 +120,37 @@ class Tile
     //--------------------------------------------------------------------------
     // Getter Methods
     //
-
-    //--------------------------------------------------------------------------
-    // getType method
-    // Gets the type of a tile
-    //
-    // @return Type side_
-    //
-    char getTypeChar();
     Type getType();
-
-    //--------------------------------------------------------------------------
-    // getColor method
-    // Gets the top color of a tile
-    //
-    // @return Color topcolor_
-    //
+    int getMove();
     Color getColor();
 
-    //------------------------------------------------------------------------------TODO
-    // getColor method
-    // Gets the top color of a tile
+    //--------------------------------------------------------------------------
+    // getTypeChar method
+    // Gets the char of the type of a tile
     //
-    // @return Color topcolor_
+    // @return Char converted side_
     //
-    Color getColor(int side);
+    char getTypeChar();
 
-    //------------------------------------------------------------------------------TODO
+    //--------------------------------------------------------------------------
+    // getColor method
+    // Gets the color of the tile on the passed border
+    //
+    // @param Border border of the tile
+    //
+    // @return Color of the passed border
+    //
+    Color getColor(Border border);
+
+    //--------------------------------------------------------------------------
     // getId method
     // gets a color id of a tile
     //
-    // @param std::string color "white" or "red"
+    // @param Color color of the needed id
     //
     // @return int id of the color(depend on input)
     //
     int getId(Color color);
-
-    //-------------------------------------------------------------------------------TODO
-    // getId method
-    // gets a color id of a tile
-    //
-    // @param std::string color "white" or "red"
-    //
-    // @return int id of the color(depend on input)
-    //
-    int getPlayerColor();
 
     //--------------------------------------------------------------------------
     // Operator Methods
@@ -230,27 +190,16 @@ class Tile
     //
     Color notTopColor();
 
-    //----------------------------------------------------------------------------
-    // charToType method
-    // returns the type for the char
-    //
-    // @return Type TYPE_CURVE_1 if '/'
-    // @return Type TYPE_CROSS if '+'
-    // @return Type TYPE_CURVE_2 if '\'
-    // @return Type EMPTY_T for default
-    //
-    //Type charToType(char c);
-
-
 
     //--------------------------------------------------------------------------
-    // Get Output Methods
+    // oppositeBorder method
+    // return Border the opposite border of the passed
     //
-    // TODO Add comment headers for each
-    std::string getPlayerColorOut();
-    int oppositeBorder(int border);
-    int getMove();
-    void setMove(int move);
+    // @param Border border the opposite border is searched
+    //
+    // @return Border TOP <-> BOTTOM or LEFT <->RIGHT
+    //
+    Border oppositeBorder(Border border);
 
 };
 #endif // TILE_H

@@ -14,13 +14,13 @@
 
 //------------------------------------------------------------------------------
 Tile::Tile(Type side, Color topcolor) : side_(side), topcolor_(topcolor),
-  of_activeplayer_(EMPTY_C), white_id_(0), red_id_(0), move_(0)
+  white_id_(0), red_id_(0), move_(0)
 {
 }
 
 //------------------------------------------------------------------------------
 Tile::Tile(Color top, Color right, Color bottom, Color left) : side_(EMPTY_T),
-  topcolor_(top), of_activeplayer_(EMPTY_C), white_id_(0), red_id_(0), move_(0)
+  topcolor_(top), white_id_(0), red_id_(0), move_(0)
 {
   if((top == bottom && top != EMPTY_C) ||
      (left == right && left != EMPTY_C))
@@ -100,8 +100,7 @@ Tile::Tile(Color top, Color right, Color bottom, Color left) : side_(EMPTY_T),
 
 //------------------------------------------------------------------------------
 Tile::Tile(const Tile & src) : side_(src.side_), topcolor_(src.topcolor_),
-  of_activeplayer_(src.of_activeplayer_), white_id_(src.white_id_),
-  red_id_(src.red_id_), move_(src.move_)
+  white_id_(src.white_id_), red_id_(src.red_id_), move_(src.move_)
 {
 }
 
@@ -114,12 +113,6 @@ Tile::~Tile() throw()
 void Tile::setColor(Color topcolor)
 {
   topcolor_ = topcolor;
-}
-
-//------------------------------------------------------------------------------
-void Tile::setPlayer(Color of_activeplayer)
-{
-  of_activeplayer_ = of_activeplayer;
 }
 
 //------------------------------------------------------------------------------
@@ -142,7 +135,7 @@ Color Tile::getColor()
 }
 
 //------------------------------------------------------------------------------
-Color Tile::getColor(int border)
+Color Tile::getColor(Border border)
 {
   switch(border)
   {
@@ -195,16 +188,12 @@ char Tile::getTypeChar()
   {
     case TYPE_CROSS:
       return '+';
-      break;
     case TYPE_CURVE_1:
       return '/';
-      break;
     case TYPE_CURVE_2:
       return '\\';
-      break;
     case EMPTY_T:
       return '0';
-      break;
   }
     return '0';
 }
@@ -235,50 +224,16 @@ void Tile::setType(char c)
 //------------------------------------------------------------------------------
 int Tile::getId(Color color)
 {
-  if(color == COLOR_RED)
-  {
-    return red_id_;
-  }
-  if(color == COLOR_WHITE)
-  {
-    return white_id_;
-  }
-  return 0;
-}
-
-//---------------------for Test cases----------
-std::string Tile::getPlayerColorOut()
-{
-  switch (of_activeplayer_)
+  switch (color)
   {
     case COLOR_WHITE:
-      return "W";
-      break;
+      return white_id_;
     case COLOR_RED:
-      return "R";
-      break;
+      return red_id_;
     case EMPTY_C:
-      return "0";
-      break;
+      return 0;
   }
-  return "fail";
-}
-
-int Tile::getPlayerColor()
-{
-  switch (of_activeplayer_)
-  {
-  case COLOR_WHITE:
-    return 1;
-    break;
-  case COLOR_RED:
-    return 2;
-    break;
-  case EMPTY_C:
-    return 0;
-    break;
-  }
-  return -1;
+  return 0;
 }
 
 //------------------------------------------------------------------------------
@@ -286,7 +241,6 @@ Tile& Tile::operator=(const Tile& original)
 {
   side_ = original.side_;
   topcolor_ = original.topcolor_;
-  of_activeplayer_ = original.of_activeplayer_;
   white_id_ = original.white_id_;
   red_id_ = original.red_id_;
   move_ = original.move_;
@@ -308,40 +262,20 @@ bool Tile::operator!=(const Tile &src) const
 //------------------------------------------------------------------------------
 Color Tile::notTopColor()
 {
-  if(topcolor_ == COLOR_RED)
+  switch (topcolor_)
   {
-    return COLOR_WHITE;
+    case COLOR_WHITE:
+      return COLOR_RED;
+    case COLOR_RED:
+      return COLOR_WHITE;
+    case EMPTY_C:
+      return EMPTY_C;
   }
-  if(topcolor_ == COLOR_WHITE)
-  {
-    return COLOR_RED;
-  }
-  else
-  {
-    return EMPTY_C;
-  }
+  return EMPTY_C;
 }
-
 
 //------------------------------------------------------------------------------
-/*
-Tile::Type Tile::charToType(char c)
-{
-  switch (c)
-  {
-    case '/':
-      return TYPE_CURVE_1;
-    case '+':
-      return TYPE_CROSS;
-    case '\\':
-      return TYPE_CURVE_2;
-    default:
-      return EMPTY_T;
-  }
-}
-*/
-//--------------------------------------------------------------------------------TODO
-int Tile::oppositeBorder(int border)
+Border Tile::oppositeBorder(Border border)
 {
   switch(border)
   {
@@ -354,16 +288,15 @@ int Tile::oppositeBorder(int border)
     case LEFT:
       return RIGHT;
   }
-  return 4;
 }
 
-//--------------------------------------------------------------------------------TODO
+//------------------------------------------------------------------------------
 int Tile::getMove()
 {
   return move_;
 }
 
-//--------------------------------------------------------------------------------TODO
+//------------------------------------------------------------------------------
 void Tile::setMove(int move)
 {
   move_ = move;

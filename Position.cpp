@@ -19,11 +19,13 @@ Position::Position(signed int x, signed int y) : x_(x), y_(y)
 {
 }
 
+//------------------------------------------------------------------------------
 Position::Position() : x_(0), y_(0)
 {
 }
 
-Position::Position(const Position &src) : x_(src.x_), y_(src.y_)
+//------------------------------------------------------------------------------
+Position::Position(const Position &original) : x_(original.x_), y_(original.y_)
 {
 }
 
@@ -38,6 +40,7 @@ signed int Position::getX()
   return x_;
 }
 
+//------------------------------------------------------------------------------
 signed int Position::getY()
 {
   return y_;
@@ -49,6 +52,7 @@ void Position::setX(const signed int x)
   x_ = x;
 }
 
+//------------------------------------------------------------------------------
 void Position::setY(const signed int y)
 {
   y_ = y;
@@ -130,21 +134,17 @@ bool Position::operator<(const Position &position) const
 }
 
 //------------------------------------------------------------------------------
-Position Position::getNearbyPosition(int side)
+Position Position::getNearbyPosition(Border border)
 {
-  switch(side)
+  switch(border)
   {
-    // top
-    case 0:
+    case TOP:
       return Position(x_,y_ - 1);
-    // right
-    case 1:
+    case RIGHT:
       return Position(x_ + 1,y_);
-    // bottom
-    case 2:
+    case BOTTOM:
       return Position(x_,y_ + 1);
-    // left
-    case 3:
+    case LEFT:
       return Position(x_ - 1,y_);
   }
   return Position(0,0);

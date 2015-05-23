@@ -62,7 +62,8 @@ Repository for SEP SS15 Basisbeispiel
 - [x] ~~commands_.pushback(new Write());~~
 - [x] ~~Command *current_command = searchCommand[userinput[0]~~
 - [x] ~~current_command->.excecute(...)]~~
-- [ ] Einheitlicher Codingstandard (`if(statement)` ohne space, `class Write : public Command` space zwischen `:`
+- [ ] Einheitlicher Codingstandard `if(statement)` ohne space, `class Write : public Command` space zwischen `:`
+- [ ] Einheitlicher Codingstandard `Type &name` bzw `Type *name`
 - [x] ~~using~~
 - [x] ~~Karte~~
 - [x] ~~deutsch~~

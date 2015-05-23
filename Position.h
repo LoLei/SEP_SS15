@@ -13,10 +13,9 @@
 #ifndef POSITION_H
 #define POSITION_H
 
-#include <iostream>
+#include "Border.h"
 #include <string>
 #include <exception>
-#include <stdexcept>
 
 //------------------------------------------------------------------------------
 // Position Class
@@ -56,7 +55,7 @@ class Position
     //
     // @param the position to be copied
     //
-    Position(const Position &src);// : x_(src.x_), y_(src.y_) {}
+    Position(const Position &original);
 
     //--------------------------------------------------------------------------
     // Destructor
@@ -66,41 +65,13 @@ class Position
     //--------------------------------------------------------------------------
     // Getter Methods
     //
-
-    //--------------------------------------------------------------------------
-    // getX method
-    // Gets the x coordinate of a position
-    //
-    // @return int x_
-    //
     signed int getX();
-
-    //--------------------------------------------------------------------------
-    // getY method
-    // Gets the y coordinate of a position
-    //
-    // @return int y_
-    //
     signed int getY();
 
     //--------------------------------------------------------------------------
     // Setter Methods
     //
-
-    //--------------------------------------------------------------------------
-    // setX method
-    // Sets the x coordinate of a position
-    //
-    // @param x the x coordinate
-    //
     void setX(const signed int x);
-
-    //--------------------------------------------------------------------------
-    // setY method
-    // Sets the y coordinate of a position
-    //
-    // @param y the y coordinate
-    //
     void setY(const signed int y);
 
     //--------------------------------------------------------------------------
@@ -120,6 +91,14 @@ class Position
     // @return std::string the position in a string
     //
     const std::string toString();
+
+    //--------------------------------------------------------------------------
+    // getNearbyPosition method
+    // returns the position on the passed border
+    //
+    // @return Position on the passed border
+    //
+    Position getNearbyPosition(Border border);
 
     //--------------------------------------------------------------------------
     // operator Methods
@@ -169,6 +148,5 @@ class Position
     //         other position or below other position)
     //
     virtual bool operator<(const Position&) const;
-    Position getNearbyPosition(int side);
 };
 #endif // POSITION_H

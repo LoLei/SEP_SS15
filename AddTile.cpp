@@ -10,6 +10,8 @@
 //------------------------------------------------------------------------------
 //
 
+#include <iostream>
+#include <climits>
 #include "Game.h"
 #include "Tile.h"
 #include "Position.h"
@@ -105,7 +107,7 @@ bool AddTile::valideInput(std::vector<string> user_input, Tile &current_tile,
 }
 
 //------------------------------------------------------------------------------
-int AddTile::execute(Game& board, std::vector<string>& user_input)
+int AddTile::execute(Game &board, std::vector<string>& user_input)
 {
   //try
   //{
@@ -113,8 +115,6 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
     Position current_position;
     Tile current_tile(Tile::EMPTY_T, COLOR_RED);
     current_tile.setMove(board.moveID);
-    // every tile gets a signature of the player
-    current_tile.setPlayer(board.getActivePlayer());
     // look up if the user input is correct
     if(!(valideInput(user_input, current_tile, current_position)))
     {
@@ -195,7 +195,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
           win_code.pop_back();
         }
 
-        addTheTile(board, current_position, current_tile);
+        addTheTile(board, current_position, current_tile); //----------------------TODO memory error
 
         win_code.push_back(winByLength(board, current_tile));
         if(win_code[win_code.size()-1] == 0)
@@ -273,7 +273,7 @@ int AddTile::execute(Game& board, std::vector<string>& user_input)
 }
 
 //------------------------------------------------------------------------------
-void AddTile::graphicMode(Game& board)
+void AddTile::graphicMode(Game &board)
 {
   // no tile set or a fail happend
   if(!board.getOutputFilename().empty())
@@ -287,7 +287,7 @@ void AddTile::graphicMode(Game& board)
 }
 
 //------------------------------------------------------------------------------
-void AddTile::addTheTile(Game& board, Position current_position, Tile current_tile)
+void AddTile::addTheTile(Game &board, Position current_position, Tile current_tile)
 {
   // replace empty tile with  new tile
   // only necessary if the position exists and filld with an empty tile
@@ -387,8 +387,8 @@ int AddTile::adaptTile(std::map<Position*, Tile*> field,
       {
         continue;
       }
-      // search in surrounding positionen , TOP = 0 LEFT = 3
-      for (int border = 0; border <= 3; border++)
+      // search in surrounding positionen
+      for (Border border : {TOP, RIGHT, BOTTOM, LEFT})
       {
         // is position in the surrounding & do the colors match &
         // is contact to the field -
@@ -421,7 +421,7 @@ int AddTile::adaptTile(std::map<Position*, Tile*> field,
 }
 
 //------------------------------------------------------------------------------
-int AddTile::completeMap(Game& board, Position &current_position, Tile &current_tile)
+int AddTile::completeMap(Game &board, Position &current_position, Tile &current_tile)
 {
   // for purposes of comparison
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
@@ -441,8 +441,8 @@ int AddTile::completeMap(Game& board, Position &current_position, Tile &current_
       {
         continue;
       }
-      // search in surrounding positionen , TOP = 0 LEFT = 3
-      for (int border = 0; border <= 3; border++)
+      // search in surrounding positionen
+      for (Border border : {TOP, RIGHT, BOTTOM, LEFT})
       {
         // is position in the surrounding
         if(*(nearby_tile.first) == it.first->getNearbyPosition(border))
@@ -469,7 +469,7 @@ int AddTile::completeMap(Game& board, Position &current_position, Tile &current_
       {
         if(found_tile > 2)
         {
-          // TODO
+          //-------------------------------------------------------------------------- TODO
           return SOME_ERROR;
           std::cout << "some error" << std::endl;
           // some error message
@@ -483,11 +483,11 @@ int AddTile::completeMap(Game& board, Position &current_position, Tile &current_
       return ADDTILE_SUCCESS;
     }
   }
-  return ADDTILE_FAIL;
+  return 1;
 }
 
 //------------------------------------------------------------------------------
-void AddTile::fillEmptyTiles(Game& board, Position current_position)
+void AddTile::fillEmptyTiles(Game &board, Position current_position)
 {
   /*try
   {*/
@@ -564,11 +564,11 @@ void AddTile::fillEmptyTiles(Game& board, Position current_position)
 }
 
 //------------------------------------------------------------------------------
-int AddTile::winByLength(Game& board, Tile current_tile)
+int AddTile::winByLength(Game &board, Tile current_tile)
 {
   int who_won = 0;
   // control of the length of the red id and the white id of the current tile
-  for (auto colors : {COLOR_WHITE, COLOR_RED})
+  for (Color colors : {COLOR_WHITE, COLOR_RED})
   {
     signed int min_x = INT_MAX;
     signed int min_y = INT_MAX;
@@ -651,13 +651,13 @@ int AddTile::winByLoop(std::map<Position*, Tile*> field,
     {
       continue;
     }
-    // setting id by comparing ids of surrounding tiles , TOP = 0 LEFT = 3
-    for (int border = 0; border <= 3; border++)
+    // setting id by comparing ids of surrounding tiles
+    for(Border border : {TOP, RIGHT, BOTTOM, LEFT})
     {
       if(*(it.first) == current_position.getNearbyPosition(border))
       {
         // for each color
-        for(auto colors : {COLOR_WHITE, COLOR_RED})
+        for(Color colors : {COLOR_WHITE, COLOR_RED})
         {
           if(current_tile.getColor(border) == colors)
           {
@@ -670,7 +670,7 @@ int AddTile::winByLoop(std::map<Position*, Tile*> field,
     }
   }
   // for each color
-  for(auto colors : {COLOR_WHITE, COLOR_RED})
+  for(Color colors : {COLOR_WHITE, COLOR_RED})
   {
     if(id_to_merge[colors - 1].size() >= 2)
     {
@@ -698,24 +698,22 @@ int AddTile::winByLoop(std::map<Position*, Tile*> field,
 }
 
 //------------------------------------------------------------------------------
-// TODO Could be void function?
-int AddTile::whoWon(int win_code)
+void AddTile::whoWon(int win_code)
 {
   if(win_code == 1)
   {
     std::cout << "Player white wins!" << std::endl;
-    return WIN;
+    return;
   }
   if(win_code == 2)
   {
     std::cout << "Player red wins!" << std::endl;
-    return WIN;
+    return;
   }
-  return 0;
 }
 
 //------------------------------------------------------------------------------
-void AddTile::win(Game& board,std::vector<int> win_code)
+void AddTile::win(Game &board,std::vector<int> win_code)
 {
   // if both won in one move the active player wins
   if(win_code.size() > 1)
