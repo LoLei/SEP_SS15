@@ -68,11 +68,11 @@
 *.psd
 
 
-/file_test
-/file_test_loop
-/file_test_max3
-/file_test_max4
-/file_test2
+file_test
+file_test_loop
+file_test_max3
+file_test_max4
+file_test2
 file_test_graphic
 file_test_graphic
 -file_ubuntu
@@ -83,9 +83,11 @@ extended1
 input.txt
 file
 
-/HWs/*
-/legacy/*
-/Newsgroup/*
-/pictures/*
-/UnnötigeExceptions/*
+HWs/*
+legacy/*
+Newsgroup/*
+pictures/*
+UnnötigeExceptions/*
 
+
+HWs/Lorenz/Color.h
