@@ -81,3 +81,11 @@ file_test_graphic
 extended
 extended1
 input.txt
+file
+
+/HWs/*
+/legacy/*
+/Newsgroup/*
+/pictures/*
+/UnnötigeExceptions/*
+
