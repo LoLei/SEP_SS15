@@ -16,6 +16,7 @@
 #include "Border.h"
 #include <string>
 #include <exception>
+#include <stdexcept>
 
 //------------------------------------------------------------------------------
 // Position Class
