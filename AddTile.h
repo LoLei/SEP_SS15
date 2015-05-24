@@ -155,7 +155,7 @@ class AddTile:public Command
     //
     // @return int 0 if everything worked 8 or 9 is somebody won
     //
-    int whoWon(int win_code);
+    void whoWon(int win_code);
     void win(Game& board,std::vector<int> win_code);
     void addTheTile(Game& board, Position current_position, Tile current_tile);
 
