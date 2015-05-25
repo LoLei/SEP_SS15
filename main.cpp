@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 
     trax.run();
   }
-  catch(std::bad_alloc& ba)
+  catch(std::bad_alloc &ba)
   {
     std::cout << "Error: Out of Memory!" << std::endl;
     return 1;

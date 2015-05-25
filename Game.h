@@ -39,7 +39,7 @@ class Game
     //--------------------------------------------------------------------------
     // Pointer of the Starttile
     //
-    Tile* starttile_;
+    Tile *starttile_;
 
     //--------------------------------------------------------------------------
     // Bool is the game is running
@@ -62,12 +62,12 @@ class Game
     //--------------------------------------------------------------------------
     // Private copy constructor
     //
-    Game(const Game& original);
+    Game(const Game &original);
 
     //--------------------------------------------------------------------------
     // Private assignment operator
     //
-    Game& operator=(const Game& original);
+    Game &operator=(const Game &original);
 
     std::string output_filename_;
 
@@ -132,7 +132,7 @@ class Game
     //
     // @param starttile the first tile
     //
-    void setStartTile(Tile* starttile);
+    void setStartTile(Tile *starttile);
 
     //--------------------------------------------------------------------------
     // setRunning method

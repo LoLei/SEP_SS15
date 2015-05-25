@@ -158,7 +158,7 @@ class Tile
 
     //--------------------------------------------------------------------------
     // assignment operator
-    virtual Tile& operator=(const Tile& original);
+    virtual Tile &operator=(const Tile &original);
 
     //--------------------------------------------------------------------------
     // operator== method

@@ -19,7 +19,7 @@
 #include "Command.h"
 #include "Game.h"
 
-class Quit:public Command
+class Quit : public Command
 {
   public:
     //--------------------------------------------------------------------------
@@ -41,7 +41,9 @@ class Quit:public Command
     //
     // @return int 0 if everything worked
     //
-    int execute(Game& board, std::vector<std::string>& params);
+    int execute(Game &board, std::vector<std::string> &params);
+
+    // TODO Needs copyconstructor and stuff?
 };
 
 #endif //QUIT_H_INCLUDED

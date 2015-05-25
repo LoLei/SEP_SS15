@@ -29,12 +29,12 @@ class Write : public Command
     //--------------------------------------------------------------------------
     // Private copy constructor
     //
-    Write(const Write& original);
+    Write(const Write &original);
 
     //--------------------------------------------------------------------------
     // Private assignment operator
     //
-    Write& operator=(const Write& original);
+    Write &operator=(const Write &original);
 
   public:
     //--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ class Write : public Command
     //
     // @return int 0 if everything worked
     //
-    int execute(Game& board, std::vector<std::string>& user_input);
+    int execute(Game &board, std::vector<std::string> &user_input);
 
     static const int WRITE_ERROR = 0;
     static const int EMPTY_ERROR = 1;

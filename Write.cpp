@@ -31,9 +31,9 @@ Write::~Write()
 }
 
 //------------------------------------------------------------------------------
-int Write::execute(Game& board, std::vector<std::string>& user_input)
+int Write::execute(Game &board, std::vector<std::string> &user_input)
 {
-  if (board.getNumberOfTiles() == 0)
+  if(board.getNumberOfTiles() == 0)
   {
     std::cout << "Board is empty!" << std::endl;
     return EMPTY_ERROR;
@@ -56,7 +56,7 @@ int Write::execute(Game& board, std::vector<std::string>& user_input)
     signed char maxim_y;    // s8
   };
 
-  //------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
   // BoardTiles Struct
   // Simple struct for easier reading of file variables
   // Actual tiles in binary file
@@ -68,7 +68,7 @@ int Write::execute(Game& board, std::vector<std::string>& user_input)
   };
 
   FileHeader file_header;
-  //------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
   // Write values into header
   // Find max and min coordinates
   file_header.minim_x = board.min_x_;
@@ -84,7 +84,7 @@ int Write::execute(Game& board, std::vector<std::string>& user_input)
   std::ofstream file(file_name,
     std::ios::out | std::ios::trunc | std::ios::binary);
   // Check if file is open, prints error if not, stops writing
-  if (!file.is_open())
+  if(!file.is_open())
   {
     std::cout << "Cannot write file " << file_name << std::endl;
     return WRITE_ERROR;
@@ -98,7 +98,7 @@ int Write::execute(Game& board, std::vector<std::string>& user_input)
   file << file_header.maxim_x;
   file << file_header.maxim_y;
 
-  //------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
   // Write each line of the board
   // from (minim_x,minim_y) to (maxim_x,maxim_y)
   // from left to right, top to bottom
@@ -106,14 +106,14 @@ int Write::execute(Game& board, std::vector<std::string>& user_input)
   BoardTiles board_tiles;
 
   // Write
-  for (signed int y = board.min_y_; y <= board.max_y_; y++)
+  for(signed int y = board.min_y_; y <= board.max_y_; y++)
   {
-    for (signed int x = board.min_x_; x <= board.max_x_; x++)
+    for(signed int x = board.min_x_; x <= board.max_x_; x++)
     {
       Position pos1(x, y);
-      for (auto& x : board.field)
+      for(auto &x : board.field)
       {
-        if (*x.first == pos1)
+        if(*x.first == pos1)
         {
           // Write type and color
           board_tiles.side = x.second->getType();

@@ -27,18 +27,18 @@ class Position;
 // AddTile Class
 // Class to add tiles
 //
-class AddTile:public Command
+class AddTile : public Command
 {
   private:
     //--------------------------------------------------------------------------
     // Private copy constructor
     //
-    AddTile(const AddTile& original);
+    AddTile(const AddTile &original);
 
     //--------------------------------------------------------------------------
     // Private assignment operator
     //
-    AddTile& operator=(const AddTile& original);
+    AddTile &operator=(const AddTile &original);
 
     static int id_counter_;
 
@@ -62,7 +62,7 @@ class AddTile:public Command
     //
     // @return int 0 if everything worked
     //
-    int execute(Game& board, std::vector<std::string>& params);
+    int execute(Game &board, std::vector<std::string> &params);
 
     //--------------------------------------------------------------------------
     // valideInput method
@@ -101,7 +101,8 @@ class AddTile:public Command
     //
     // @return int 0 if everything worked 8 or 9 is somebody won
     //
-    int adaptTile(std::map<Position*, Tile*> field, Tile &current_tile, Position current_position);
+    int adaptTile(std::map<Position*, Tile*> field, Tile &current_tile,
+      Position current_position);
 
     //--------------------------------------------------------------------------
     // completeMap method
@@ -112,7 +113,8 @@ class AddTile:public Command
     //
     // @return bool false if no tile needs to be force placed
     //
-    int completeMap(Game& board, Position &current_position, Tile &current_tile);
+    int completeMap(Game &board, Position &current_position,
+      Tile &current_tile);
 
     //--------------------------------------------------------------------------
     // fillEmptyTiles method
@@ -120,7 +122,7 @@ class AddTile:public Command
     //
     // @param board the current board
     //
-    void fillEmptyTiles(Game& board, Position current_position);
+    void fillEmptyTiles(Game &board, Position current_position);
 
     //--------------------------------------------------------------------------
     // checkWin method
@@ -130,7 +132,7 @@ class AddTile:public Command
     //
     // @return int 1 if somebody won else 0
     //
-    int winByLength(Game& board, Tile current_tile);
+    int winByLength(Game &board, Tile current_tile);
 
     //-------------------------------------------------------------------------- ------TODO
     // adaptTile method
@@ -156,10 +158,10 @@ class AddTile:public Command
     // @return int 0 if everything worked 8 or 9 is somebody won
     //
     void whoWon(int win_code);
-    void win(Game& board,std::vector<int> win_code);
-    void addTheTile(Game& board, Position current_position, Tile current_tile);
+    void win(Game &board,std::vector<int> win_code);
+    void addTheTile(Game &board, Position current_position, Tile current_tile);
 
-    void graphicMode(Game& board);
+    void graphicMode(Game &board);
     static const int ABORT_ADDTILE = 1;
     static const int INVALID_COORDINATES_ERROR = 1;
     static const int COMPLETE_ERROR = 1;

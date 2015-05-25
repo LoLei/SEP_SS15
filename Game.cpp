@@ -36,7 +36,7 @@ Game::~Game()
 }
 
 //------------------------------------------------------------------------------
-void Game::setStartTile(Tile* starttile)
+void Game::setStartTile(Tile *starttile)
 {
   starttile_ = starttile;
 }
@@ -122,7 +122,7 @@ int Game::userInputToCommand(std::vector<string> &vector_input)
   std::istringstream is(string_input);
   string word;
 
-  if (is.bad())
+  if(is.bad())
   {
     setRunning(false);
   }
@@ -154,7 +154,7 @@ int Game::userInputToCommand(std::vector<string> &vector_input)
 //------------------------------------------------------------------------------
 void Game::freeTiles(std::map<Position*, Tile*> field)
 {
-  for (auto& x: field)
+  for(auto &x: field)
   {
     delete x.first;
     delete x.second;
@@ -175,7 +175,7 @@ void Game::run()
   }
   catch(...)
   {
-    for(auto& it : command_)
+    for(auto &it : command_)
     {
       delete it;
     }
@@ -198,7 +198,7 @@ void Game::run()
     moveID++;
     int no_command_found = 1;
 
-    for (auto& current_command : command_)
+    for(auto &current_command : command_)
     {
       if(current_command->getName() == user_input[0])
       {
@@ -217,7 +217,7 @@ void Game::run()
 
   freeTiles(field);
 
-  for(auto& it : command_)
+  for(auto &it : command_)
   {
     delete it;
   }

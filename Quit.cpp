@@ -23,7 +23,7 @@ Quit::~Quit()
 }
 
 //------------------------------------------------------------------------------
-int Quit::execute(Game& board, std::vector<std::string>& params)
+int Quit::execute(Game &board, std::vector<std::string> &params)
 {
   if(params.size() != 1)
   {

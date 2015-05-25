@@ -99,7 +99,7 @@ Tile::Tile(Color top, Color right, Color bottom, Color left) : side_(EMPTY_T),
 }
 
 //------------------------------------------------------------------------------
-Tile::Tile(const Tile & src) : side_(src.side_), topcolor_(src.topcolor_),
+Tile::Tile(const Tile &src) : side_(src.side_), topcolor_(src.topcolor_),
   white_id_(src.white_id_), red_id_(src.red_id_), move_(src.move_)
 {
 }
@@ -237,7 +237,7 @@ int Tile::getId(Color color)
 }
 
 //------------------------------------------------------------------------------
-Tile& Tile::operator=(const Tile& original)
+Tile &Tile::operator=(const Tile &original)
 {
   side_ = original.side_;
   topcolor_ = original.topcolor_;
@@ -287,6 +287,9 @@ Border Tile::oppositeBorder(Border border)
       return TOP;
     case LEFT:
       return RIGHT;
+    // Otherwise compiler warning
+    default:
+      return TOP;
   }
 }
 

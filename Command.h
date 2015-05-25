@@ -23,12 +23,12 @@ class Command
     //--------------------------------------------------------------------------
     // Private copy constructor
     //
-    Command(const Command& original);
+    Command(const Command &original);
 
     //--------------------------------------------------------------------------
     // Private assignment operator
     //
-    Command& operator=(const Command& original);
+    Command& operator=(const Command &original);
 
     //--------------------------------------------------------------------------
     /// Name of this command
@@ -51,11 +51,11 @@ class Command
     // @param params Possible parameters neede for the execution
     // @return Integer representing the success of the action
 
-    virtual int execute(Game& board, std::vector<std::string>& params) = 0;
+    virtual int execute(Game &board, std::vector<std::string> &params) = 0;
 
     //--------------------------------------------------------------------------
     // Getter Methods
-    const std::string& getName() const;
+    const std::string &getName() const;
 };
 
 #endif //COMMAND_H_INCLUDED
