@@ -39,6 +39,8 @@
 *.vcxproj
 *.filters
 *.TMP
+CMakeLists.txt
+.idea/
 
 # Debug files
 *.log
