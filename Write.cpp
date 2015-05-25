@@ -19,8 +19,6 @@
 #include "Tile.h"
 #include "Command.h"
 #include "Write.h"
-//#include "WrongParameterException.h"
-//#include "WriteException.h"
 
 //------------------------------------------------------------------------------
 Write::Write() : Command("write")

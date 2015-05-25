@@ -14,8 +14,6 @@
 #include <string>
 #include "Game.h"
 
-//#include "UsageException.h"
-
 
 //------------------------------------------------------------------------------
 // main function
@@ -44,7 +42,6 @@ int main(int argc, char **argv)
           trax.setOutputFilename(filename);
           break;
         default:
-          //throw UsageException();
           std::cout << "Usage: " << argv[0] << std::endl;
           return 2;
       }
@@ -55,7 +52,6 @@ int main(int argc, char **argv)
     }
     else if(argc != 1 && argc != 3)
     {
-      //throw UsageException();
       std::cout << "Usage: " << argv[0] << std::endl;
       return 2;
     }
@@ -67,16 +63,6 @@ int main(int argc, char **argv)
 
     trax.run();
   }
-  //catch (UsageException& e1)
-  //{
-    //std::cout << e1.what() << argv[0] << std::endl;
-    //return 2;
-  //}
-  //catch(...)
-  //{
-    //std::cout << "Error: Out of Memory!" << std::endl;
-    //return 1;
-  //}
   catch(std::bad_alloc& ba)
   {
     std::cout << "Error: Out of Memory!" << std::endl;
