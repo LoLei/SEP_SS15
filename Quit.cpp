@@ -28,9 +28,9 @@ int Quit::execute(Game &board, std::vector<std::string> &params)
   if(params.size() != 1)
   {
     std::cout << "Error: Wrong parameter count!" << std::endl;
-    return 1;
+    return QUIT_ERROR;
   }
   board.setRunning(false);
   std::cout << "Bye!" << std::endl;
-  return 0;
+  return QUIT_SUCCESS;
 }

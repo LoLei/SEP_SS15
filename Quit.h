@@ -21,6 +21,17 @@
 
 class Quit : public Command
 {
+  private:
+    //--------------------------------------------------------------------------
+    // Private copy constructor
+    //
+    Quit(const Quit &original);
+
+    //--------------------------------------------------------------------------
+    // Private assignment operator
+    //
+    Quit &operator=(const Quit &original);
+
   public:
     //--------------------------------------------------------------------------
     // Constructor
@@ -43,7 +54,8 @@ class Quit : public Command
     //
     int execute(Game &board, std::vector<std::string> &params);
 
-    // TODO Needs copyconstructor and stuff?
+    static const int QUIT_SUCCESS = 0;
+    static const int QUIT_ERROR = 1;
 };
 
 #endif //QUIT_H_INCLUDED
