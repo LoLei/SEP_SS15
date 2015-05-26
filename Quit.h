@@ -48,12 +48,16 @@ class Quit : public Command
     // Executes command
     //
     // @param board the game board
-    // @param user_input the input the user enters
+    // @param params the input the user enters
     //
-    // @return int 0 if everything worked
+    // @return int QUIT_SUCCESS if everything worked
     //
     int execute(Game &board, std::vector<std::string> &params);
 
+    //--------------------------------------------------------------------------
+    // defined return values
+    // For easier reading and changing
+    //
     static const int QUIT_SUCCESS = 0;
     static const int QUIT_ERROR = 1;
 };

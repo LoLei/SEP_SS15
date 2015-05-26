@@ -58,7 +58,7 @@ class AddTile : public Command
     // Executes command
     //
     // @param board the game board
-    // @param user_input the input the user enters
+    // @param params the input the user enters
     //
     // @return int 0 if everything worked
     //
@@ -77,11 +77,11 @@ class AddTile : public Command
     bool valideInput(std::vector<std::string> user_input, Tile &tile,
       Position &position);
 
-    //-------------------------------------------------------------------------- ------TODO
-    // colorAndIdCheck method
+    //--------------------------------------------------------------------------
+    // colorCheck method
     // Checks if move is correct
     //
-    // @param abfrage if true starts query
+    // @param color_bool checks if color of nearby tile matches with the current
     // @param twisted if tile is twisted
     // @param lonely_tile if tile is placed not adjacent to two other tiles
     // @param tile the current tile
@@ -91,7 +91,7 @@ class AddTile : public Command
     bool colorCheck(bool color_bool, bool &twisted, bool &lonely_tile,
                          Tile &current_tile);
 
-    //-------------------------------------------------------------------------- -------TODO
+    //--------------------------------------------------------------------------
     // adaptTile method
     // Turns tile so colors connect
     //
@@ -99,7 +99,9 @@ class AddTile : public Command
     // @param tile the current tile
     // @param position the current position
     //
-    // @return int 0 if everything worked 8 or 9 is somebody won
+    // @return int 0 if everything worked
+    // @return int ABORT_ADDTILE if tile cannot be placed
+    // @return int INVALID_COORDINATES_ERROR if field not connected to tile
     //
     int adaptTile(std::map<Position*, Tile*> field, Tile &current_tile,
       Position current_position);
@@ -111,7 +113,7 @@ class AddTile : public Command
     // @param field the game board of fields
     // @param forAddtile the new string to use as a command
     //
-    // @return bool false if no tile needs to be force placed
+    // @return int ADDTILE_SUCCESS if everything worked
     //
     int completeMap(Game &board, Position &current_position,
       Tile &current_tile);
@@ -125,43 +127,78 @@ class AddTile : public Command
     void fillEmptyTiles(Game &board, Position current_position);
 
     //--------------------------------------------------------------------------
-    // checkWin method
-    // checks board if someone won
+    // winByLength method
+    // Checks if someone won by length
     //
     // @param board the current board
     //
-    // @return int 1 if somebody won else 0
+    // @return int WIN_WHITE if white won
+    // @return int WIN_RED if red won
+    // @return int WIN_NONE if nobody won
     //
     int winByLength(Game &board, Tile current_tile);
 
-    //-------------------------------------------------------------------------- ------TODO
-    // adaptTile method
-    // Turns tile so colors connect
+    //--------------------------------------------------------------------------
+    // winByLoop method
+    // Checks if someone won by loop
     //
     // @param field the game board of fields
     // @param tile the current tile
     // @param position the current position
     //
-    // @return int 0 if everything worked 8 or 9 is somebody won
+    // @return int colors color of winning tile
+    // @return int WIN_NONE if nobody won
     //
     int winByLoop(std::map<Position*, Tile*> field,
             Tile &current_tile, Position current_position);
 
-    //-------------------------------------------------------------------------- ------TODO
-    // adaptTile method
-    // Turns tile so colors connect
+    //--------------------------------------------------------------------------
+    // whoWon method
+    // Prints the winner
     //
-    // @param field the game board of fields
-    // @param tile the current tile
-    // @param position the current position
+    // @param win_code the play who won
     //
-    // @return int 0 if everything worked 8 or 9 is somebody won
+    // @return void
     //
     void whoWon(int win_code);
-    void win(Game &board,std::vector<int> win_code);
+
+    //--------------------------------------------------------------------------
+    // win method
+    // Checks for winner, also checks if both won with one move, can end game
+    //
+    // @param board the current game
+    // @param win_code the play who won
+    //
+    // @return void
+    //
+    void win(Game &board, std::vector<int> win_code);
+
+    //--------------------------------------------------------------------------
+    // addTheTile method
+    // Adds tiles into the game field
+    //
+    // @param board the current game
+    // @param current_position the current position
+    // @param current_tile the current tile
+    //
+    // @return void
+    //
     void addTheTile(Game &board, Position current_position, Tile current_tile);
 
+    //--------------------------------------------------------------------------
+    // graphicMode method
+    // Checks whether graphic mode is enabled, if yes will write into file
+    //
+    // @param board the current game
+    //
+    // @return void
+    //
     void graphicMode(Game &board);
+
+    //--------------------------------------------------------------------------
+    // defined return values
+    // For easier reading and changing
+    //
     static const int ABORT_ADDTILE = 1;
     static const int INVALID_COORDINATES_ERROR = 1;
     static const int COMPLETE_ERROR = 1;

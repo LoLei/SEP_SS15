@@ -54,10 +54,14 @@ class Write : public Command
     // @param board the game board
     // @param user_input the input the user enters, will be file name
     //
-    // @return int 0 if everything worked
+    // @return int WRITE_SUCCESS if everything worked
     //
     int execute(Game &board, std::vector<std::string> &user_input);
 
+    //--------------------------------------------------------------------------
+    // defined return values
+    // For easier reading and changing
+    //
     static const int WRITE_ERROR = 0;
     static const int EMPTY_ERROR = 1;
     static const int PARAMETER_COUNT_ERROR = 1;

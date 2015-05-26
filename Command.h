@@ -37,12 +37,12 @@ class Command
   public:
     //--------------------------------------------------------------------------
     // Constructor
-
+    //
     Command(std::string name);
 
     //--------------------------------------------------------------------------
     // Destructor
-
+    //
     virtual ~Command();
 
     //--------------------------------------------------------------------------
@@ -50,11 +50,12 @@ class Command
     // @param board The board where action should be performed on
     // @param params Possible parameters neede for the execution
     // @return Integer representing the success of the action
-
+    //
     virtual int execute(Game &board, std::vector<std::string> &params) = 0;
 
     //--------------------------------------------------------------------------
     // Getter Methods
+    //
     const std::string &getName() const;
 };
 
