@@ -56,7 +56,7 @@ Repository for SEP SS15 Basisbeispiel
 - [x] ~~remove hard coded return values (replace with const/define)~~
 - [ ] memleak bei new fehler von tile
 - [ ] 1 trax exception // Nicht benutzt
-- [ ] constructor mit "TRAX" in write
+- [x] ~~constructor mit "TRAX" in write~~ // Fixed
 - [x] ~~write: class zu struct~~
 - [x] ~~vector<Command*> command_;~~
 - [x] ~~commands_.pushback(new Write());~~
