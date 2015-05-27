@@ -54,9 +54,9 @@ Repository for SEP SS15 Basisbeispiel
 ### Feedback Gespräch
 - [x] ~~exceptions~~
 - [x] ~~remove hard coded return values (replace with const/define)~~
-- [ ] memleak bei new fehler von tile
-- [ ] 1 trax exception // Nicht benutzt
-- [x] ~~constructor mit "TRAX" in write~~ // Fixed
+- [x] memleak bei new fehler von tile
+(- [ ] 1 trax exception // Nicht benutzt)
+- [x] constructor mit "TRAX" in write!
 - [x] ~~write: class zu struct~~
 - [x] ~~vector<Command*> command_;~~
 - [x] ~~commands_.pushback(new Write());~~
@@ -67,6 +67,6 @@ Repository for SEP SS15 Basisbeispiel
 - [x] ~~using~~
 - [x] ~~Karte~~
 - [x] ~~deutsch~~
-- [ ] ĥeader keine .h nur class
-- [ ] initialisierungsliste! (AddTile, Game)
-- [ ] Kommentierten Code und zusätzlichen Code löschen
+- [x] ĥeader keine .h nur class
+- [x] initialisierungsliste! (AddTile, Game)
+- [x] Kommentierten Code und zusätzlichen Code löschen

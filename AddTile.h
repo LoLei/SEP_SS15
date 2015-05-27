@@ -31,6 +31,10 @@ class AddTile : public Command
 {
   private:
     //--------------------------------------------------------------------------
+    // static ID counter for individual Tile IDs
+    //
+    static int id_counter_;
+    //--------------------------------------------------------------------------
     // Private copy constructor
     //
     AddTile(const AddTile &original);
@@ -40,9 +44,23 @@ class AddTile : public Command
     //
     AddTile &operator=(const AddTile &original);
 
-    static int id_counter_;
 
   public:
+    //--------------------------------------------------------------------------
+    // defined return values
+    // For easier reading and changing
+    //
+    static const int ABORT_ADDTILE = 1;
+    static const int INVALID_COORDINATES_ERROR = 1;
+    static const int INVALID_INPUT_ERROR = 1;
+    static const int MEMORY_ERROR = 1;
+    static const int COMPLETE_ERROR = 2;
+    static const int COMPLETE_DONE = 1;
+    static const int ADDTILE_SUCCESS = 0;
+    static const int WIN_WHITE = 1;
+    static const int WIN_RED = 2;
+    static const int WIN_NONE = 0;
+    static const int WIN = 5;
     //--------------------------------------------------------------------------
     // Constructor
     //
@@ -65,8 +83,8 @@ class AddTile : public Command
     int execute(Game &board, std::vector<std::string> &params);
 
     //--------------------------------------------------------------------------
-    // valideInput method
-    // Checks if command is correct
+    // setPositionAndTiletypeError method
+    // Checks if command is correct and set position and tiletype
     //
     // @param user_input the input the user enters
     // @param tile the current tile
@@ -74,8 +92,8 @@ class AddTile : public Command
     //
     // @return bool true if everything worked
     //
-    bool valideInput(std::vector<std::string> user_input, Tile &tile,
-      Position &position);
+    bool setPositionAndTiletypeError(std::vector<std::string> user_input,
+      Tile &tile, Position &position);
 
     //--------------------------------------------------------------------------
     // colorCheck method
@@ -89,29 +107,29 @@ class AddTile : public Command
     // @return bool true if everything worked
     //
     bool colorCheck(bool color_bool, bool &twisted, bool &lonely_tile,
-                         Tile &current_tile);
+      Tile &current_tile);
 
     //--------------------------------------------------------------------------
     // adaptTile method
     // Turns tile so colors connect
     //
-    // @param field the game board of fields
-    // @param tile the current tile
-    // @param position the current position
+    // @param board the current board
+    // @param current_tile the current tile
+    // @param current_position the current position
     //
     // @return int 0 if everything worked
     // @return int ABORT_ADDTILE if tile cannot be placed
     // @return int INVALID_COORDINATES_ERROR if field not connected to tile
     //
-    int adaptTile(std::map<Position*, Tile*> field, Tile &current_tile,
-      Position current_position);
+    int adaptTile(Game &board, Tile &current_tile, Position current_position);
 
     //--------------------------------------------------------------------------
     // completeMap method
     // Fills map with forced tiles
     //
-    // @param field the game board of fields
-    // @param forAddtile the new string to use as a command
+    // @param board the current board
+    // @param current_tile the current tile
+    // @param current_position the current position
     //
     // @return int ADDTILE_SUCCESS if everything worked
     //
@@ -123,6 +141,7 @@ class AddTile : public Command
     // Fills map with empty tiles
     //
     // @param board the current board
+    // @param current_position the current position
     //
     void fillEmptyTiles(Game &board, Position current_position);
 
@@ -131,6 +150,7 @@ class AddTile : public Command
     // Checks if someone won by length
     //
     // @param board the current board
+    // @param current_tile the current tile
     //
     // @return int WIN_WHITE if white won
     // @return int WIN_RED if red won
@@ -143,14 +163,14 @@ class AddTile : public Command
     // Checks if someone won by loop
     //
     // @param field the game board of fields
-    // @param tile the current tile
-    // @param position the current position
+    // @param current_tile the current tile
+    // @param current_position the current position
     //
     // @return int colors color of winning tile
     // @return int WIN_NONE if nobody won
     //
     int winByLoop(std::map<Position*, Tile*> field,
-            Tile &current_tile, Position current_position);
+      Tile &current_tile, Position current_position);
 
     //--------------------------------------------------------------------------
     // whoWon method
@@ -181,9 +201,9 @@ class AddTile : public Command
     // @param current_position the current position
     // @param current_tile the current tile
     //
-    // @return void
+    // @return int 0 for OK and 1 for memory error
     //
-    void addTheTile(Game &board, Position current_position, Tile current_tile);
+    int addTheTile(Game &board, Position current_position, Tile current_tile);
 
     //--------------------------------------------------------------------------
     // graphicMode method
@@ -195,20 +215,6 @@ class AddTile : public Command
     //
     void graphicMode(Game &board);
 
-    //--------------------------------------------------------------------------
-    // defined return values
-    // For easier reading and changing
-    //
-    static const int ABORT_ADDTILE = 1;
-    static const int INVALID_COORDINATES_ERROR = 1;
-    static const int COMPLETE_ERROR = 1;
-    static const int SOME_ERROR = 2;
-    static const int ADDTILE_SUCCESS = 0;
-    static const int ADDTILE_FAIL = 1;
-    static const int WIN_WHITE = 1;
-    static const int WIN_RED = 2;
-    static const int WIN_NONE = 0;
-    static const int WIN = 5;
 };
 
 #endif //ADDTILE_H_INCLUDED

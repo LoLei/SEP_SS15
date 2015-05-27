@@ -17,7 +17,8 @@
 #include <vector>
 
 #include "Command.h"
-#include "Game.h"
+
+class Game;
 
 class Quit : public Command
 {
