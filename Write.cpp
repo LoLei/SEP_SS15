@@ -48,7 +48,7 @@ int Write::execute(Game &board, std::vector<std::string> &user_input)
   std::string file_name = user_input[1];
   struct FileHeader
   {
-    char *signature;        // char[5] // TRAX
+    std::string signature;
     char active_player;     // char // white (1) or red (2)
     signed char minim_x;    // s8
     signed char minim_y;    // s8
