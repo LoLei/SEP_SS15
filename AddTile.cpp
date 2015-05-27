@@ -52,7 +52,7 @@ bool AddTile::setPositionAndTiletypeError(std::vector<string> user_input,
       std::cout << "Invalid Parameters!" << std::endl;
       return true;
     }
-    // if the sign is not valide, funktion return empty type(EMPTY_T)
+    // if the sign is not valid, funktion return empty type(EMPTY_T)
     current_tile.setType(user_input[2][0]);
     if(current_tile.getType() == Tile::EMPTY_T)
     {
