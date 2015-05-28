@@ -71,6 +71,8 @@ bool AddTile::setPositionAndTiletypeError(std::vector<string> user_input,
 //------------------------------------------------------------------------------
 int AddTile::execute(Game &board, std::vector<string> &user_input)
 {
+  int pre_extrema[] = {board.getExtrema('+', 'x'), board.getExtrema('-', 'x'),
+                       board.getExtrema('+', 'y'), board.getExtrema('-', 'y')};
   // tile and position which is going to be set
   Position current_position;
   Tile current_tile(Tile::EMPTY_T, COLOR_RED);
@@ -155,30 +157,56 @@ int AddTile::execute(Game &board, std::vector<string> &user_input)
     {
       win_code.push_back(code);
     }
+
+    if(board.getNumberOfTiles() >= 64)
+    {
+      complete_code = COMPLETE_ERROR;
+      break;
+    }
   }
 
-  if((complete_code == COMPLETE_ERROR) || ((complete_code == COMPLETE_DONE)
-    && (board.getNumberOfTiles() >= 64)))
+  if(complete_code == COMPLETE_ERROR)
   {
+    std::vector<std::map<Position*,Tile*>::iterator> positions_to_delete;
     // if there is a corrupt auto complete move
-    for(auto &tile: board.field)
+    try
     {
-      if(tile.second->getMove() == board.getMoveId())
+      for(auto &tile: board.field)
       {
-        delete tile.first;
-        delete tile.second;
+        if(tile.second->getMove() == current_tile.getMove())
+        {
+          positions_to_delete.push_back(board.field.find(tile.first));
+          delete tile.second;
+          delete tile.first;
+        }
       }
     }
-    // abort addtile command
-    if(complete_code == COMPLETE_ERROR)
+    catch(...)
     {
-      std::cout << "Invalid move - connected colors mismatch" << std::endl;
-      return COMPLETE_ERROR;
+      board.setRunning(false);
+      return ABORT_ADDTILE;
     }
+
+    for(auto &it : positions_to_delete)
+    {
+      board.field.erase(it);
+    }
+
+    board.setExtrema('+','x',pre_extrema[0]);
+    board.setExtrema('-','x',pre_extrema[1]);
+    board.setExtrema('+','y',pre_extrema[2]);
+    board.setExtrema('-','y',pre_extrema[3]);
+
     // if the auto complete adds more tiles as available
-    if(complete_code == COMPLETE_DONE)
+    if(board.getNumberOfTiles() >= 64)
     {
       std::cout << "Invalid move - not enough tiles left" << std::endl;
+      return COMPLETE_ERROR;
+    }
+    // abort addtile command
+    else
+    {
+      std::cout << "Invalid move - connected colors mismatch" << std::endl;
       return COMPLETE_ERROR;
     }
   }

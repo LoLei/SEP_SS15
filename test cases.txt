@@ -102,6 +102,21 @@ addtile (4,6) +
 addtile (5,6) +
 addtile (6,6) +
 
+addtile (0,-1) +
+addtile (1,-1) +
+addtile (2,-1) +
+addtile (3,-1) +
+addtile (4,-1) +
+addtile (5,-1) +
+addtile (6,-1) +
+
+addtile (0,-2) +
+addtile (1,-2) +
+addtile (2,-2) +
+addtile (3,-2) +
+addtile (4,-2) +
+addtile (5,-2) +
+addtile (6,-2) +
 
 ---------------------
 
@@ -154,7 +169,7 @@ addtile (5,5) \
 addtile (6,5) /
 
 ---------------------
-3 farben gewinnen in 1 complete zug, ->TODO
+3 farben gewinnen in 1 complete zug,
 
 addtile (0,0) /
 addtile (1,0) \

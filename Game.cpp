@@ -158,6 +158,34 @@ signed int Game::getExtrema(char extrema, char axis)
 }
 
 //------------------------------------------------------------------------------
+void Game::setExtrema(char extrema, char axis, int number)
+{
+  switch(extrema)
+  {
+    case '+':
+      switch(axis)
+      {
+        case 'x':
+          max_x_ = number;
+          return;
+        case 'y':
+          max_y_ = number;
+          return;
+      }
+    case '-':
+      switch(axis)
+      {
+        case 'x':
+          min_x_ = number;
+          return;
+        case 'y':
+          min_y_ = number;
+          return;
+      }
+  }
+}
+
+//------------------------------------------------------------------------------
 int Game::userInputToCommand(std::vector<string> &vector_input)
 {
   string string_input;

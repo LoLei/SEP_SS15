@@ -170,5 +170,7 @@ class Game
     // @param axis 'x' for x and 'y' for y
     //
     signed int getExtrema(char extrema, char axis);
+    void setExtrema(char extrema, char axis, int number);
+
 };
 #endif // GAME_H
