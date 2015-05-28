@@ -25,8 +25,7 @@
 using std::string;
 
 //------------------------------------------------------------------------------
-Game::Game() : activeplayer_(COLOR_WHITE), starttile_(NULL), tile_counter_(0),
-               max_x_(0), max_y_(0), min_x_(0), min_y_(0), moveID(0)
+Game::Game() : activeplayer_(COLOR_WHITE), starttile_(NULL)
 {
 }
 
@@ -97,6 +96,12 @@ int Game::getNumberOfTiles()
 }
 
 //------------------------------------------------------------------------------
+int Game::getMoveId()
+{
+  return moveID;
+}
+
+//------------------------------------------------------------------------------
 string Game::getOutputFilename()
 {
   return output_filename_;
@@ -112,6 +117,12 @@ void Game::setOutputFilename(string filename)
 void Game::riseNumberOfTiles()
 {
   tile_counter_++;
+}
+
+//------------------------------------------------------------------------------
+void Game::riseMoveId()
+{
+  moveID++;
 }
 
 //------------------------------------------------------------------------------
@@ -154,10 +165,10 @@ int Game::userInputToCommand(std::vector<string> &vector_input)
 //------------------------------------------------------------------------------
 void Game::freeTiles(std::map<Position*, Tile*> field)
 {
-  for(auto &x: field)
+  for(auto &tile : field)
   {
-    delete x.first;
-    delete x.second;
+    delete tile.first;
+    delete tile.second;
   }
 }
 
@@ -179,39 +190,47 @@ void Game::run()
     {
       delete it;
     }
-    std::cout << "out of memory" << std::endl; //-----------TODO
+    std::cout << "out of memory" << std::endl;
     setRunning(false);
     return;
   }
 
   do
   {
-    std::cout << "sep> ";
-    // get user input into a vector
-    std::vector<string> user_input;
-    // If user enters blank line, prompt again
-    if(userInputToCommand(user_input))
+    try
     {
-      continue;
-    }
-
-    moveID++;
-    int no_command_found = 1;
-
-    for(auto &current_command : command_)
-    {
-      if(current_command->getName() == user_input[0])
+      std::cout << "sep> ";
+      // get user input into a vector
+      std::vector<string> user_input;
+      // If user enters blank line, prompt again
+      if(userInputToCommand(user_input))
       {
-        current_command->execute(*this, user_input);
+        continue;
+      }
 
-        no_command_found = 0;
-        break;
+      int no_command_found = 1;
+
+      for(auto &current_command : command_)
+      {
+        if(current_command->getName() == user_input[0])
+        {
+          current_command->execute(*this, user_input);
+
+          no_command_found = 0;
+          break;
+        }
+      }
+      if(no_command_found)
+      {
+        std::cout << "Error: Unknown command!" << std::endl;
+        continue;
       }
     }
-    if(no_command_found)
+    catch(std::bad_alloc &ba)
     {
-      std::cout << "Error: Unknown command!" << std::endl;
-      continue;
+      std::cout << "out of memory" << std::endl;
+      setRunning(false);
+      break;
     }
   } while(running_);
 

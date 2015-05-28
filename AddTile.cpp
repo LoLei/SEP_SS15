@@ -74,7 +74,7 @@ int AddTile::execute(Game &board, std::vector<string> &user_input)
   // tile and position which is going to be set
   Position current_position;
   Tile current_tile(Tile::EMPTY_T, COLOR_RED);
-  current_tile.setMove(board.moveID);
+  current_tile.setMove(board.getMoveId());
 
   // look up if the user input is correct and set position and tiletype
   if(setPositionAndTiletypeError(user_input, current_tile, current_position))
@@ -163,14 +163,14 @@ int AddTile::execute(Game &board, std::vector<string> &user_input)
     // if there is a corrupt auto complete move
     for(auto &tile: board.field)
     {
-      if(tile.second->getMove() == board.moveID)
+      if(tile.second->getMove() == board.getMoveId())
       {
         delete tile.first;
         delete tile.second;
       }
     }
     // abort addtile command
-    if(complete_code == COMPLETE_DONE)
+    if(complete_code == COMPLETE_ERROR)
     {
       std::cout << "Invalid move - connected colors mismatch" << std::endl;
       return COMPLETE_ERROR;
@@ -198,6 +198,9 @@ int AddTile::execute(Game &board, std::vector<string> &user_input)
 
   // in the end of an move switch the player
   board.togglePlayer();
+
+  // for individual mode identification
+  board.riseMoveId();
 
   // if the grafic mode is on, create automatically new file
   graphicMode(board);
@@ -430,7 +433,7 @@ int AddTile::completeMap(Game &board, Position &current_position,
 void AddTile::fillEmptyTiles(Game &board, Position current_position)
 {
   Tile empty_tile(Tile::EMPTY_T,EMPTY_C);
-  empty_tile.setMove(board.moveID);
+  empty_tile.setMove(board.getMoveId());
   int current_x = current_position.getX();
   int current_y = current_position.getY();
   // if new tile was set on a edge

@@ -49,8 +49,12 @@ class Game
     //--------------------------------------------------------------------------
     // counts the tiles
     //
-    int tile_counter_;
+    int tile_counter_ = 0;
 
+    //--------------------------------------------------------------------------
+    // individual identification for move
+    //
+    int moveID = 0;
     //--------------------------------------------------------------------------
     // userInputToCommand method
     // parses the user input as commands
@@ -73,18 +77,16 @@ class Game
 
   public:
 
-    signed int max_x_;
-    signed int max_y_;
-    signed int min_x_;
-    signed int min_y_;
-
+    signed int max_x_ = 0;
+    signed int max_y_ = 0;
+    signed int min_x_ = 0;
+    signed int min_y_ = 0;
 
     //--------------------------------------------------------------------------
-    // setMaximas method
-    // sets the maximum coordinates
-    // @param reference position which is used as a reference to set coordinates
+    // map
+    // Store tiles with positions
     //
-    void setMaximas(Position reference);
+    std::map<Position*, Tile*> field;
 
     //--------------------------------------------------------------------------
     // Constructor
@@ -96,11 +98,28 @@ class Game
     //
     virtual ~Game();
 
+
     //--------------------------------------------------------------------------
-    // map
-    // Store tiles
+    // Setter Methods
     //
-    std::map<Position*, Tile*> field;
+    void setStartTile(Tile *starttile);
+    void setRunning(bool running);
+    void setOutputFilename(std::string);
+
+    //--------------------------------------------------------------------------
+    // Getter Methods
+    //
+    Color getActivePlayer();
+    int getNumberOfTiles();
+    int getMoveId();
+    std::string getOutputFilename();
+
+    //--------------------------------------------------------------------------
+    // setMaximas method
+    // sets the maximum coordinates
+    // @param reference position which is used as a reference to set coordinates
+    //
+    void setMaximas(Position reference);
 
     //--------------------------------------------------------------------------
     // run method
@@ -123,44 +142,10 @@ class Game
     void riseNumberOfTiles();
 
     //--------------------------------------------------------------------------
-    // Setter Methods
+    // riseMoveId method
+    // Increases the move ID
     //
-
-    //--------------------------------------------------------------------------
-    // setStartTile method
-    // Sets the first tile
-    //
-    // @param starttile the first tile
-    //
-    void setStartTile(Tile *starttile);
-
-    //--------------------------------------------------------------------------
-    // setRunning method
-    // Toggles if the game is run
-    //
-    // @param running true if game shall be run, false if it should stop
-    //
-    void setRunning(bool running);
-
-    //--------------------------------------------------------------------------
-    // Getter Methods
-    //
-
-    //--------------------------------------------------------------------------
-    // getActivePlayer method
-    // Gets the current active player
-    //
-    // @return Color activeplayer_
-    //
-    Color getActivePlayer();
-
-    //--------------------------------------------------------------------------
-    // getNumberOfTiles method
-    // Gets the current number of tiles
-    //
-    // @return int tile_counter
-    //
-    int getNumberOfTiles();
+    void riseMoveId();
 
     //--------------------------------------------------------------------------
     // freeTiles method
@@ -169,14 +154,5 @@ class Game
     // @param field map of tiles
     //
     void freeTiles(std::map<Position*, Tile*> field);
-
-
-    // TODO remove
-    void printTiles();
-
-
-    int moveID;
-    std::string getOutputFilename();
-    void setOutputFilename(std::string);
 };
 #endif // GAME_H
