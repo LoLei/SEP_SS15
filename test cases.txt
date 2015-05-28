@@ -269,6 +269,7 @@ addtile (0,-5) \
 
 // Invalid move connected color mismatch
 // Valgrind
+// write file danach ruft auch valgrind error hervor
 addtile (0,0) /
 addtile (1,0) /
 addtile (2,0) /
