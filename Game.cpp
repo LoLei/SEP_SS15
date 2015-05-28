@@ -25,7 +25,8 @@
 using std::string;
 
 //------------------------------------------------------------------------------
-Game::Game() : activeplayer_(COLOR_WHITE), starttile_(NULL)
+Game::Game() : activeplayer_(COLOR_WHITE), starttile_(NULL), tile_counter_(0),
+               max_x_(0), max_y_(0), min_x_(0), min_y_(0), moveID(0)
 {
 }
 
@@ -123,6 +124,37 @@ void Game::riseNumberOfTiles()
 void Game::riseMoveId()
 {
   moveID++;
+}
+
+//------------------------------------------------------------------------------
+signed int Game::getExtrema(char extrema, char axis)
+{
+  switch(extrema)
+  {
+    case '+':
+      switch(axis)
+      {
+        case 'x':
+          return max_x_;
+        case 'y':
+          return max_y_;
+        default:
+          break;
+      }
+    case '-':
+      switch(axis)
+      {
+        case 'x':
+          return min_x_;
+        case 'y':
+          return min_y_;
+        default:
+          break;
+      }
+    default:
+      break;
+  }
+  return 0;
 }
 
 //------------------------------------------------------------------------------

@@ -340,8 +340,8 @@ int AddTile::adaptTile(Game &board, //std::map<Position*, Tile*> field,
       // is position in the surrounding & do the colors match &
       // is contact to the field -
       if(*(tile.first) == current_position.getNearbyPosition(border) &&
-         !colorCheck(tile.second->getColor(tile.second->oppositeBorder(border)) !=
-                current_tile.getColor(border),
+         !colorCheck(tile.second->getColor(tile.second->oppositeBorder(border))
+                != current_tile.getColor(border),
                 twisted, lonely_tile, current_tile))
       {
         // abort addtile command
@@ -437,15 +437,19 @@ void AddTile::fillEmptyTiles(Game &board, Position current_position)
   int current_x = current_position.getX();
   int current_y = current_position.getY();
   // if new tile was set on a edge
-  if((current_x == board.max_x_ || current_x == board.min_x_) &&
-     (current_y == board.max_y_ || current_y == board.min_y_))
+  if((current_x == board.getExtrema('+', 'x') ||
+      current_x == board.getExtrema('-', 'x')) &&
+     (current_y == board.getExtrema('+', 'y') ||
+      current_y == board.getExtrema('-', 'y')))
   {
     // if the position is not in the tile bool is true and an empty tile
     // will be set
     bool set_empty_tile;
-    for(signed int x = board.min_x_; x <= board.max_x_; x++)
+    for(signed int x = board.getExtrema('-', 'x');
+        x <= board.getExtrema('+', 'x'); x++)
     {
-      for(signed int y = board.min_y_; y <= board.max_y_; y++)
+      for(signed int y = board.getExtrema('-', 'y');
+          y <= board.getExtrema('+', 'y'); y++)
       {
         set_empty_tile = true;
         Position empty_position(x, y);
@@ -466,9 +470,11 @@ void AddTile::fillEmptyTiles(Game &board, Position current_position)
     }
   }
   // if the new tile was set in the middle of the field
-  else if(current_x == board.max_x_ || current_x == board.min_x_)
+  else if(current_x == board.getExtrema('+', 'x') ||
+          current_x == board.getExtrema('-', 'x'))
   {
-    for(signed int y = board.min_y_; y <= board.max_y_; y++)
+    for(signed int y = board.getExtrema('-', 'y');
+        y <= board.getExtrema('+', 'y'); y++)
     {
       Position empty_position(current_x, y);
       if(empty_position == current_position)
@@ -481,9 +487,11 @@ void AddTile::fillEmptyTiles(Game &board, Position current_position)
       }
     }
   }
-  else if(current_y == board.max_y_ || current_y == board.min_y_)
+  else if(current_y == board.getExtrema('+', 'y') ||
+          current_y == board.getExtrema('-', 'y'))
   {
-    for(signed int x = board.min_x_; x <= board.max_x_; x++)
+    for(signed int x = board.getExtrema('-', 'x');
+        x <= board.getExtrema('+', 'x'); x++)
     {
       Position empty_position(x, current_y);
       if(empty_position == current_position)

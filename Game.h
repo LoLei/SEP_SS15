@@ -49,19 +49,25 @@ class Game
     //--------------------------------------------------------------------------
     // counts the tiles
     //
-    int tile_counter_ = 0;
+    int tile_counter_;
+
+    //--------------------------------------------------------------------------
+    // the maximas and minimas of the game field
+    //
+    signed int max_x_;
+    signed int max_y_;
+    signed int min_x_;
+    signed int min_y_;
 
     //--------------------------------------------------------------------------
     // individual identification for move
     //
-    int moveID = 0;
+    int moveID;
+
     //--------------------------------------------------------------------------
-    // userInputToCommand method
-    // parses the user input as commands
+    // name of the output file
     //
-    // @param user_input input entered from the user
-    //
-    int userInputToCommand(std::vector<std::string> &user_input);
+    std::string output_filename_;
 
     //--------------------------------------------------------------------------
     // Private copy constructor
@@ -73,15 +79,8 @@ class Game
     //
     Game &operator=(const Game &original);
 
-    std::string output_filename_;
 
   public:
-
-    signed int max_x_ = 0;
-    signed int max_y_ = 0;
-    signed int min_x_ = 0;
-    signed int min_y_ = 0;
-
     //--------------------------------------------------------------------------
     // map
     // Store tiles with positions
@@ -113,6 +112,14 @@ class Game
     int getNumberOfTiles();
     int getMoveId();
     std::string getOutputFilename();
+
+    //--------------------------------------------------------------------------
+    // userInputToCommand method
+    // parses the user input as commands
+    //
+    // @param user_input input entered from the user
+    //
+    int userInputToCommand(std::vector<std::string> &user_input);
 
     //--------------------------------------------------------------------------
     // setMaximas method
@@ -154,5 +161,14 @@ class Game
     // @param field map of tiles
     //
     void freeTiles(std::map<Position*, Tile*> field);
+
+    //--------------------------------------------------------------------------
+    // getExtrema method
+    // get max/min x/y
+    //
+    // @param extrema '+' for maximum and '-' for minimum
+    // @param axis 'x' for x and 'y' for y
+    //
+    signed int getExtrema(char extrema, char axis);
 };
 #endif // GAME_H

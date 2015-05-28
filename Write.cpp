@@ -71,10 +71,10 @@ int Write::execute(Game &board, std::vector<std::string> &user_input)
   //----------------------------------------------------------------------------
   // Write values into header
   // Find max and min coordinates
-  file_header.minim_x = board.min_x_;
-  file_header.minim_y = board.min_y_;
-  file_header.maxim_x = board.max_x_;
-  file_header.maxim_y = board.max_y_;
+  file_header.minim_x = board.getExtrema('-', 'x');
+  file_header.minim_y = board.getExtrema('-', 'y');
+  file_header.maxim_x = board.getExtrema('+', 'x');
+  file_header.maxim_y = board.getExtrema('+', 'y');
   // Signature and active player;
   file_header.signature = "TRAX";
   file_header.active_player = board.getActivePlayer();
@@ -106,9 +106,11 @@ int Write::execute(Game &board, std::vector<std::string> &user_input)
   BoardTiles board_tiles;
 
   // Write
-  for(signed int y = board.min_y_; y <= board.max_y_; y++)
+  for(signed int y = board.getExtrema('-', 'y');
+      y <= board.getExtrema('+', 'y'); y++)
   {
-    for(signed int x = board.min_x_; x <= board.max_x_; x++)
+    for(signed int x = board.getExtrema('-', 'x');
+        x <= board.getExtrema('+', 'x'); x++)
     {
       Position pos1(x, y);
       for(auto &x : board.field)
