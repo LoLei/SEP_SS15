@@ -252,3 +252,41 @@ addtile (0,7) /
 addtile (0,8) /
 addtile (0,9) /
 addtile (0,10) /
+
+
+addtile (0,0) /
+addtile (1,0) /
+addtile (2,0) /
+addtile (3,0) /
+addtile (4,0) /
+addtile (5,0) /
+addtile (0,-1) \
+addtile (0,-2) \
+addtile (0,-3) \
+addtile (0,-4) \
+addtile (0,-5) \
+
+
+// Invalid move connected color mismatch
+// Valgrind
+addtile (0,0) /
+addtile (1,0) /
+addtile (2,0) /
+addtile (3,0) /
+addtile (4,0) /
+addtile (5,0) /
+addtile (6,0) /
+addtile (7,0) /
+addtile (8,0) /
+addtile (9,0) /
+addtile (10,0) /
+addtile (0,-1) \
+addtile (0,-2) \
+addtile (0,-3) \
+addtile (0,-4) \
+addtile (0,-5) \
+addtile (0,-6) \
+addtile (0,-7) \
+addtile (0,-8) \
+addtile (0,-9) \
+addtile (0,-10) \
