@@ -84,7 +84,7 @@ class AddTile : public Command
 
     //--------------------------------------------------------------------------
     // setPositionAndTiletypeError method
-    // Checks if command is correct and set position and tiletype
+    // Checks if command is correct and set position and tile type
     //
     // @param user_input the input the user enters
     // @param tile the current tile

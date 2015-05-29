@@ -6,7 +6,7 @@
 // Authors: 
 // Tutors
 // Created: 08.08.2011
-// Last change: 02.09.2011
+// Last change: 29.05.2015
 //------------------------------------------------------------------------------
 
 #ifndef COMMAND_H_INCLUDED
@@ -48,7 +48,7 @@ class Command
     //--------------------------------------------------------------------------
     // Executes the command.
     // @param board The board where action should be performed on
-    // @param params Possible parameters neede for the execution
+    // @param params Possible parameters needed for the execution
     // @return Integer representing the success of the action
     //
     virtual int execute(Game &board, std::vector<std::string> &params) = 0;

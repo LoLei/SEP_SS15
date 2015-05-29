@@ -43,7 +43,7 @@ bool AddTile::setPositionAndTiletypeError(std::vector<string> user_input,
     std::cout << "Error: Wrong parameter count!" << std::endl;
     return true;
   }
-  // controll and set position input
+  // control and set position input
   if(current_position.parse(user_input[1]))
   {
     // type input is only one sign
@@ -52,7 +52,7 @@ bool AddTile::setPositionAndTiletypeError(std::vector<string> user_input,
       std::cout << "Invalid Parameters!" << std::endl;
       return true;
     }
-    // if the sign is not valid, funktion return empty type(EMPTY_T)
+    // if the sign is not valid, function return empty type(EMPTY_T)
     current_tile.setType(user_input[2][0]);
     if(current_tile.getType() == Tile::EMPTY_T)
     {
@@ -78,13 +78,13 @@ int AddTile::execute(Game &board, std::vector<string> &user_input)
   Tile current_tile(Tile::EMPTY_T, COLOR_RED);
   current_tile.setMove(board.getMoveId());
 
-  // look up if the user input is correct and set position and tiletype
+  // look up if the user input is correct and set position and tile type
   if(setPositionAndTiletypeError(user_input, current_tile, current_position))
   {
     // abort addtile command
     return INVALID_INPUT_ERROR;
   }
-  // fist tile has to be set in the point of orgin and topcolor red
+  // fist tile has to be set in the point of origin and top color red
   Position center(0, 0);
   if((board.getNumberOfTiles() == 0) && (current_position != center))
   {
@@ -106,7 +106,7 @@ int AddTile::execute(Game &board, std::vector<string> &user_input)
     }
   }
 
-  // change topcolor, check if contact to other tile,
+  // change top color, check if contact to other tile,
   // and check if all connected colors match
   if(adaptTile(board, current_tile, current_position))
   {
@@ -116,7 +116,7 @@ int AddTile::execute(Game &board, std::vector<string> &user_input)
 
   // code to identify who/if someone won by loop
   // add 1 for white, 2 for red, not if none
-  // addtidionally add and merge ids
+  // additionally add and merge ids
   std::vector<int> win_code;
   if(int code = winByLoop(board.field, current_tile, current_position))
   {
@@ -230,7 +230,7 @@ int AddTile::execute(Game &board, std::vector<string> &user_input)
   // for individual mode identification
   board.riseMoveId();
 
-  // if the grafic mode is on, create automatically new file
+  // if the graphic mode is on, create automatically new file
   graphicMode(board);
 
   // if everything went well and game is not over
@@ -244,7 +244,7 @@ void AddTile::graphicMode(Game &board)
   {
     return;
   }
-  // no tile set or a fail happend
+  // no tile set or a fail happened
   if(!board.getOutputFilename().empty())
   {
     Write new_file;
@@ -260,7 +260,7 @@ int AddTile::addTheTile(Game &board, Position current_position,
   Tile current_tile)
 {
   // replace empty tile with  new tile
-  // only necessary if the position exists and filld with an empty tile
+  // only necessary if the position exists and filled with an empty tile
   bool replace = true;
   for(auto &tile : board.field)
   {
@@ -320,14 +320,14 @@ bool AddTile::colorCheck(bool color_bool, bool &twisted, bool &lonely_tile,
   // check if the touching color of the nearby tile match with the current
   if(color_bool)
   {
-    // if one color already match and one dosen't
+    // if one color already match and one does not
     if(twisted)
     {
       // abort addtile command
       std::cout << "Invalid move - connected colors mismatch" << std::endl;
       return false;
     }
-    // twist the tile in order that the colors match resp. chage topcolor
+    // twist the tile in order that the colors match resp. change top color
     current_tile.setColor(current_tile.notTopColor());
     // now one color match
     twisted = true;
@@ -349,7 +349,7 @@ int AddTile::adaptTile(Game &board, //std::map<Position*, Tile*> field,
   {
     return 0;
   }
-  // true if tile was twiste resp. topcolor war changed
+  // true if tile was twisted resp. top color was changed
   bool twisted = false;
   // true if there is no contact to another tile
   bool lonely_tile = true;
@@ -362,7 +362,7 @@ int AddTile::adaptTile(Game &board, //std::map<Position*, Tile*> field,
     {
       continue;
     }
-    // search in surrounding positionen
+    // search in surrounding positions
     for(Border border : {TOP, RIGHT, BOTTOM, LEFT})
     {
       // is position in the surrounding & do the colors match &
@@ -415,13 +415,13 @@ int AddTile::completeMap(Game &board, Position &current_position,
       {
         continue;
       }
-      // search in surrounding positionen
+      // search in surrounding positions
       for(Border border : {TOP, RIGHT, BOTTOM, LEFT})
       {
         // is position in the surrounding
         if(*(nearby_tile.first) == tile.first->getNearbyPosition(border))
         {
-          // cound surrounding tiles
+          // found surrounding tiles
           found_tile++;
           // set surrounding colors
           surrounding_color[border] =
@@ -430,7 +430,7 @@ int AddTile::completeMap(Game &board, Position &current_position,
         }
       }
     }
-    // if there are two sourrounding tiles with the same touching colors
+    // if there are two surrounding tiles with the same touching colors
     // of three tiles one tile will automatically set
     if(found_tile >= 2)
     {
@@ -638,7 +638,7 @@ int AddTile::winByLoop(std::map<Position*, Tile*> field,
           if(current_tile.getColor(border) == colors)
           {
             current_tile.setId(colors, tile.second->getId(colors));
-            // add ids of sorrounding tiles depending on the color
+            // add ids of surrounding tiles depending on the color
             id_to_merge[colors - 1].push_back(current_tile.getId(colors));
           }
         }

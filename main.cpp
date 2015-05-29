@@ -68,7 +68,7 @@ int main(int argc, char **argv)
     std::cout << "Error: Out of Memory!" << std::endl;
     return 1;
   }
-  // Catch any other exceptions without ouput, so program does not crash
+  // Catch any other exceptions without output, so program does not crash
   catch (...)
   {
     return 1;

@@ -37,7 +37,7 @@ class Game
     Color activeplayer_;
 
     //--------------------------------------------------------------------------
-    // Pointer of the Starttile
+    // Pointer of the start tile
     //
     Tile *starttile_;
 
@@ -132,7 +132,7 @@ class Game
     // run method
     // Starts the game
     // @param file_name file name to write file
-    // @param graphic_mode used to test if grapic mode is enabled
+    // @param graphic_mode used to test if graphic mode is enabled
     //
     void run();
 
