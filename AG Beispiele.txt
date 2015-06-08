@@ -6,3 +6,17 @@
 	(Zu schwierig)
 3)	Neuer Befehl: Mirror
 	Spiegelt das Spielfeld horizontal oder vertikal
+4)
+	Win condition by tile count length
+5)
+	Binary file additiional information
+	max line length for example
+6)
+	New flag -x
+	Create new file each turn
+7)
+	Move existing tile to another position
+8)
+	New command: Scramble
+	Randomizes the board
+9)
