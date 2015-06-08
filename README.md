@@ -54,19 +54,19 @@ Repository for SEP SS15 Basisbeispiel
 ### Feedback Gespräch
 - [x] ~~exceptions~~
 - [x] ~~remove hard coded return values (replace with const/define)~~
-- [x] memleak bei new fehler von tile
-(- [ ] 1 trax exception // Nicht benutzt)
+- [x] ~~memleak bei new fehler von tile~~
+- [x] ~~1 trax exception // Nicht benutzt)~~
 - [x] constructor mit "TRAX" in write!
 - [x] ~~write: class zu struct~~
 - [x] ~~vector<Command*> command_;~~
 - [x] ~~commands_.pushback(new Write());~~
 - [x] ~~Command *current_command = searchCommand[userinput[0]~~
 - [x] ~~current_command->.excecute(...)]~~
-- [ ] Einheitlicher Codingstandard `if(statement)` ohne space, `class Write : public Command` space zwischen `:`
-- [ ] Einheitlicher Codingstandard `Type &name` bzw `Type *name`
+- [x] ~~Einheitlicher Codingstandard `if(statement)` ohne space, `class Write : public Command` space zwischen `:`~~
+- [x] ~~Einheitlicher Codingstandard `Type &name` bzw `Type *name`~~
 - [x] ~~using~~
 - [x] ~~Karte~~
 - [x] ~~deutsch~~
-- [x] ĥeader keine .h nur class
-- [x] initialisierungsliste! (AddTile, Game)
-- [x] Kommentierten Code und zusätzlichen Code löschen
+- [x] ~~ĥeader keine .h nur class~~
+- [x] ~~initialisierungsliste! (AddTile, Game)~~
+- [x] ~~Kommentierten Code und zusätzlichen Code löschen~~
